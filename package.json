@@ -21,9 +21,10 @@
     "react-router-typesafe-routes": "^1.2.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "dotenv -o -e envs/.env.dev craco start",
+    "start:prod": "dotenv -o -e envs/.env.prod craco start",
+    "build": "dotenv -o -e envs/.env.prod craco build",
+    "test": "dotenv -o -e envs/.env.dev craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,6 +48,8 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@craco/craco": "^7.1.0",
-    "babel-plugin-styled-components": "^2.1.4"
+    "babel-plugin-styled-components": "^2.1.4",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.2.1"
   }
 }
