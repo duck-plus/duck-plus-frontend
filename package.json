@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tanstack/react-query": "^4.32.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -10,6 +11,8 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "axios": "^1.4.0",
+    "graphql": "^16.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.10",
@@ -28,6 +31,9 @@
     "start:prod": "dotenv -o -e envs/.env.prod craco start",
     "build": "dotenv -o -e envs/.env.prod craco build",
     "test": "dotenv -o -e envs/.env.dev craco test",
+    "codegen": "dotenv -o -e envs/.env.dev yarn _codegen",
+    "codegen:prod": "dotenv -o -e envs/.env.prod yarn _codegen",
+    "_codegen": "graphql-codegen --config src/gql/codegen.ts --watch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -51,6 +57,9 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@craco/craco": "^7.1.0",
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@parcel/watcher": "^2.2.0",
     "babel-plugin-styled-components": "^2.1.4",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.2.1",
