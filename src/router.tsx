@@ -1,10 +1,11 @@
-import { Outlet, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { route } from "react-router-typesafe-routes/dom";
 import CafeList from "./components/pages/CafeList";
 import CafeDetail from "./components/pages/CafeDetail";
 import CafeMap from "./components/pages/CafeMap";
 import Home from "./components/pages/Home";
 import RouteErrorElement from "./components/atoms/RouteErrorElement";
+import App from "./App";
 
 // typed Routes
 export const ROUTES = {
@@ -24,7 +25,7 @@ export const ROUTES = {
 const router = createBrowserRouter([
   {
     errorElement: <RouteErrorElement />,
-    element: <Outlet />,
+    element: <App />,
     children: [
       {
         path: ROUTES.HOME.path,
