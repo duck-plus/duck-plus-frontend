@@ -1,0 +1,65 @@
+@import url("./assets/fonts/SUIT.css");
+
+body {
+  margin: 0;
+  font-family: "SUIT", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 기본적으로 이미지는 드래그 불가 */
+img {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  /** vertical-align: baseline 라서, 아래 간격 생기는 것 방지 */
+  vertical-align: middle;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+button {
+  /* 버튼 기본마진 제거 (browser by browser) */
+  margin: 0;
+  /* 버튼 기본패딩 제거 (browser by browser) */
+  padding: 0;
+}
+
+* {
+  /* taekwon_yoo) iOS에서 터치 시, 파란 박스가 생겨 하이라이팅 되지 않도록 함 */
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+/** 포커스 된 Simplebar 아웃라인 제거 */
+.simplebar-content-wrapper:focus-visible {
+  outline: 0;
+}
+
+/** Simplebar 트랙바 제거 */
+.simplebar-track.simplebar-vertical {
+  width: 0;
+}
+
+/** Simplebar width 꼬이는 이슈 해결 */
+.simplebar-offset {
+  width: 100%;
+}
+
+/** Simplebar width 꼬이는 이슈 해결 */
+.simplebar-content-wrapper {
+  width: 100%;
+}
+
+/** Simplebar width 꼬이는 이슈 해결 */
+.simplebar-content {
+  width: 100%;
+}
