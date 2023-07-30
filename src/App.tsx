@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import LoadingPage from "./components/pages/LoadingPage";
+import { HorizontalRatioBoundary } from "./hooks/useHorizontalRatio";
 
 const App = () => {
   // 첫 렌더 후, App loading 모달 제거
@@ -9,9 +10,11 @@ const App = () => {
       "none";
   }, []);
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <Outlet />
-    </Suspense>
+    <HorizontalRatioBoundary>
+      <Suspense fallback={<LoadingPage />}>
+        <Outlet />
+      </Suspense>
+    </HorizontalRatioBoundary>
   );
 };
 
