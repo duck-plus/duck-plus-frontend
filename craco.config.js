@@ -12,4 +12,14 @@ module.exports = {
       "@": path.resolve(__dirname, "src"),
     },
   },
+  jest: {
+    configure: {
+      moduleNameMapper: {
+        "@/(.*)$": "<rootDir>/src/$1",
+        "react-router-typesafe-routes/dom": require.resolve(
+          "react-router-typesafe-routes/dom"
+        ),
+      },
+    },
+  },
 };
