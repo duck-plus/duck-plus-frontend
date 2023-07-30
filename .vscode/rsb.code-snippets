@@ -1,0 +1,80 @@
+{
+  "Insert stateful button": {
+    "scope": "javascriptreact,typescriptreact",
+    "prefix": "rsb",
+    "body": [
+      "import styled from 'styled-components';",
+      "",
+      "const StatefulButton = styled.button`",
+      "  $1",
+      "  @media (hover: hover) {",
+      "    :hover{",
+      "      $3",
+      "    }",
+      "  }",
+      "  :not(:disabled):active{",
+      "    $4",
+      "  }",
+      "  :disabled{",
+      "    $5",
+      "  }",
+      "`;",
+      "$0"
+    ],
+    "description": "insert styled-component button with hovered / pressed state"
+  },
+  "Insert stateful button as Component": {
+    "scope": "javascriptreact,typescriptreact",
+    "prefix": "rsbc",
+    "body": [
+      "import React from 'react';",
+      "import styled from 'styled-components';",
+      "",
+      "const StatefulButton = styled.button`",
+      "  $1",
+      "  @media (hover: hover) {",
+      "    :hover{",
+      "      $3",
+      "    }",
+      "  }",
+      "  :not(:disabled):active{",
+      "    $4",
+      "  }",
+      "  :disabled{",
+      "    $5",
+      "  }",
+      "`;",
+      "function $TM_FILENAME_BASE() {",
+      "  $0",
+      "  return <StatefulButton />;",
+      "}",
+      "",
+      "export default $TM_FILENAME_BASE;"
+    ],
+    "description": "insert styled-component button with hovered / pressed state"
+  },
+  "Insert Theme props for styled-components": {
+    "scope": "css",
+    "prefix": "sct",
+    "body": ["${({ theme }) => theme$1}$0"],
+    "description": "Insert theme for styled-components"
+  },
+  "Insert Theme color for styled-components": {
+    "scope": "css",
+    "prefix": "sctc",
+    "body": ["${({ theme }) => theme.colors$1}$0"],
+    "description": "Insert theme for styled-components"
+  },
+  "Insert Theme fontFace for styled-components": {
+    "scope": "css",
+    "prefix": "sctf",
+    "body": ["${({ theme }) => theme.fontFaces$1}$0"],
+    "description": "Insert theme for styled-components"
+  },
+  "Insert horizontal scale func for styled-components": {
+    "scope": "css",
+    "prefix": "hsp",
+    "body": ["${hScalePx($1)}$0"],
+    "description": "Insert horizontal scale func for styled-components"
+  }
+}
