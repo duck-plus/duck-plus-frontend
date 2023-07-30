@@ -5,7 +5,7 @@ import CafeDetail from "./components/pages/CafeDetail";
 import CafeMap from "./components/pages/CafeMap";
 import Home from "./components/pages/Home";
 import RouteErrorElement from "./components/atoms/RouteErrorElement";
-import App from "./App";
+import App from "./components/App";
 
 // typed Routes
 export const ROUTES = {

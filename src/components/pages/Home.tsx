@@ -1,9 +1,9 @@
-import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
+import { hScalePx } from "@/hooks/useHorizontalRatio";
 import React from "react";
 import { styled } from "styled-components";
 
 const HomePage = styled.div`
-  background: pink;
+  background: ${({ theme }) => theme.colors.orange50};
   width: ${hScalePx(130)};
   height: 100%;
   flex-shrink: 0;
@@ -11,8 +11,7 @@ const HomePage = styled.div`
 `;
 
 const Home = () => {
-  const hr = useHorizontalRatio();
-  return <HomePage>Hi, I'm Home. {hr}</HomePage>;
+  return <HomePage>Hi, I'm Home.</HomePage>;
 };
 
 export default Home;
