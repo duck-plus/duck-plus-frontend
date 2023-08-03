@@ -13,7 +13,7 @@ const HorizontalRatioContext = createContext<number>(1);
 const HorizontalRatioProvider = HorizontalRatioContext.Provider;
 
 const RatioContainer = styled.div`
-  display: absolute;
+  position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
