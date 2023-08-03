@@ -18,7 +18,7 @@ const LogoFrame = styled.div`
   height: ${hScalePx(18)};
 `;
 
-/** [<-] {children} */
+/** [Duck+] */
 const AppTopBarLogoLeft = () => {
   return (
     <Container>
