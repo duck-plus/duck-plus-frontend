@@ -73,6 +73,138 @@ const colors = {
 } as const;
 
 const fontFaces = {
+  "Display1/40-Bold": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(40)};
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(46)};
+  `,
+  "Display1/40-SemiBold": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(40)};
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(46)};
+  `,
+  "Display1/40-Medium": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(40)};
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(46)};
+  `,
+  "Display1/40-Regular": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(40)};
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(46)};
+  `,
+
+  "Display2/36-Bold": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(36)};
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(44)};
+  `,
+  "Display2/36-SemiBold": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(36)};
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(44)};
+  `,
+  "Display2/36-Medium": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(36)};
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(44)};
+  `,
+  "Display2/36-Regular": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(36)};
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(44)};
+  `,
+
+  "Display3/32-Bold": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(32)};
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(40)};
+  `,
+  "Display3/32-SemiBold": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(32)};
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(40)};
+  `,
+  "Display3/32-Medium": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(32)};
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(40)};
+  `,
+  "Display3/32-Regular": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(32)};
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(40)};
+  `,
+
+  "Display4/28-Bold": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(28)};
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(36)};
+  `,
+  "Display4/28-SemiBold": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(28)};
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(36)};
+  `,
+  "Display4/28-Medium": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(28)};
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(36)};
+  `,
+  "Display4/28-Regular": css`
+    font-family: "SUIT";
+    font-size: ${hScalePx(28)};
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: ${hScalePx(36)};
+  `,
+
   "Headline1/24-Bold": css`
     font-family: "SUIT";
     font-size: ${hScalePx(24)};
