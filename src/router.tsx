@@ -7,6 +7,7 @@ import Home from "./components/pages/Home";
 import Calc from "./components/pages/Calc";
 import RouteErrorElement from "./components/atoms/RouteErrorElement";
 import App from "./components/App";
+import CommingSoon from "./components/pages/CommingSoon";
 
 // typed Routes
 export const ROUTES = {
@@ -31,7 +32,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: ROUTES.HOME.path,
-        element: <Home />,
+        // element: <Home />,
+        element: <CommingSoon />,
       },
       {
         path: ROUTES.CALC.path,
