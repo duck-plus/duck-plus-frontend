@@ -29,7 +29,7 @@ const BackButton = styled.button`
   background-color: transparent;
 `;
 
-/** [<-] {children} */
+/** [<-]  */
 const AppTopBarLeftIcon = () => {
   const navigate = useNavigate();
   return (
