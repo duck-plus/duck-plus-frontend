@@ -4,12 +4,14 @@ import CafeList from "./components/pages/CafeList";
 import CafeDetail from "./components/pages/CafeDetail";
 import CafeMap from "./components/pages/CafeMap";
 import Home from "./components/pages/Home";
+import Calc from "./components/pages/Calc";
 import RouteErrorElement from "./components/atoms/RouteErrorElement";
 import App from "./components/App";
 
 // typed Routes
 export const ROUTES = {
   HOME: route("", {}),
+  CALC: route("calc", {}),
   CAFE: route(
     "cafe",
     {},
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.HOME.path,
         element: <Home />,
+      },
+      {
+        path: ROUTES.CALC.path,
+        element: <Calc />,
       },
       {
         path: ROUTES.CAFE.LIST.path,
