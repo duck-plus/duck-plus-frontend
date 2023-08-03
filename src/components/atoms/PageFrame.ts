@@ -8,6 +8,9 @@ const PageFrame = styled(SimpleBar)`
   flex-shrink: 0;
   margin: 0 auto;
   background-color: white;
+  .simplebar-content {
+    height: 100%;
+  }
 `;
 
 export default PageFrame;
