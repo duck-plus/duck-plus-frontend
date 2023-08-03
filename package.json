@@ -22,6 +22,9 @@
     "react-router-dom": "^6.14.2",
     "react-router-typesafe-routes": "^1.2.1",
     "react-scripts": "5.0.1",
+    "resize-observer-polyfill": "^1.5.1",
+    "simplebar": "^6.2.5",
+    "simplebar-react": "^3.2.4",
     "styled-components": "^6.0.5",
     "typescript": "^5.1.6",
     "web-vitals": "^2.1.0"

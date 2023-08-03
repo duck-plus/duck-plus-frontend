@@ -2802,6 +2802,18 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
+"@types/lodash-es@^4.17.6":
+  version "4.17.8"
+  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.17.8.tgz#cfffd0969507830c22da18dbb20d2ca126fdaa8b"
+  integrity sha512-euY3XQcZmIzSy7YH5+Unb3b2X12Wtk54YWINBvvGQ5SmMvwb11JQskGsfkH/5HXK77Kr8GF0wkVDIxzAisWtog==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.196"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.196.tgz#a7c3d6fc52d8d71328b764e28e080b4169ec7a95"
+  integrity sha512-22y3o88f4a94mKljsZcanlNWPzO0uBsBdzLAngf2tp533LzZcQzb6+eZPJ+vCTt+bqF2XnvT9gejTLsAcJAJyQ==
+
 "@types/mime@*":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-3.0.1.tgz#5f8f2bca0a5863cb69bc0b0acd88c96cb1d4ae10"
@@ -4031,6 +4043,11 @@ camelize@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/camelize/-/camelize-1.0.1.tgz#89b7e16884056331a35d6b5ad064332c91daa6c3"
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
+
+can-use-dom@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/can-use-dom/-/can-use-dom-0.1.0.tgz#22cc4a34a0abc43950f42c6411024a3f6366b45a"
+  integrity sha512-ceOhN1DL7Y4O6M0j9ICgmTYziV89WMd96SvSl0REd8PMgrY0B/WBOPoed5S1KUmJqXgUXh8gzSe6E3ae27upsQ==
 
 caniuse-api@^3.0.0:
   version "3.0.0"
@@ -7709,6 +7726,11 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
+lodash-es@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
@@ -9642,6 +9664,11 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
 
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
+
 resolve-cwd@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/resolve-cwd/-/resolve-cwd-3.0.0.tgz#0f0075f1bb2544766cf73ba6a6e2adfebcb13f2d"
@@ -10037,6 +10064,31 @@ signedsource@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/signedsource/-/signedsource-1.0.0.tgz#1ddace4981798f93bd833973803d80d52e93ad6a"
   integrity sha512-6+eerH9fEnNmi/hyM1DXcRK3pWdoMQtlkQ+ns0ntzunjKqp5i3sKCc80ym8Fib3iaYhdJUOPdhlJWj1tvge2Ww==
+
+simplebar-core@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/simplebar-core/-/simplebar-core-1.2.4.tgz#1fe965716a426f812c1a112ce28d98b9a643797b"
+  integrity sha512-P+Sqshef4fq3++gQ82TgNYcgl3qZFSCP5jS2/8NMmw18oagXOijMzs1G+vm6RUY3oMvpwH3wGoqh9u6SyDjHfQ==
+  dependencies:
+    "@types/lodash-es" "^4.17.6"
+    can-use-dom "^0.1.0"
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+
+simplebar-react@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/simplebar-react/-/simplebar-react-3.2.4.tgz#fa495e50048c497c767fb5591b106658f160b240"
+  integrity sha512-ogLN79e7JUm82wJChD7NSUB+4EHCFvDkjXpiu8hT1Alk7DnCekUWds61NXcsP9jC97KOgF5To/AVjYFbX0olgg==
+  dependencies:
+    simplebar-core "^1.2.4"
+
+simplebar@^6.2.5:
+  version "6.2.5"
+  resolved "https://registry.yarnpkg.com/simplebar/-/simplebar-6.2.5.tgz#9d7cdf9f9a57b28f2497d165caf60f1bc644913e"
+  integrity sha512-vfxKR6KNBsPx7+sZnqO7T8VuCvi4px6OlycrrkNgyjvoHhRW7LIyVkHhUfXxbz33Gw99Wb9UMMsnEZv35wtLSw==
+  dependencies:
+    can-use-dom "^0.1.0"
+    simplebar-core "^1.2.4"
 
 sisteransi@^1.0.5:
   version "1.0.5"
