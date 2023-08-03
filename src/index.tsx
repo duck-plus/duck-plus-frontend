@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@/global.css";
 import reportWebVitals from "@/reportWebVitals";
 import { RouterProvider } from "react-router-dom";
 import router from "@/router";
+import "simplebar/dist/simplebar.css";
+import "@/global.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
