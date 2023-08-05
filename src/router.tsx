@@ -3,7 +3,7 @@ import { route } from "react-router-typesafe-routes/dom";
 import CafeList from "./components/pages/CafeList";
 import CafeDetail from "./components/pages/CafeDetail";
 import CafeMap from "./components/pages/CafeMap";
-import Home from "./components/pages/Home";
+// import Home from "./components/pages/Home";
 import Calc from "./components/pages/Calc";
 import RouteErrorElement from "./components/atoms/RouteErrorElement";
 import App from "./components/App";

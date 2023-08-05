@@ -2,6 +2,7 @@ import React from "react";
 import ReactPlayer from "react-player";
 import PageFrame from "../atoms/PageFrame";
 import { styled } from "styled-components";
+import CommingSoonMP4 from "@/assets/videos/commingsoon.mp4";
 
 const CommingSoonFrame = styled(PageFrame)`
   background-color: black;
@@ -18,12 +19,21 @@ const CommingSoon = () => {
     <CommingSoonFrame>
       <PlayerFrame>
         <ReactPlayer
-          url={"/commingsoon.mp4"}
+          url={CommingSoonMP4}
           width="100%"
           height="100%"
+          muted
           loop
           playing
-          muted
+          playsinline
+          config={{
+            file: {
+              attributes: {
+                disablePictureInPicture: true,
+                onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
+              },
+            },
+          }}
         />
       </PlayerFrame>
     </CommingSoonFrame>

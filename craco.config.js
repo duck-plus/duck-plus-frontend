@@ -11,6 +11,22 @@ module.exports = {
     alias: {
       "@": path.resolve(__dirname, "src"),
     },
+    configure: (webpackConfig) => {
+      const oneOf = webpackConfig.module.rules.find(
+        (cand) => !!cand.oneOf
+      ).oneOf;
+
+      oneOf.push({
+        test: [/\.mp4$/],
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10000,
+          },
+        },
+      });
+      return webpackConfig;
+    },
   },
   jest: {
     configure: {
