@@ -98,7 +98,7 @@ const CalcButton = styled.button`
   }
 `;
 
-const Calc = () => {
+const CalcPage = () => {
   const [dayCnt, setDayCnt] = useState<string>("");
   const [cost, setCost] = useState<string>("");
 
@@ -179,4 +179,4 @@ const Calc = () => {
   );
 };
 
-export default Calc;
+export default CalcPage;

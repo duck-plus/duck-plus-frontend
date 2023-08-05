@@ -1,8 +1,8 @@
 import React from "react";
 import PageFrame from "@/components/atoms/PageFrame";
 
-const CafeMap = () => {
+const CafeMapPage = () => {
   return <PageFrame>Hi, I'm map.</PageFrame>;
 };
 
-export default CafeMap;
+export default CafeMapPage;

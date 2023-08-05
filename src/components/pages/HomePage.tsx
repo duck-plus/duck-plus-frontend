@@ -5,7 +5,7 @@ import { hScalePx } from "@/hooks/useHorizontalRatio";
 import AppTopBarLogoLeft from "../organisms/AppTopBarLogoLeft";
 import SimpleBar from "simplebar-react";
 
-const HomePage = styled(SimpleBar)`
+const HomePageFrame = styled(SimpleBar)`
   width: ${hScalePx(360)};
   height: 100%;
   flex-shrink: 0;
@@ -17,10 +17,10 @@ const BottomSheetContent = styled.div`
   margin: ${hScalePx(20)};
 `;
 
-const Home = () => {
+const HomePage = () => {
   const { BottomSheet, register } = useBottomSheet(true);
   return (
-    <HomePage>
+    <HomePageFrame>
       <AppTopBarLogoLeft />
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis, sed
       et. Perspiciatis alias dicta, laboriosam cumque nihil dolore laborum omnis
@@ -118,8 +118,8 @@ const Home = () => {
       <BottomSheet {...register}>
         <BottomSheetContent>Hi, I'm BottomSheet.</BottomSheetContent>
       </BottomSheet>
-    </HomePage>
+    </HomePageFrame>
   );
 };
 
-export default Home;
+export default HomePage;

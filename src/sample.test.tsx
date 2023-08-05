@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
-import Home from "./components/pages/Home";
+import Home from "./components/pages/HomePage";
 import App from "./components/App";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import RouteErrorElement from "./components/atoms/RouteErrorElement";
-import CafeDetail from "./components/pages/CafeDetail";
-import CafeList from "./components/pages/CafeList";
-import CafeMap from "./components/pages/CafeMap";
+import CafeDetail from "./components/pages/CafeDetailPage";
+import CafeList from "./components/pages/CafeListPage";
+import CafeMap from "./components/pages/CafeMapPage";
 import { ROUTES } from "./router";
 
 // react-lottie-player

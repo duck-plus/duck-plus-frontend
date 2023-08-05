@@ -14,7 +14,7 @@ const PlayerFrame = styled.div`
   height: 100%;
 `;
 
-const CommingSoon = () => {
+const CommingSoonPage = () => {
   return (
     <CommingSoonFrame>
       <PlayerFrame>
@@ -40,4 +40,4 @@ const CommingSoon = () => {
   );
 };
 
-export default CommingSoon;
+export default CommingSoonPage;

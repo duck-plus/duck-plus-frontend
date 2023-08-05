@@ -1,7 +1,7 @@
 import React from "react";
 
-const CafeList = () => {
+const CafeListPage = () => {
   return <div>Hi, Im 'CafeList'.</div>;
 };
 
-export default CafeList;
+export default CafeListPage;
