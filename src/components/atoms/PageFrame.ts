@@ -8,9 +8,6 @@ const PageFrame = styled(SimpleBar)`
   flex-shrink: 0;
   margin: 0 auto;
   background-color: white;
-  .simplebar-content {
-    height: 100%;
-  }
   padding: 0 0 0 env(safe-area-inset-bottom, 0);
 `;
 
