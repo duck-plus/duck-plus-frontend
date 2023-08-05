@@ -14,12 +14,12 @@ export const ROUTES = {
   HOME: route("", {}),
   CALC: route("calc", {}),
   CAFE: route(
-    "cafe",
+    "",
     {},
     {
-      LIST: route("list", {}),
-      DETAIL: route("detail", {}),
-      MAP: route("map", {}),
+      LIST: route("cafe-list", {}),
+      DETAIL: route("cafe-detail", {}),
+      MAP: route("cafe-map", {}),
     }
   ),
 } as const;
