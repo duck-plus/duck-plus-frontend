@@ -11,6 +11,7 @@ const PageFrame = styled(SimpleBar)`
   .simplebar-content {
     height: 100%;
   }
+  padding: 0 0 0 env(safe-area-inset-bottom, 0);
 `;
 
 export default PageFrame;

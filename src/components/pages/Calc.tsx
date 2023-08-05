@@ -46,7 +46,7 @@ const BaseInput = styled.input`
     border-bottom: solid ${hScalePx(1)} black;
   }
 
-  ::placeholder {
+  &::placeholder {
     color: ${({ theme }) => theme.colors.gray200};
   }
 `;
@@ -68,11 +68,44 @@ const Unit = styled.div`
   color: ${({ theme }) => theme.colors.gray700};
 `;
 
+const BottomFrame = styled.div`
+  width: 100%;
+  padding: ${hScalePx(12)} ${hScalePx(21)};
+  position: absolute;
+  bottom: env(safe-area-inset-bottom, 0);
+  border-top: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
+`;
+
+const CalcButton = styled.button`
+  ${({ theme }) => theme.fontFaces["body1/14-Regular"]}
+  cursor: pointer;
+  padding: ${hScalePx(16)} ${hScalePx(46)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.white};
+  width: 100%;
+  border: 0;
+  outline: 0;
+
+  &:not(:disabled):active {
+  }
+
+  &:disabled {
+    cursor: default;
+    background-color: ${({ theme }) => theme.colors.gray200};
+  }
+`;
+
 const Calc = () => {
   const [dayCnt, setDayCnt] = useState<string>("");
   const [cost, setCost] = useState<string>("");
 
   const handleCntChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.target.value === "") {
+      return setDayCnt("");
+    }
     const originalNumber = Number(e.target.value);
     const formattedNumber = originalNumber.toString();
 
@@ -104,13 +137,17 @@ const Calc = () => {
     setCost(formattedNumber);
   };
 
+  const handleCalcClick = () => {
+    alert("TODO) 견적내기 Page 연동");
+  };
+
   return (
     <PageFrame>
       <AppTopBarCenter>견적내기</AppTopBarCenter>
       <HSeperator />
       <InputRow>
         <InputItem>
-          <Label>예상 대관시간</Label>
+          <Label>예상 대관기간</Label>
           <InputField>
             <InputDayCnt
               placeholder="1"
@@ -133,6 +170,11 @@ const Calc = () => {
           </InputField>
         </InputItem>
       </InputRow>
+      <BottomFrame>
+        <CalcButton disabled={!cost || !dayCnt} onClick={handleCalcClick}>
+          견적내기
+        </CalcButton>
+      </BottomFrame>
     </PageFrame>
   );
 };
