@@ -1,11 +1,13 @@
 import React from "react";
-import AppTopBarLeftIcon from "@/components/organisms/AppTopBarLeftIcon";
 import PageFrame from "@/components/atoms/PageFrame";
+import CafeListTabBar from "@/components/organisms/CafeListTabBar";
+import AppTopBar from "../organisms/AppTopBar";
 
 const CafeListPage = () => {
   return (
     <PageFrame>
-      <AppTopBarLeftIcon />
+      <AppTopBar.LeftIcon />
+      <CafeListTabBar />
     </PageFrame>
   );
 };

@@ -2,8 +2,8 @@ import React from "react";
 import { styled } from "styled-components";
 import useBottomSheet from "@/hooks/useBottomSheet";
 import { hScalePx } from "@/hooks/useHorizontalRatio";
-import AppTopBarLogoLeft from "../organisms/AppTopBarLogoLeft";
 import SimpleBar from "simplebar-react";
+import AppTopBar from "../organisms/AppTopBar";
 
 const HomePageFrame = styled(SimpleBar)`
   width: ${hScalePx(360)};
@@ -21,7 +21,7 @@ const HomePage = () => {
   const { BottomSheet, register } = useBottomSheet(true);
   return (
     <HomePageFrame>
-      <AppTopBarLogoLeft />
+      <AppTopBar.LogoLeft />
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis, sed
       et. Perspiciatis alias dicta, laboriosam cumque nihil dolore laborum omnis
       adipisci eum doloribus? Ut optio atque, fugiat saepe suscipit eos. Lorem

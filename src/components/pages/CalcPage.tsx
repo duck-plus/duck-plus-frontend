@@ -1,9 +1,9 @@
 import React, { ChangeEventHandler, useState } from "react";
-import AppTopBarCenter from "../organisms/AppTopBarCenter";
 import PageFrame from "@/components/atoms/PageFrame";
 import { styled } from "styled-components";
 import { hScalePx } from "@/hooks/useHorizontalRatio";
 import HSeperator from "../atoms/HSeperator";
+import AppTopBar from "../organisms/AppTopBar";
 
 const InputRow = styled.div`
   display: flex;
@@ -143,7 +143,7 @@ const CalcPage = () => {
 
   return (
     <PageFrame>
-      <AppTopBarCenter>견적내기</AppTopBarCenter>
+      <AppTopBar.Center>견적내기</AppTopBar.Center>
       <HSeperator />
       <InputRow>
         <InputItem>

@@ -45,8 +45,10 @@ button {
 }
 
 /** Simplebar 트랙바 제거 */
-.simplebar-track.simplebar-vertical {
+.simplebar-track.simplebar-vertical,
+.simplebar-track.simplebar-horizontal {
   width: 0;
+  height: 0;
 }
 
 /** Simplebar width 꼬이는 이슈 해결 */
