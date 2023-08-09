@@ -39,7 +39,7 @@
     "test": "dotenv -o -e envs/.env.dev craco test",
     "codegen": "dotenv -o -e envs/.env.dev yarn _codegen",
     "codegen:prod": "dotenv -o -e envs/.env.prod yarn _codegen",
-    "_codegen": "graphql-codegen --config src/gql/codegen.ts --watch",
+    "_codegen": "graphql-codegen --config src/services/gqlCodegenConfig.ts --watch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -65,6 +65,8 @@
     "@craco/craco": "^7.1.0",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/typescript-enum-array": "^2.4.0",
+    "@graphql-codegen/typescript-react-query": "^4.1.0",
     "@parcel/watcher": "^2.2.0",
     "babel-plugin-styled-components": "^2.1.4",
     "dotenv": "^16.3.1",

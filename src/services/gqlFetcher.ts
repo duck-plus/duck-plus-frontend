@@ -1,4 +1,4 @@
-import { GQL_ENDPOINT } from "../gql/codegen";
+import { GQL_ENDPOINT } from "./gqlCodegenConfig";
 import customAxios from "./CustomAxios";
 
 /** gql codegen에서 사용할 fetcher */
