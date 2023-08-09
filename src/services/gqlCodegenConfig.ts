@@ -1,8 +1,8 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
-export const GQL_ENDPOINT = "/<foo>/graphql";
+export const GQL_ENDPOINT = "/graphql";
 
-const config: CodegenConfig = {
+const codegenConfig: CodegenConfig = {
   overwrite: true,
   config: {
     namingConvention: "keep",
@@ -10,7 +10,7 @@ const config: CodegenConfig = {
     enumsAsTypes: true,
   },
   generates: {
-    "src/gql/output": {
+    "src/services/gql-outputs/": {
       preset: "client",
       plugins: [
         { "typescript-enum-array": { constArrays: true } },
@@ -29,7 +29,7 @@ const config: CodegenConfig = {
     },
   },
   schema: `${process.env.REACT_APP_API_URL ?? "undefined"}${GQL_ENDPOINT}`,
-  documents: ["src/gql/input/**/*.{ts,gql}"],
+  documents: ["src/services/gql/**/*.gql"],
 };
 
-export default config;
+export default codegenConfig;
