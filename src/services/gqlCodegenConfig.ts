@@ -28,7 +28,7 @@ const codegenConfig: CodegenConfig = {
       ],
     },
   },
-  schema: `${process.env.REACT_APP_API_URL ?? "undefined"}${GQL_ENDPOINT}`,
+  schema: `${process.env.REACT_APP_API_URL ?? ""}${GQL_ENDPOINT}`,
   documents: ["src/services/gql/**/*.gql"],
 };
 
