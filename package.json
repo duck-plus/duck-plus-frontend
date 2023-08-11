@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@sentry/react": "^7.63.0",
     "@tanstack/react-query": "^4.32.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -35,12 +36,13 @@
   "scripts": {
     "start": "dotenv -o -e envs/.env.dev craco start",
     "start:prod": "dotenv -o -e envs/.env.prod craco start",
-    "build": "dotenv -o -e envs/.env.prod craco build",
+    "build": "dotenv -o -e envs/.env.prod craco build && yarn sentry:sourcemaps",
     "test": "dotenv -o -e envs/.env.dev craco test",
     "codegen": "dotenv -o -e envs/.env.dev yarn _codegen",
     "codegen:prod": "dotenv -o -e envs/.env.prod yarn _codegen",
     "_codegen": "graphql-codegen --config src/services/gqlCodegenConfig.ts --watch",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org tigeryoo --project duckplus-frontend ./build && sentry-cli sourcemaps upload --org tigeryoo --project javascript-react ./build"
   },
   "eslintConfig": {
     "extends": [
