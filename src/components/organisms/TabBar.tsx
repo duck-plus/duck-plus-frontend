@@ -67,7 +67,7 @@ const StyledTab = styled(Tab)`
   ${({ theme }) => theme.fontFaces["body2/12-Medium"]}
   color: ${({ theme }) => theme.colors.gray500};
   display: flex;
-  height: 100%;
+  height: ${CSSTabBarHeight};
   padding: ${hScalePx(2)} 0 0 0;
   border-bottom: ${hScalePx(2)} solid transparent;
   align-items: center;

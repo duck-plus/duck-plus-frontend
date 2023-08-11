@@ -4,6 +4,10 @@ import LoadingPage from "./pages/LoadingPage";
 import { HorizontalRatioBoundary } from "../hooks/useHorizontalRatio";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/theme";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const location = useLocation();
@@ -18,11 +22,14 @@ const App = () => {
 
   return (
     <HorizontalRatioBoundary>
-      <Suspense fallback={<LoadingPage />}>
-        <ThemeProvider theme={theme}>
-          <Outlet />
-        </ThemeProvider>
-      </Suspense>
+      <QueryClientProvider client={queryClient}>
+        <Suspense fallback={<LoadingPage />}>
+          <ThemeProvider theme={theme}>
+            <Outlet />
+          </ThemeProvider>
+        </Suspense>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </HorizontalRatioBoundary>
   );
 };

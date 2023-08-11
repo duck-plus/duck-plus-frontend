@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import { hScalePx } from "@/hooks/useHorizontalRatio";
 import CafeList from "./CafeList";
 import TabBar from "./TabBar";
 import AppTopBar from "./AppTopBar";
+import useCafeFeatureList from "@/hooks/useCafeFeatureList";
+import useFeaturedRegionList from "@/hooks/useFeaturedRegionList";
 
 const CategoryTabList = styled(TabBar.TabList)`
   position: sticky;
@@ -12,56 +14,72 @@ const CategoryTabList = styled(TabBar.TabList)`
 `;
 
 const RegionTabList = styled(TabBar.TabList)`
+  height: ${hScalePx(56)};
   position: sticky;
   top: calc(${AppTopBar.CSSAppTopBarHeight} + ${TabBar.CSSTabBarHeight});
+  padding: ${hScalePx(12)} ${hScalePx(14)};
   z-index: 100;
-`;
-const RegionTab = styled(TabBar.Tab)`
-  &.selected {
-    border-bottom: ${hScalePx(2)} solid white;
+
+  .simplebar-content {
+    gap: ${hScalePx(6)};
   }
 `;
 
-export const CategoryList = [
-  "전체보기",
-  "무료대관",
-  "특전맛집",
-  "대형카페",
-  "전체보기2",
-  "무료대관2",
-  "특전맛집2",
-  "대형카페2",
-  "전체보기3",
-  "무료대관3",
-  "특전맛집3",
-  "대형카페3",
-] as const;
+const RegionTab = styled(TabBar.Tab)`
+  height: ${hScalePx(28)};
+  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  padding: ${hScalePx(3)} ${hScalePx(12)};
+  border-radius: ${hScalePx(100)};
+  color: ${({ theme }) => theme.colors.black};
+  border: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
 
-const RegionList = ["홍대/합정", "캐나다", "일본", "태초마을"] as const;
+  &.selected {
+    background-color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.white};
+    border-bottom: ${hScalePx(2)} solid white;
+    padding: ${hScalePx(5)} ${hScalePx(13)};
+    border: ${hScalePx(0)};
+  }
+`;
 
 const CafeListTabBar = () => {
+  // 특성 목록
+  const { data: featureList } = useCafeFeatureList();
+
+  // 선택된 특성
+  const [selectedFeatureIdx, setSelectedFeatureIdx] = useState<number>(0);
+  const selectedFeature = featureList?.at(selectedFeatureIdx);
+
+  // 특성에 속한 지역 목록
+  const { data: regionList } = useFeaturedRegionList(
+    selectedFeature === "전체보기" ? undefined : selectedFeature
+  );
+
   return (
-    <TabBar.Tabs>
-      {/* 카테고리 필터 */}
+    <TabBar.Tabs
+      onSelect={(idx) => setSelectedFeatureIdx(idx)}
+      selectedIndex={selectedFeatureIdx}
+    >
+      {/* 특성 필터 */}
       <CategoryTabList>
-        {CategoryList.map((category) => (
-          <TabBar.Tab key={category}>{category}</TabBar.Tab>
+        {featureList?.map((feature) => (
+          <TabBar.Tab key={feature || ""}>{feature || "전체보기"}</TabBar.Tab>
         ))}
       </CategoryTabList>
 
-      {CategoryList.map((category) => (
-        <TabBar.TabPanel key={category}>
-          {/* 지역 필터*/}
+      {featureList?.map((feature) => (
+        <TabBar.TabPanel key={feature || ""}>
           <TabBar.Tabs>
+            {/* 지역 필터*/}
             <RegionTabList>
-              {RegionList.map((region) => (
+              {regionList?.map((region) => (
                 <RegionTab key={region}>{region}</RegionTab>
               ))}
             </RegionTabList>
-            {RegionList.map((region) => (
+            {regionList?.map((region) => (
               <TabBar.TabPanel key={region}>
                 {/* 카페 목록 */}
-                <CafeList category={category} region={region} />
+                <CafeList feature={feature} region={region} />
               </TabBar.TabPanel>
             ))}
           </TabBar.Tabs>
