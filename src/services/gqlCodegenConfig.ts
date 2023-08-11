@@ -19,7 +19,7 @@ const codegenConfig: CodegenConfig = {
             documentVariableSuffix: "QueryString",
             addInfiniteQuery: true,
             fetcher: {
-              func: "./gqlFetcher#useFetchData",
+              func: "@/services/gqlFetcher#useFetchData",
               isReactHook: true,
             },
             exposeQueryKeys: true,
