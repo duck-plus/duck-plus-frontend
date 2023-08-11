@@ -5,11 +5,10 @@ import { RouterProvider } from "react-router-dom";
 import router from "@/router";
 import "simplebar/dist/simplebar.css";
 import "@/global.css";
-
 import * as Sentry from "@sentry/react";
 
 Sentry.init({
-  dsn: "https://49919e3cd0697b2b6439919f31515672@o4505684790870016.ingest.sentry.io/4505684792180736",
+  dsn: process.env.REACT_APP_SENTRY_DSN,
   integrations: [
     new Sentry.BrowserTracing({
       // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
