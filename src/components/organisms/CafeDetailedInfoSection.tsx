@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Cafe } from "@/services/gql-outputs/graphql";
 import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
 import styled, { useTheme } from "styled-components";
 import AppTopBar from "./AppTopBar";
 import { ReactComponent as DotSVGR } from "@/assets/svgr/ic/dot.svg";
 import { ReactComponent as ZoomInSVGR } from "@/assets/svgr/ic/zoom-in.svg";
+import { Magnifier, MagnifierContainer } from "react-image-magnifiers";
 
 const CafeDetailedInfoSectionFrame = styled.div`
   display: flex;
@@ -97,17 +98,15 @@ const MenuInfo = styled.div`
 
 const MenuImageFrame = styled.div`
   position: relative;
+
+  img {
+    cursor: pointer;
+  }
 `;
 
 const MenuDisclaimer = styled.div`
   ${({ theme }) => theme.fontFaces["caption/10-Regular"]};
   color: ${({ theme }) => theme.colors.gray500};
-`;
-
-const MenuImage = styled.img`
-  width: 100%;
-  object-fit: contain;
-  cursor: pointer;
 `;
 
 const ZoomInIcon = styled.div`
@@ -144,6 +143,7 @@ interface IProps {
 
 /** 카페 상세 페이지 > 상세 정보들 */
 const CafeDetailedInfoSection = ({ cafe }: IProps) => {
+  const [showMagnifier, setShowMagnifier] = useState<boolean>(false);
   const theme = useTheme();
 
   const facilityList = splitToArray(cafe?.specialBenefit);
@@ -151,10 +151,6 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
   const specialBenefitList = splitToArray(cafe?.specialBenefit);
 
   const menuImage = cafe?.imageFileList?.find((s) => s?.category === "MENU");
-
-  const handleMenuImageClick = (url: string) => {
-    alert("TODO: implement Gallery (확대기능)");
-  };
 
   return !cafe ? null : (
     <CafeDetailedInfoSectionFrame>
@@ -231,16 +227,16 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
             <Title>음료 및 디저트 메뉴판</Title>
             <MenuInfo>
               {/* 이미지 */}
-              <MenuImageFrame>
-                <MenuImage
-                  src={menuImage.url}
-                  onClick={() => handleMenuImageClick(menuImage.url)}
-                />
-                {/* 돋보기 */}
-                <ZoomInIcon>
-                  <ZoomInSVGR width="100%" height="100%" />
-                </ZoomInIcon>
-              </MenuImageFrame>
+              <MagnifierContainer>
+                <MenuImageFrame>
+                  <Magnifier imageSrc={menuImage.url} />
+                  {/* 돋보기 */}
+                  <ZoomInIcon onClick={() => setShowMagnifier(!showMagnifier)}>
+                    <ZoomInSVGR width="100%" height="100%" />
+                  </ZoomInIcon>
+                </MenuImageFrame>
+              </MagnifierContainer>
+
               {/* 면책 조항 */}
               <MenuDisclaimer>
                 *이벤트 메뉴와는 상이하며 구성 및 금액은 문의를 통해
