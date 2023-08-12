@@ -71,7 +71,7 @@ const Price = styled.div`
 `;
 
 const Disclaimer = styled.div`
-  ${({ theme }) => theme.fontFaces["outline/9-Regular"]};
+  ${({ theme }) => theme.fontFaces["overline/9-Regular"]};
   color: ${({ theme }) => theme.colors.gray600};
   display: flex;
 `;
@@ -84,6 +84,7 @@ const VerticalSep = styled.div`
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
   position: relative;
+  cursor: pointer;
 `;
 
 const Container = styled(EmblaCarousel.Container)`
@@ -145,7 +146,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
   const navigate = useNavigate();
 
   const handleCafeClick = (cafeCode: string) => {
-    navigate(ROUTES.CAFE.DETAILS.buildPath({ code: cafeCode }));
+    navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
   };
 
   const handleDotClick = (e: React.MouseEvent, idx: number) => {
@@ -162,7 +163,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
   return (
     <CafeListItemFrame key={cafe.name}>
       {/* 캐로샐 */}
-      <CafeCarousel ref={emblaRef}>
+      <CafeCarousel ref={emblaRef} onClick={() => handleCafeClick(cafe.code)}>
         <Container>
           {cafe.imageFileList.map((img) =>
             img ? (
@@ -188,7 +189,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
         </CarouselDots>
       </CafeCarousel>
       {/* 설명 */}
-      <CafeDesc onClick={() => handleCafeClick(cafe.code)}>
+      <CafeDesc>
         {/* 이름 주소 등 */}
         <DescItem>
           <Name>{cafe.name}</Name>
@@ -200,7 +201,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
         </DescItem>
         {/* 금액 관련 */}
         <DescItem>
-          <Price>{cafe.feeInfo.dailyCharge}원~</Price>
+          <Price>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Price>
           <Disclaimer>
             /일 기준
             <VerticalSep />

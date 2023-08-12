@@ -404,7 +404,7 @@ const fontFaces = {
     line-height: ${hScalePx(14)};
   `,
 
-  "outline/9-SemiBold": css`
+  "overline/9-SemiBold": css`
     font-family: "SUIT";
     font-size: ${hScalePx(9)};
     font-style: normal;
@@ -412,7 +412,7 @@ const fontFaces = {
     letter-spacing: -0.02em;
     line-height: ${hScalePx(12)};
   `,
-  "outline/9-Medium": css`
+  "overline/9-Medium": css`
     font-family: "SUIT";
     font-size: ${hScalePx(9)};
     font-style: normal;
@@ -420,7 +420,7 @@ const fontFaces = {
     letter-spacing: -0.02em;
     line-height: ${hScalePx(12)};
   `,
-  "outline/9-Regular": css`
+  "overline/9-Regular": css`
     font-family: "SUIT";
     font-size: ${hScalePx(9)};
     font-style: normal;

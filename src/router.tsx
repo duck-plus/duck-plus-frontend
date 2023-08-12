@@ -18,9 +18,9 @@ export const ROUTES = {
     {},
     {
       LIST: route("cafe-list", {}),
-      DETAILS: route("cafe-details/:code", {
+      DETAILS: route("cafe-details", {
         searchParams: {
-          code: string().defined(),
+          code: string().default(""),
         },
       }),
       MAP: route("cafe-map", {}),
