@@ -4,16 +4,14 @@ import AppTopBar from "../organisms/AppTopBar";
 import styled from "styled-components";
 import EmblaCarousel from "../organisms/EmblaCarousel";
 import { hScalePx } from "@/hooks/useHorizontalRatio";
-import {
-  useGetCafeListQuery,
-  useGetCafeQuery,
-} from "@/services/gql-outputs/graphql";
+import { useGetCafeQuery } from "@/services/gql-outputs/graphql";
 import { useTypedSearchParams } from "react-router-typesafe-routes/dom";
 import { ROUTES } from "@/router";
 import useEmblaCarousel from "embla-carousel-react";
 import isNotNull from "@/utils/isNotNull";
 import CafeBriefInfoSection from "../organisms/CafeBriefInfoSection";
 import CafeDetailedInfoSection from "../organisms/CafeDetailedInfoSection";
+import { Navigate } from "react-router";
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -57,21 +55,13 @@ const CarouselDot = styled.div<{ selected: boolean }>`
 const CafeDetailPage = () => {
   const [{ code }] = useTypedSearchParams(ROUTES.CAFE.DETAILS);
 
-  // const { data: cafe } = useGetCafeQuery(
-  //   {
-  //     code,
-  //   },
-  //   {
-  //     enabled: !!code,
-  //     select: (s) => s.cafe,
-  //   }
-  // );
-  // TODO, useGetCafeQuery가 정상 동작 하면, 윗 주석 코드로 변경
-  const { data: cafe } = useGetCafeListQuery(
-    {},
+  const { data: cafe } = useGetCafeQuery(
     {
-      select: (s) => s.cafeList?.find((cafe) => cafe?.code === code),
+      code,
+    },
+    {
       enabled: !!code,
+      select: (s) => s.cafe,
     }
   );
 
@@ -89,16 +79,13 @@ const CafeDetailPage = () => {
     });
   }, [emblaApi]);
 
-  if (!code) {
-    alert("잘못된 접근입니다.");
-    window.location.href = "/";
-  }
-
   const landscapeImages = cafe?.imageFileList
     .filter(isNotNull)
     .filter(({ category }) => category === "LANDSCAPE");
 
-  return (
+  return !code || !cafe ? (
+    <Navigate to="/" replace />
+  ) : (
     <PageFrame>
       <AppTopBar.LeftIcon />
       {/* Cafe Image Carousel */}
