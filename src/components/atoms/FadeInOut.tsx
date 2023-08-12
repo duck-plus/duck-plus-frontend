@@ -10,8 +10,8 @@ const SlideOutKeyframes = keyframes`
   to{opacity: 0;transform: translateY(-5px);}
 `;
 
-const FadeInOutFrame = styled.div<{ show: boolean }>`
-  animation: ${({ show }) => (show ? SlideInKeyframes : SlideOutKeyframes)}
+const FadeInOutFrame = styled.div<{ $show: boolean }>`
+  animation: ${({ $show }) => ($show ? SlideInKeyframes : SlideOutKeyframes)}
     ease-in 0.3s forwards;
 `;
 
@@ -34,7 +34,15 @@ interface IFadeInOut extends HTMLAttributes<HTMLDivElement> {
  * */
 
 const FadeInOut = React.forwardRef<HTMLDivElement, IFadeInOut>(
-  ({ show, className, onUnmounted, ...leftOver }: IFadeInOut, ref) => {
+  (
+    {
+      show,
+      className,
+      onUnmounted,
+      ...leftOver
+    }: Omit<IFadeInOut, "$show"> & { show: boolean },
+    ref
+  ) => {
     const [shouldRender, setShouldRender] = useState(show);
 
     // mount
@@ -58,7 +66,7 @@ const FadeInOut = React.forwardRef<HTMLDivElement, IFadeInOut>(
       <FadeInOutFrame
         ref={ref}
         className={className}
-        show={show}
+        $show={show}
         onAnimationEnd={handleAnimationEnd}
         {...leftOver}
       />
