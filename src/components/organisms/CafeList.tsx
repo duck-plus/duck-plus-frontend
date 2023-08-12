@@ -3,6 +3,8 @@ import React from "react";
 import SimpleBar from "simplebar-react";
 import { styled } from "styled-components";
 import useFilteredCafeList from "@/hooks/useFilteredCafeList";
+import useEmblaCarousel from "embla-carousel-react";
+import EmblaCarousel from "./EmblaCarousel";
 
 const ScrollFrame = styled(SimpleBar)`
   width: ${hScalePx(360)};
@@ -26,12 +28,6 @@ const CafeListItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${hScalePx(8)};
-`;
-
-const CafeImg = styled.img`
-  width: 100%;
-  aspect-ratio: 40 / 23;
-  background-color: ${({ theme }) => theme.colors.gray100};
 `;
 
 const CafeDesc = styled.div`
@@ -82,6 +78,23 @@ const VerticalSep = styled.div`
   border-right: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray200};
 `;
 
+// carousel
+const CafeCarousel = styled(EmblaCarousel.Embla)`
+  aspect-ratio: 40/23;
+`;
+
+const Container = styled(EmblaCarousel.Container)`
+  gap: ${hScalePx(20)};
+`;
+
+const Slide = styled(EmblaCarousel.Slide)`
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
 interface IProps {
   feature: string | undefined;
   region: string;
@@ -89,18 +102,25 @@ interface IProps {
 
 const CafeList = ({ feature, region }: IProps) => {
   const { data: cafeList } = useFilteredCafeList(feature, region);
+  const [emblaRef] = useEmblaCarousel();
 
   return (
     <ScrollFrame>
       <CafeListContainer>
         {cafeList?.map((cafe) => {
           return (
-            <CafeListItem>
-              <CafeImg
-                style={{ width: "100%", objectFit: "contain" }}
-                alt={cafe.name}
-                src={cafe.imageFileList[0]?.url}
-              />
+            <CafeListItem key={cafe.name}>
+              <CafeCarousel ref={emblaRef}>
+                <Container>
+                  {cafe.imageFileList.map((img) =>
+                    img ? (
+                      <Slide key={img.filename}>
+                        <img alt={cafe.name} src={img.url} />
+                      </Slide>
+                    ) : null
+                  )}
+                </Container>
+              </CafeCarousel>
               <CafeDesc>
                 <DescItem>
                   <Name>{cafe.name}</Name>
