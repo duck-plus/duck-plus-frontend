@@ -37,6 +37,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <Suspense fallback={<LoadingPage />}>
             <Outlet />
+            <div id="ModalRoot" />
           </Suspense>
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} position="top-right" />
