@@ -1,5 +1,5 @@
 import { hScalePx } from "@/hooks/useHorizontalRatio";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SimpleBar from "simplebar-react";
 import { styled } from "styled-components";
 import useFilteredCafeList from "@/hooks/useFilteredCafeList";
@@ -30,13 +30,13 @@ const CafeListItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${hScalePx(8)};
-  cursor: pointer;
 `;
 
 const CafeDesc = styled.div`
   gap: ${hScalePx(8)};
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 const DescItem = styled.div`
@@ -83,7 +83,7 @@ const VerticalSep = styled.div`
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
-  aspect-ratio: 40/23;
+  position: relative;
 `;
 
 const Container = styled(EmblaCarousel.Container)`
@@ -92,6 +92,8 @@ const Container = styled(EmblaCarousel.Container)`
 
 const Slide = styled(EmblaCarousel.Slide)`
   position: relative;
+  background-color: ${({ theme }) => theme.colors.gray100};
+  aspect-ratio: 40/23;
   img {
     width: 100%;
     height: 100%;
@@ -113,6 +115,24 @@ const HotBadge = styled.div`
   ${({ theme }) => theme.fontFaces["caption/10-SemiBold"]};
 `;
 
+const CarouselDots = styled.div`
+  position: absolute;
+  bottom: ${hScalePx(12)};
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: ${hScalePx(4)};
+`;
+
+const CarouselDot = styled.div<{ selected: boolean }>`
+  width: ${hScalePx(4)};
+  height: ${hScalePx(4)};
+  background-color: ${({ selected, theme }) =>
+    selected ? theme.colors.white : "rgba(255, 255, 255, 0.6)"};
+  border-radius: 100%;
+  cursor: pointer;
+`;
+
 interface IProps {
   feature: string | undefined;
   region: string;
@@ -120,12 +140,24 @@ interface IProps {
 
 const CafeList = ({ feature, region }: IProps) => {
   const { data: cafeList } = useFilteredCafeList(feature, region);
-  const [emblaRef] = useEmblaCarousel();
+  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
   const navigate = useNavigate();
 
   const handleCafeClick = (cafeCode: string) => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({ code: cafeCode }));
   };
+
+  const handleDotClick = (e: React.MouseEvent, idx: number) => {
+    e.stopPropagation();
+    emblaApi?.scrollTo(idx);
+  };
+
+  useEffect(() => {
+    emblaApi?.on("select", (emblaApi) => {
+      setSelectedImageIdx(emblaApi.selectedScrollSnap());
+    });
+  }, [emblaApi]);
 
   return (
     <ScrollFrame>
@@ -133,10 +165,7 @@ const CafeList = ({ feature, region }: IProps) => {
         {cafeList?.map((cafe) => {
           const isHot = cafe.featureList.some((feat) => feat === "생카성지");
           return (
-            <CafeListItem
-              key={cafe.name}
-              onClick={() => handleCafeClick(cafe.code)}
-            >
+            <CafeListItem key={cafe.name}>
               {/* 캐로샐 */}
               <CafeCarousel ref={emblaRef}>
                 <Container>
@@ -150,9 +179,19 @@ const CafeList = ({ feature, region }: IProps) => {
                     ) : null
                   )}
                 </Container>
+                <CarouselDots>
+                  {cafe.imageFileList.map((_, idx) => {
+                    return (
+                      <CarouselDot
+                        selected={idx === selectedImageIdx}
+                        onClick={(e) => handleDotClick(e, idx)}
+                      ></CarouselDot>
+                    );
+                  })}
+                </CarouselDots>
               </CafeCarousel>
               {/* 설명 */}
-              <CafeDesc>
+              <CafeDesc onClick={() => handleCafeClick(cafe.code)}>
                 {/* 이름 주소 등 */}
                 <DescItem>
                   <Name>{cafe.name}</Name>
