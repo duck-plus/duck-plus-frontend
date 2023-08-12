@@ -21,7 +21,12 @@ const App = () => {
   }, [location.pathname]);
 
   return (
-    <HorizontalRatioBoundary>
+    <HorizontalRatioBoundary
+      style={{
+        maxWidth: "768px",
+        margin: "0 auto",
+      }}
+    >
       <QueryClientProvider client={queryClient}>
         <Suspense fallback={<LoadingPage />}>
           <ThemeProvider theme={theme}>
