@@ -72,7 +72,6 @@ const BottomFrame = styled.div`
   width: 100%;
   padding: ${hScalePx(12)} ${hScalePx(21)};
   position: absolute;
-  bottom: env(safe-area-inset-bottom, 0);
   border-top: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
 `;
 

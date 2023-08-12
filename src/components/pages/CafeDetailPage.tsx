@@ -13,6 +13,7 @@ import CafeBriefInfoSection from "../organisms/CafeBriefInfoSection";
 import CafeDetailedInfoSection from "../organisms/CafeDetailedInfoSection";
 import { Navigate } from "react-router";
 import openURL from "@/utils/openURL";
+import useBottomSheet from "@/hooks/useBottomSheet";
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -62,8 +63,8 @@ const Footer = styled.div`
   gap: ${hScalePx(10)};
   position: sticky;
   z-index: 100;
-  bottom: env(safe-area-inset-bottom, 0);
   background: ${({ theme }) => theme.colors.white};
+  bottom: 0;
 `;
 
 const FooterInfo = styled.div`
@@ -125,6 +126,13 @@ const CafeDetailPage = () => {
     }
   );
 
+  const {
+    show: showBottomSheet,
+    setShow: setShowBottomSheet,
+    register,
+    BottomSheet,
+  } = useBottomSheet(false);
+
   const [emblaRef, emblaApi] = useEmblaCarousel();
   const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
 
@@ -180,12 +188,15 @@ const CafeDetailPage = () => {
             <Price>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Price>
             <Unit>/일</Unit>
           </PriceRow>
-          <ShowInfoButton>정보보기</ShowInfoButton>
+          <ShowInfoButton onClick={() => setShowBottomSheet(true)}>
+            정보보기
+          </ShowInfoButton>
         </FooterInfo>
         <ContactButton onClick={() => openURL(cafe.askingUrl)}>
           문의하기
         </ContactButton>
       </Footer>
+      <BottomSheet {...register}>foo</BottomSheet>
     </PageFrame>
   );
 };
