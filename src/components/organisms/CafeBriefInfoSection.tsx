@@ -10,6 +10,7 @@ import { ReactComponent as KakaoSVGR } from "@/assets/svgr/ic/instagram.svg";
 import { ReactComponent as TwitterSVGR } from "@/assets/svgr/ic/instagram.svg";
 import styled, { useTheme } from "styled-components";
 import isNotNull from "@/utils/isNotNull";
+import openURL from "@/utils/openURL";
 
 const BreifIntro = styled.div`
   padding: ${hScalePx(16)} ${hScalePx(20)} ${hScalePx(12)} ${hScalePx(20)};
@@ -113,7 +114,7 @@ const CafeBriefInfoSection = ({ cafe }: IProps) => {
                 height={hr * 16}
                 fill={theme.colors.gray800}
               />
-              <SNSChannelName onClick={() => window.open(url)}>
+              <SNSChannelName onClick={() => openURL(url)}>
                 {channelName}
               </SNSChannelName>
             </DetailItem>

@@ -12,6 +12,7 @@ import isNotNull from "@/utils/isNotNull";
 import CafeBriefInfoSection from "../organisms/CafeBriefInfoSection";
 import CafeDetailedInfoSection from "../organisms/CafeDetailedInfoSection";
 import { Navigate } from "react-router";
+import openURL from "@/utils/openURL";
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -50,6 +51,65 @@ const CarouselDot = styled.div<{ selected: boolean }>`
     selected ? theme.colors.white : "rgba(255, 255, 255, 0.6)"};
   border-radius: 100%;
   cursor: pointer;
+`;
+
+const Footer = styled.div`
+  display: flex;
+  width: 100%;
+  padding: ${hScalePx(12)} ${hScalePx(21)};
+  justify-content: space-between;
+  align-items: center;
+  gap: ${hScalePx(10)};
+  position: sticky;
+  z-index: 100;
+  bottom: env(safe-area-inset-bottom, 0);
+  background: ${({ theme }) => theme.colors.white};
+`;
+
+const FooterInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+const PriceRow = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Price = styled.div`
+  ${({ theme }) => theme.fontFaces["body1/14-Medium"]};
+  color: ${({ theme }) => theme.colors.black};
+`;
+
+const Unit = styled.div`
+  ${({ theme }) => theme.fontFaces["caption/10-Regular"]};
+  color: ${({ theme }) => theme.colors.gray500};
+`;
+
+const ShowInfoButton = styled.button`
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  color: #000;
+  font-family: SUIT;
+  font-size: ${hScalePx(12)};
+  font-style: normal;
+  font-weight: 400;
+  line-height: ${hScalePx(20)};
+  letter-spacing: -0.4px;
+  text-decoration-line: underline;
+  background: none;
+`;
+
+const ContactButton = styled.button`
+  cursor: pointer;
+  padding: ${hScalePx(12)} ${hScalePx(46)};
+  ${({ theme }) => theme.fontFaces["body1/14-Regular"]};
+  color: ${({ theme }) => theme.colors.white};
+  outline: 0;
+  border: 0;
+  background-color: ${({ theme }) => theme.colors.black};
 `;
 
 const CafeDetailPage = () => {
@@ -94,7 +154,7 @@ const CafeDetailPage = () => {
           {landscapeImages?.map((img) =>
             img ? (
               <Slide key={img.url}>
-                <img alt={cafe?.name} src={img.url} />
+                <img alt={cafe.name} src={img.url} />
               </Slide>
             ) : null
           )}
@@ -104,7 +164,7 @@ const CafeDetailPage = () => {
           {landscapeImages?.map((_, idx) => {
             return (
               <CarouselDot
-                key={`${cafe?.name || ""}_${idx}`}
+                key={`${cafe.name || ""}_${idx}`}
                 selected={idx === selectedImageIdx}
                 onClick={(e) => handleDotClick(e, idx)}
               />
@@ -112,8 +172,20 @@ const CafeDetailPage = () => {
           })}
         </CarouselDots>
       </CafeCarousel>
-      {!cafe ? null : <CafeBriefInfoSection cafe={cafe} />}
-      {!cafe ? null : <CafeDetailedInfoSection cafe={cafe} />}
+      {<CafeBriefInfoSection cafe={cafe} />}
+      {<CafeDetailedInfoSection cafe={cafe} />}
+      <Footer>
+        <FooterInfo>
+          <PriceRow>
+            <Price>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Price>
+            <Unit>/일</Unit>
+          </PriceRow>
+          <ShowInfoButton>정보보기</ShowInfoButton>
+        </FooterInfo>
+        <ContactButton onClick={() => openURL(cafe.askingUrl)}>
+          문의하기
+        </ContactButton>
+      </Footer>
     </PageFrame>
   );
 };
