@@ -5,6 +5,8 @@ import { styled } from "styled-components";
 import useFilteredCafeList from "@/hooks/useFilteredCafeList";
 import useEmblaCarousel from "embla-carousel-react";
 import EmblaCarousel from "./EmblaCarousel";
+import { useNavigate } from "react-router";
+import { ROUTES } from "@/router";
 
 const ScrollFrame = styled(SimpleBar)`
   width: ${hScalePx(360)};
@@ -28,6 +30,7 @@ const CafeListItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${hScalePx(8)};
+  cursor: pointer;
 `;
 
 const CafeDesc = styled.div`
@@ -88,11 +91,26 @@ const Container = styled(EmblaCarousel.Container)`
 `;
 
 const Slide = styled(EmblaCarousel.Slide)`
+  position: relative;
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+`;
+
+const HotBadge = styled.div`
+  background: rgba(0, 0, 0, 0.4);
+  display: inline-flex;
+  padding: ${hScalePx(2)} ${hScalePx(6)};
+  justify-content: center;
+  align-items: center;
+  gap: ${hScalePx(2)};
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: ${({ theme }) => theme.colors.white};
+  ${({ theme }) => theme.fontFaces["caption/10-SemiBold"]};
 `;
 
 interface IProps {
@@ -103,25 +121,39 @@ interface IProps {
 const CafeList = ({ feature, region }: IProps) => {
   const { data: cafeList } = useFilteredCafeList(feature, region);
   const [emblaRef] = useEmblaCarousel();
+  const navigate = useNavigate();
+
+  const handleCafeClick = (cafeCode: string) => {
+    navigate(ROUTES.CAFE.DETAILS.buildPath({ code: cafeCode }));
+  };
 
   return (
     <ScrollFrame>
       <CafeListContainer>
         {cafeList?.map((cafe) => {
+          const isHot = cafe.featureList.some((feat) => feat === "생카성지");
           return (
-            <CafeListItem key={cafe.name}>
+            <CafeListItem
+              key={cafe.name}
+              onClick={() => handleCafeClick(cafe.code)}
+            >
+              {/* 캐로샐 */}
               <CafeCarousel ref={emblaRef}>
                 <Container>
                   {cafe.imageFileList.map((img) =>
                     img ? (
                       <Slide key={img.filename}>
+                        {/* 생카성지는 인기 딱지 노출 */}
+                        {isHot ? <HotBadge>인기</HotBadge> : null}
                         <img alt={cafe.name} src={img.url} />
                       </Slide>
                     ) : null
                   )}
                 </Container>
               </CafeCarousel>
+              {/* 설명 */}
               <CafeDesc>
+                {/* 이름 주소 등 */}
                 <DescItem>
                   <Name>{cafe.name}</Name>
                   <Row>
@@ -130,6 +162,7 @@ const CafeList = ({ feature, region }: IProps) => {
                     <HashTags>{cafe.hashtag}</HashTags>
                   </Row>
                 </DescItem>
+                {/* 금액 관련 */}
                 <DescItem>
                   <Price>{cafe.feeInfo.dailyCharge}원~</Price>
                   <Disclaimer>

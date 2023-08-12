@@ -39,7 +39,7 @@ const memoryRouter = createMemoryRouter(
           element: <CafeList />,
         },
         {
-          path: ROUTES.CAFE.DETAIL.path,
+          path: ROUTES.CAFE.DETAILS.path,
           element: <CafeDetail />,
         },
         {

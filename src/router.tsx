@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { route } from "react-router-typesafe-routes/dom";
+import { route, string } from "react-router-typesafe-routes/dom";
 import CafeList from "./components/pages/CafeListPage";
 import CafeDetail from "./components/pages/CafeDetailPage";
 import CafeMap from "./components/pages/CafeMapPage";
@@ -18,7 +18,11 @@ export const ROUTES = {
     {},
     {
       LIST: route("cafe-list", {}),
-      DETAIL: route("cafe-detail", {}),
+      DETAILS: route("cafe-details/:code", {
+        searchParams: {
+          code: string().defined(),
+        },
+      }),
       MAP: route("cafe-map", {}),
     }
   ),
@@ -44,7 +48,7 @@ const router = createBrowserRouter([
         element: <CafeList />,
       },
       {
-        path: ROUTES.CAFE.DETAIL.path,
+        path: ROUTES.CAFE.DETAILS.path,
         element: <CafeDetail />,
       },
       {
