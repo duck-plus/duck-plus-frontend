@@ -12,8 +12,8 @@ import { useTypedSearchParams } from "react-router-typesafe-routes/dom";
 import { ROUTES } from "@/router";
 import useEmblaCarousel from "embla-carousel-react";
 import isNotNull from "@/utils/isNotNull";
-import CafeBreifInfoSection from "../organisms/CafeBriefInfoSection";
-import CafeDetailInfoSection from "../organisms/CafeDetailedInfoSection";
+import CafeBriefInfoSection from "../organisms/CafeBriefInfoSection";
+import CafeDetailedInfoSection from "../organisms/CafeDetailedInfoSection";
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -125,8 +125,8 @@ const CafeDetailPage = () => {
           })}
         </CarouselDots>
       </CafeCarousel>
-      <CafeBreifInfoSection cafe={cafe} />
-      <CafeDetailInfoSection cafe={cafe} />
+      {!cafe ? null : <CafeBriefInfoSection cafe={cafe} />}
+      {!cafe ? null : <CafeDetailedInfoSection cafe={cafe} />}
     </PageFrame>
   );
 };

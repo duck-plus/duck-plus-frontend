@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Cafe } from "@/services/gql-outputs/graphql";
 import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
 import styled, { useTheme } from "styled-components";
@@ -6,6 +6,7 @@ import AppTopBar from "./AppTopBar";
 import { ReactComponent as DotSVGR } from "@/assets/svgr/ic/dot.svg";
 import { ReactComponent as ZoomInSVGR } from "@/assets/svgr/ic/zoom-in.svg";
 import Zoom from "react-medium-image-zoom";
+import LocationFillSVG from "@/assets/svgr/ic/location-fill.svg";
 
 const CafeDetailedInfoSectionFrame = styled.div`
   display: flex;
@@ -124,6 +125,29 @@ const ZoomInIcon = styled.div`
   pointer-events: none;
 `;
 
+const MapContainer = styled.div`
+  width: 100%;
+  height: ${hScalePx(176)};
+  position: relative;
+  display: flex;
+  justify-content: center;
+  * {
+    cursor: pointer;
+  }
+`;
+const NaverMap = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const MapOverlay = styled.div`
+  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  color: ${({ theme }) => theme.colors.gray900};
+  position: absolute;
+  bottom: ${hScalePx(14)};
+  padding: ${hScalePx(4)} ${hScalePx(16)};
+`;
+
 const detailInfoItems = ["카페정보", "특전안내", "메뉴", "지도"] as const;
 
 const splitToArray = (s: string | undefined | null) =>
@@ -142,20 +166,49 @@ const InfoListItem = ({ children }: React.PropsWithChildren) => {
 };
 
 interface IProps {
-  cafe: Cafe | null | undefined;
+  cafe: Cafe;
 }
 
 /** 카페 상세 페이지 > 상세 정보들 */
 const CafeDetailedInfoSection = ({ cafe }: IProps) => {
   const theme = useTheme();
 
-  const facilityList = splitToArray(cafe?.specialBenefit);
+  const facilityList = splitToArray(cafe.specialBenefit);
 
-  const specialBenefitList = splitToArray(cafe?.specialBenefit);
+  const specialBenefitList = splitToArray(cafe.specialBenefit);
 
-  const menuImage = cafe?.imageFileList?.find((s) => s?.category === "MENU");
+  const menuImage = cafe.imageFileList?.find((s) => s?.category === "MENU");
+  const mapElement = useRef<HTMLDivElement>(null);
 
-  return !cafe ? null : (
+  useEffect(() => {
+    if (!mapElement.current || !naver || !cafe) return;
+
+    // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
+    const [lng, lat] = cafe.address.location?.coordinates || [0, 0];
+    const location = new naver.maps.LatLng(lat, lng);
+
+    const mapOptions: naver.maps.MapOptions = {
+      center: location,
+      zoom: 17,
+      minZoom: 17,
+      maxZoom: 17,
+      zoomControl: false,
+      scaleControl: false,
+      scrollWheel: false,
+      draggable: false,
+    };
+
+    const map = new naver.maps.Map(mapElement.current, mapOptions);
+    new naver.maps.Marker({
+      position: location,
+      map,
+      icon: {
+        url: LocationFillSVG,
+      },
+    });
+  }, [cafe]);
+
+  return (
     <CafeDetailedInfoSectionFrame>
       <HorSep
         style={{
@@ -196,12 +249,12 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
       )}
 
       {/* 특이사항 */}
-      {!cafe?.remarkList ? null : (
+      {!cafe.remarkList ? null : (
         <>
           <DetailedInfo>
             <Title>특이사항</Title>
             <InfoTags>
-              {cafe?.remarkList.map((benefit) => (
+              {cafe.remarkList.map((benefit) => (
                 <InfoTag key={benefit}>{benefit}</InfoTag>
               ))}
             </InfoTags>
@@ -256,7 +309,12 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
       {/* 상세위치 */}
       <DetailedInfo>
         <Title>상세위치</Title>
-        <Info>🚧🚧🚧</Info>
+        <MapContainer>
+          <NaverMap ref={mapElement} onClick={() => alert("foo")} />
+          <MapOverlay>
+            {cafe.address.briefAddress} {cafe.address.detailedAddress}
+          </MapOverlay>
+        </MapContainer>
       </DetailedInfo>
 
       {/* TODO) TBD */}

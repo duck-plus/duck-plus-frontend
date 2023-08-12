@@ -74,13 +74,13 @@ const NoHolidayBadge = styled.div`
 `;
 
 interface IProps {
-  cafe: Cafe | null | undefined;
+  cafe: Cafe;
 }
 
 const CafeBriefInfoSection = ({ cafe }: IProps) => {
   const hr = useHorizontalRatio();
   const theme = useTheme();
-  return !cafe ? null : (
+  return (
     <div>
       <BreifIntro>
         <Name>{cafe.name}</Name>
