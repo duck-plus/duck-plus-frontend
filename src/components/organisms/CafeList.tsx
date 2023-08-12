@@ -25,7 +25,7 @@ const CafeListContainer = styled.div`
   gap: ${hScalePx(32)};
 `;
 
-const CafeListItem = styled.div`
+const CafeListItemFrame = styled.div`
   padding: 0 ${hScalePx(20)};
   display: flex;
   flex-direction: column;
@@ -133,15 +133,15 @@ const CarouselDot = styled.div<{ selected: boolean }>`
   cursor: pointer;
 `;
 
-interface IProps {
-  feature: string | undefined;
-  region: string;
+interface ICafeListItemProps {
+  cafe: NonNullable<ReturnType<typeof useFilteredCafeList>["data"]>[number];
 }
 
-const CafeList = ({ feature, region }: IProps) => {
-  const { data: cafeList } = useFilteredCafeList(feature, region);
+// 카페 목록 내 개별 항목
+const CafeListItem = ({ cafe }: ICafeListItemProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel();
   const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
+  const isHot = cafe.featureList.some((feat) => feat === "생카성지");
   const navigate = useNavigate();
 
   const handleCafeClick = (cafeCode: string) => {
@@ -160,60 +160,72 @@ const CafeList = ({ feature, region }: IProps) => {
   }, [emblaApi]);
 
   return (
+    <CafeListItemFrame key={cafe.name}>
+      {/* 캐로샐 */}
+      <CafeCarousel ref={emblaRef}>
+        <Container>
+          {cafe.imageFileList.map((img) =>
+            img ? (
+              <Slide key={img.filename}>
+                {/* 생카성지는 인기 딱지 노출 */}
+                {isHot ? <HotBadge>인기</HotBadge> : null}
+                <img alt={cafe.name} src={img.url} />
+              </Slide>
+            ) : null
+          )}
+        </Container>
+        {/* 캐로샐 탐색용 점들 */}
+        <CarouselDots>
+          {cafe.imageFileList.map((_, idx) => {
+            return (
+              <CarouselDot
+                key={`${cafe.name}_${idx}`}
+                selected={idx === selectedImageIdx}
+                onClick={(e) => handleDotClick(e, idx)}
+              />
+            );
+          })}
+        </CarouselDots>
+      </CafeCarousel>
+      {/* 설명 */}
+      <CafeDesc onClick={() => handleCafeClick(cafe.code)}>
+        {/* 이름 주소 등 */}
+        <DescItem>
+          <Name>{cafe.name}</Name>
+          <Row>
+            <Sigungu>{cafe.address.sigungu}</Sigungu>
+            <VerticalSep />
+            <HashTags>{cafe.hashtag}</HashTags>
+          </Row>
+        </DescItem>
+        {/* 금액 관련 */}
+        <DescItem>
+          <Price>{cafe.feeInfo.dailyCharge}원~</Price>
+          <Disclaimer>
+            /일 기준
+            <VerticalSep />
+            정확한 가격정보 문의 필요
+          </Disclaimer>
+        </DescItem>
+      </CafeDesc>
+    </CafeListItemFrame>
+  );
+};
+
+interface IProps {
+  feature: string | undefined;
+  region: string;
+}
+// 카페 목록
+const CafeList = ({ feature, region }: IProps) => {
+  const { data: cafeList } = useFilteredCafeList(feature, region);
+
+  return (
     <ScrollFrame>
       <CafeListContainer>
-        {cafeList?.map((cafe) => {
-          const isHot = cafe.featureList.some((feat) => feat === "생카성지");
-          return (
-            <CafeListItem key={cafe.name}>
-              {/* 캐로샐 */}
-              <CafeCarousel ref={emblaRef}>
-                <Container>
-                  {cafe.imageFileList.map((img) =>
-                    img ? (
-                      <Slide key={img.filename}>
-                        {/* 생카성지는 인기 딱지 노출 */}
-                        {isHot ? <HotBadge>인기</HotBadge> : null}
-                        <img alt={cafe.name} src={img.url} />
-                      </Slide>
-                    ) : null
-                  )}
-                </Container>
-                <CarouselDots>
-                  {cafe.imageFileList.map((_, idx) => {
-                    return (
-                      <CarouselDot
-                        selected={idx === selectedImageIdx}
-                        onClick={(e) => handleDotClick(e, idx)}
-                      ></CarouselDot>
-                    );
-                  })}
-                </CarouselDots>
-              </CafeCarousel>
-              {/* 설명 */}
-              <CafeDesc onClick={() => handleCafeClick(cafe.code)}>
-                {/* 이름 주소 등 */}
-                <DescItem>
-                  <Name>{cafe.name}</Name>
-                  <Row>
-                    <Sigungu>{cafe.address.sigungu}</Sigungu>
-                    <VerticalSep />
-                    <HashTags>{cafe.hashtag}</HashTags>
-                  </Row>
-                </DescItem>
-                {/* 금액 관련 */}
-                <DescItem>
-                  <Price>{cafe.feeInfo.dailyCharge}원~</Price>
-                  <Disclaimer>
-                    /일 기준
-                    <VerticalSep />
-                    정확한 가격정보 문의 필요
-                  </Disclaimer>
-                </DescItem>
-              </CafeDesc>
-            </CafeListItem>
-          );
-        })}
+        {cafeList?.map((cafe) => (
+          <CafeListItem key={cafe.name} cafe={cafe} />
+        ))}
         {/* For Last Gap(Padding) */}
         <div />
       </CafeListContainer>
