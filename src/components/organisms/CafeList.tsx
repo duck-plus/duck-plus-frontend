@@ -71,7 +71,7 @@ const Price = styled.div`
 `;
 
 const Disclaimer = styled.div`
-  ${({ theme }) => theme.fontFaces["outline/9-Regular"]};
+  ${({ theme }) => theme.fontFaces["overline/9-Regular"]};
   color: ${({ theme }) => theme.colors.gray600};
   display: flex;
 `;

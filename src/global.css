@@ -8,6 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #000;
+  overflow: hidden;
 }
 
 /* 기본적으로 이미지는 드래그 불가 */

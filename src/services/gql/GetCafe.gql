@@ -1,0 +1,49 @@
+query GetCafe($code: ID!) {
+  cafe(code: $code) {
+    code
+    name
+    briefInfo
+    detailedInfo
+    imageFileList {
+      url
+      filename
+      category
+    }
+    snsList {
+      type
+      channelName
+      url
+    }
+    askingUrl
+    seatCount
+    facility
+    specialBenefit
+    hashtag
+    remarkList
+    featureList
+    concept
+    isSpecialBenefitCustomable
+    isPopular
+    region
+    businessHour {
+      openingTime
+      closingTime
+      businessDayList
+      workingOnHoliday
+    }
+    address {
+      sigungu
+      briefAddress
+      detailedAddress
+      location
+    }
+    feeInfo {
+      minPeriod
+      dailyCharge
+      guaranteeCount
+      depositAmount
+      bookingAmount
+      note
+    }
+  }
+}
