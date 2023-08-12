@@ -163,7 +163,9 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
       <DetailInfoNavBar>
         {detailInfoItems.map((item) => (
           // TODO) inView 활용해서, selected 컨트롤
-          <DetailInfoNavBarItem selected>{item}</DetailInfoNavBarItem>
+          <DetailInfoNavBarItem selected key={item}>
+            {item}
+          </DetailInfoNavBarItem>
         ))}
       </DetailInfoNavBar>
       <HorSep style={{ margin: "0" }} />
@@ -182,7 +184,7 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
             <Title>시설안내</Title>
             <InfoList>
               {facilityList.map((facility) => (
-                <InfoListItem>{facility}</InfoListItem>
+                <InfoListItem key={facility}>{facility}</InfoListItem>
               ))}
             </InfoList>
           </DetailedInfo>
@@ -197,7 +199,7 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
             <Title>특이사항</Title>
             <InfoTags>
               {cafe?.remarkList.map((benefit) => (
-                <InfoTag>{benefit}</InfoTag>
+                <InfoTag key={benefit}>{benefit}</InfoTag>
               ))}
             </InfoTags>
           </DetailedInfo>
@@ -213,7 +215,7 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
             <InfoListItem>정보 없음</InfoListItem>
           ) : (
             specialBenefitList.map((benefit) => (
-              <InfoListItem>{benefit}</InfoListItem>
+              <InfoListItem key={benefit}>{benefit}</InfoListItem>
             ))
           )}
         </InfoList>

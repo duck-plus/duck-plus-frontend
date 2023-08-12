@@ -106,7 +106,7 @@ const CafeDetailPage = () => {
         <Container>
           {landscapeImages?.map((img) =>
             img ? (
-              <Slide>
+              <Slide key={img.url}>
                 <img alt={cafe?.name} src={img.url} />
               </Slide>
             ) : null
