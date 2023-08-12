@@ -6,6 +6,7 @@ import router from "@/router";
 import "simplebar/dist/simplebar.css";
 import "@/global.css";
 import * as Sentry from "@sentry/react";
+import "react-medium-image-zoom/dist/styles.css";
 
 if (process.env.NODE_ENV === "production") {
   Sentry.init({

@@ -23,42 +23,27 @@ const BackgroundFrame = styled(FadeInOut)`
     ${({ show }) => (show ? "0.15s" : "0s")} ease-out forwards;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: ${hScalePx(20)} ${hScalePx(20)} 0 0;
-  bottom: 0;
   display: flex;
   flex-direction: column;
-  padding: 0;
+  bottom: 0;
+  padding: 0 0 env(safe-area-inset-bottom, 0) 0;
   position: absolute;
   right: 0;
   width: 100%;
 `;
 
-const ContentFrame = styled.div<{ padding?: string }>`
-  margin: ${({ padding }) => padding || `0 ${hScalePx(20)}`};
-`;
-
-const BottomFrame = styled.div`
-  margin: ${hScalePx(16)} ${hScalePx(20)} 0 ${hScalePx(20)};
-`;
-
 interface IProps {
-  buttonContent?: React.ReactNode;
-  padding?: string;
   hide: () => void;
   show: boolean;
   children: React.ReactNode;
 }
 
-function BottomSheet({ buttonContent, padding, show, hide, children }: IProps) {
+function BottomSheet({ show, hide, children }: IProps) {
   return (
     <>
       {show && (
         <Container onEscapeKey={hide} onClickOutside={hide}>
-          <BackgroundFrame show={show}>
-            {children ? (
-              <ContentFrame padding={padding}>{children}</ContentFrame>
-            ) : null}
-            {buttonContent ? <BottomFrame>{buttonContent}</BottomFrame> : null}
-          </BackgroundFrame>
+          <BackgroundFrame show={show}>{children}</BackgroundFrame>
         </Container>
       )}
     </>

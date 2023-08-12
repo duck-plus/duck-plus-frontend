@@ -3,6 +3,7 @@ import SimpleBar from "simplebar-react";
 import styled from "styled-components";
 
 const PageFrame = styled(SimpleBar)`
+  position: relative;
   width: ${hScalePx(360)};
   height: 100%;
   flex-shrink: 0;

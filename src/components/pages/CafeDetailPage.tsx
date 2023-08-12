@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from "react";
 import PageFrame from "../atoms/PageFrame";
 import AppTopBar from "../organisms/AppTopBar";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import EmblaCarousel from "../organisms/EmblaCarousel";
 import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
-import {
-  Day,
-  useGetCafeListQuery,
-  useGetCafeQuery,
-} from "@/services/gql-outputs/graphql";
+import { useGetCafeQuery } from "@/services/gql-outputs/graphql";
 import { useTypedSearchParams } from "react-router-typesafe-routes/dom";
 import { ROUTES } from "@/router";
 import useEmblaCarousel from "embla-carousel-react";
-import { ReactComponent as LocationSVGR } from "@/assets/svgr/ic/location.svg";
-import { ReactComponent as TimeSVGR } from "@/assets/svgr/ic/time.svg";
-import { ReactComponent as InstagramSVGR } from "@/assets/svgr/ic/instagram.svg";
-// FIXME) 카카오 svg 나오면 교체 필요
-import { ReactComponent as KakaoSVGR } from "@/assets/svgr/ic/instagram.svg";
-// FIXME) 트위터 svg 나오면 교체 필요
-import { ReactComponent as TwitterSVGR } from "@/assets/svgr/ic/instagram.svg";
 import isNotNull from "@/utils/isNotNull";
+import CafeBriefInfoSection from "../organisms/CafeBriefInfoSection";
+import CafeDetailedInfoSection from "../organisms/CafeDetailedInfoSection";
+import { Navigate } from "react-router";
+import openURL from "@/utils/openURL";
+import useBottomSheet from "@/hooks/useBottomSheet";
+import { ReactComponent as CloseSVGR } from "@/assets/svgr/ic/close.svg";
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -60,88 +55,129 @@ const CarouselDot = styled.div<{ selected: boolean }>`
   cursor: pointer;
 `;
 
-const CafeDesc1 = styled.div`
-  padding: ${hScalePx(16)} ${hScalePx(20)} ${hScalePx(12)} ${hScalePx(20)};
+const Footer = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: ${hScalePx(2)};
-`;
-const CafeDesc2 = styled.div`
-  padding: ${hScalePx(16)} ${hScalePx(20)};
-  display: flex;
-  flex-direction: column;
-  gap: ${hScalePx(6)};
-`;
-const Desc2Item = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
-  color: ${({ theme }) => theme.colors.gray800};
-  display: flex;
-  height: ${hScalePx(20)};
+  width: 100%;
+  padding: ${hScalePx(12)} ${hScalePx(21)};
+  justify-content: space-between;
   align-items: center;
-  gap: ${hScalePx(6)};
+  gap: ${hScalePx(10)};
+  position: sticky;
+  z-index: 100;
+  background: ${({ theme }) => theme.colors.white};
+  border-top: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
+  bottom: 0;
 `;
 
-const Name = styled.div`
-  ${({ theme }) => theme.fontFaces["title2/16-Regular"]};
-  color: ${({ theme }) => theme.colors.gray900};
-`;
-const BriefInfo = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
-  color: ${({ theme }) => theme.colors.gray800};
+const FooterInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
-const HorSep = styled.div`
-  width: ${hScalePx(320)};
-  margin: 0 auto;
-  border-bottom: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
+const FeeRow = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
-const SNSChannelName = styled.div`
-  text-decoration: underline;
+const Fee = styled.div`
+  ${({ theme }) => theme.fontFaces["body1/14-Medium"]};
+  color: ${({ theme }) => theme.colors.black};
+`;
+
+const Unit = styled.div`
+  ${({ theme }) => theme.fontFaces["caption/10-Regular"]};
+  color: ${({ theme }) => theme.colors.gray500};
+`;
+
+const ShowInfoButton = styled.button`
+  outline: 0;
+  border: 0;
   cursor: pointer;
+  color: #000;
+  font-family: SUIT;
+  font-size: ${hScalePx(12)};
+  font-style: normal;
+  font-weight: 400;
+  line-height: ${hScalePx(20)};
+  letter-spacing: -0.4px;
+  text-decoration-line: underline;
+  background: none;
 `;
 
-const dayToLocaleStringMap: Record<Day, string> = {
-  FRI: "금",
-  MON: "월",
-  SAT: "토",
-  SUN: "일",
-  THU: "목",
-  TUE: "화",
-  WED: "수",
-} as const;
-
-const NoHolidayBadge = styled.div`
-  ${({ theme }) => theme.fontFaces["overline/9-SemiBold"]};
-  color: ${({ theme }) => theme.colors.gray700};
-  background-color: ${({ theme }) => theme.colors.gray100};
-  border-radius: ${hScalePx(2)};
-  padding: 0 ${hScalePx(4)};
-  height: ${hScalePx(14)};
+const SheetContent = styled.div`
+  padding: ${hScalePx(16)} 0 ${hScalePx(4)} 0;
+`;
+const SheetTitle = styled.div`
+  ${({ theme }) => theme.fontFaces["body1/14-Medium"]};
+  color: ${({ theme }) => theme.colors.gray900};
+  width: 100%;
+  height: ${hScalePx(20)};
+  padding: 0 ${hScalePx(20)};
   display: flex;
   align-items: center;
+  justify-content: space-between;
+`;
+
+const FeeInfoContent = styled.div`
+  padding: ${hScalePx(12)} ${hScalePx(20)} ${hScalePx(16)} ${hScalePx(20)};
+`;
+const HorSep = styled.div`
+  border-bottom: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
+  width: 100%;
+`;
+const FeeInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: ${hScalePx(12)} 0;
+`;
+const FeeTitle = styled.div`
+  ${({ theme }) => theme.fontFaces["body2/12-Medium"]};
+  color: ${({ theme }) => theme.colors.gray900};
+  margin: 0 0 ${hScalePx(6)} 0;
+`;
+const FeeInfoDesc = styled.div`
+  display: flex;
+  gap: ${hScalePx(12)};
+`;
+const FeeDesc = styled.div`
+  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  color: ${({ theme }) => theme.colors.gray800};
+`;
+const FeeDisclaimer = styled.div`
+  ${({ theme }) => theme.fontFaces["caption/10-Regular"]};
+  color: ${({ theme }) => theme.colors.gray500};
+  margin: ${hScalePx(12)} 0 0 0;
+`;
+
+const ContactButton = styled.button`
+  cursor: pointer;
+  padding: ${hScalePx(12)} ${hScalePx(46)};
+  ${({ theme }) => theme.fontFaces["body1/14-Regular"]};
+  color: ${({ theme }) => theme.colors.white};
+  outline: 0;
+  border: 0;
+  background-color: ${({ theme }) => theme.colors.black};
 `;
 
 const CafeDetailPage = () => {
   const [{ code }] = useTypedSearchParams(ROUTES.CAFE.DETAILS);
 
-  // const { data: cafe } = useGetCafeQuery(
-  //   {
-  //     code,
-  //   },
-  //   {
-  //     enabled: !!code,
-  //     select: (s) => s.cafe,
-  //   }
-  // );
-  // TODO, useGetCafeQuery가 정상 동작 하면, 윗 주석 코드로 변경
-  const { data: cafe } = useGetCafeListQuery(
-    {},
+  const { data: cafe } = useGetCafeQuery(
     {
-      select: (s) => s.cafeList?.find((cafe) => cafe?.code === code),
+      code,
+    },
+    {
       enabled: !!code,
+      select: (s) => s.cafe,
     }
   );
+
+  const {
+    setShow: setShowFeeInfo,
+    register,
+    BottomSheet,
+  } = useBottomSheet(false);
 
   const [emblaRef, emblaApi] = useEmblaCarousel();
   const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
@@ -158,22 +194,22 @@ const CafeDetailPage = () => {
   }, [emblaApi]);
 
   const hr = useHorizontalRatio();
-  const theme = useTheme();
 
-  if (!code) {
-    alert("잘못된 접근입니다.");
-    window.location.href = "/";
-  }
+  const landscapeImages = cafe?.imageFileList
+    .filter(isNotNull)
+    .filter(({ category }) => category === "LANDSCAPE");
 
-  return (
+  return !code || !cafe ? (
+    <Navigate to="/" replace />
+  ) : (
     <PageFrame>
       <AppTopBar.LeftIcon />
       {/* Cafe Image Carousel */}
       <CafeCarousel ref={emblaRef}>
         <Container>
-          {cafe?.imageFileList.map((img) =>
+          {landscapeImages?.map((img) =>
             img ? (
-              <Slide>
+              <Slide key={img.url}>
                 <img alt={cafe.name} src={img.url} />
               </Slide>
             ) : null
@@ -181,10 +217,10 @@ const CafeDetailPage = () => {
         </Container>
         {/* 캐로샐 탐색용 점들 */}
         <CarouselDots>
-          {cafe?.imageFileList.map((_, idx) => {
+          {landscapeImages?.map((_, idx) => {
             return (
               <CarouselDot
-                key={`${cafe.name}_${idx}`}
+                key={`${cafe.name || ""}_${idx}`}
                 selected={idx === selectedImageIdx}
                 onClick={(e) => handleDotClick(e, idx)}
               />
@@ -192,75 +228,55 @@ const CafeDetailPage = () => {
           })}
         </CarouselDots>
       </CafeCarousel>
-      {cafe ? (
-        <>
-          {/* Cafe Description */}
-          <CafeDesc1>
-            <Name>{cafe.name}</Name>
-            <BriefInfo>{cafe.briefInfo}</BriefInfo>
-          </CafeDesc1>
-          <HorSep></HorSep>
-          <CafeDesc2>
-            <Desc2Item>
-              <LocationSVGR
-                width={hr * 16}
-                height={hr * 16}
-                fill={theme.colors.gray800}
-              />
-              {cafe.address.briefAddress}
-            </Desc2Item>
-            {cafe.snsList
-              .filter(isNotNull)
-              .map(({ type, channelName, url }) => {
-                const SNSIcon =
-                  type === "KAKAO"
-                    ? KakaoSVGR
-                    : type === "INSTAGRAM"
-                    ? InstagramSVGR
-                    : TwitterSVGR;
-
-                return (
-                  <Desc2Item key={`${channelName}_${url}`}>
-                    <SNSIcon
-                      width={hr * 16}
-                      height={hr * 16}
-                      fill={theme.colors.gray800}
-                    />
-                    <SNSChannelName onClick={() => window.open(url)}>
-                      {channelName}
-                    </SNSChannelName>
-                  </Desc2Item>
-                );
-              })}
-            <Desc2Item>
-              <TimeSVGR
-                width={hr * 16}
-                height={hr * 16}
-                fill={theme.colors.gray800}
-              />
-              {/* 요일 */}
-              {cafe.businessHour.businessDayList.length === 7
-                ? "매일"
-                : cafe.businessHour.businessDayList
-                    .filter(isNotNull)
-                    .reduce(
-                      (prev, day, idx) =>
-                        `${prev}${idx > 0 ? " " : ""}${
-                          dayToLocaleStringMap[day]
-                        }`,
-                      ""
-                    ) + " "}
-              {/* 시간 */}
-              {cafe.businessHour.openingTime}~{cafe.businessHour.closingTime}
-              {/* 휴일에도 운영 하면 휴무없음 딱지*/}
-              {cafe.businessHour.workingOnHoliday ? (
-                <NoHolidayBadge>휴무없음</NoHolidayBadge>
-              ) : null}
-            </Desc2Item>
-          </CafeDesc2>
-        </>
-      ) : null}
-      {/* TODO) show CafeDetails.. */}
+      {<CafeBriefInfoSection cafe={cafe} />}
+      {<CafeDetailedInfoSection cafe={cafe} />}
+      <Footer>
+        <FooterInfo>
+          <FeeRow>
+            <Fee>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Fee>
+            <Unit>/일</Unit>
+          </FeeRow>
+          <ShowInfoButton onClick={() => setShowFeeInfo(true)}>
+            정보보기
+          </ShowInfoButton>
+        </FooterInfo>
+        <ContactButton onClick={() => openURL(cafe.askingUrl)}>
+          문의하기
+        </ContactButton>
+      </Footer>
+      <BottomSheet {...register}>
+        <SheetContent>
+          <SheetTitle>
+            대관료 정보
+            <CloseSVGR
+              style={{ cursor: "pointer" }}
+              width={hr * 18}
+              height={hr * 18}
+              onClick={() => setShowFeeInfo(false)}
+            />
+          </SheetTitle>
+          <FeeInfoContent>
+            <HorSep />
+            <FeeInfo>
+              <FeeTitle>평균 대관료</FeeTitle>
+              <FeeInfoDesc>
+                <FeeDesc>1일 평균 가격</FeeDesc>
+                <FeeDesc>{cafe.feeInfo.dailyCharge.toLocaleString()}원</FeeDesc>
+              </FeeInfoDesc>
+              <FeeDisclaimer>
+                *가격은 카페마다 상이하며 정확한 가격은 문의를 통해 확인해주세요
+              </FeeDisclaimer>
+            </FeeInfo>
+            <HorSep />
+            <FeeInfo>
+              <FeeTitle>최소 보증인원</FeeTitle>
+              <FeeInfoDesc>
+                <FeeDesc>{cafe.feeInfo.guaranteeCount}명</FeeDesc>
+              </FeeInfoDesc>
+            </FeeInfo>
+          </FeeInfoContent>
+        </SheetContent>
+      </BottomSheet>
     </PageFrame>
   );
 };

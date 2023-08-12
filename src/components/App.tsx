@@ -7,7 +7,13 @@ import { theme } from "@/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 const App = () => {
   const location = useLocation();
@@ -28,12 +34,13 @@ const App = () => {
       }}
     >
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<LoadingPage />}>
-          <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <Suspense fallback={<LoadingPage />}>
             <Outlet />
-          </ThemeProvider>
-        </Suspense>
-        <ReactQueryDevtools initialIsOpen={false} />
+            <div id="ModalRoot" />
+          </Suspense>
+        </ThemeProvider>
+        <ReactQueryDevtools initialIsOpen={false} position="top-right" />
       </QueryClientProvider>
     </HorizontalRatioBoundary>
   );
