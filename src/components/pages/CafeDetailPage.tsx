@@ -3,7 +3,7 @@ import PageFrame from "../atoms/PageFrame";
 import AppTopBar from "../organisms/AppTopBar";
 import styled from "styled-components";
 import EmblaCarousel from "../organisms/EmblaCarousel";
-import { hScalePx } from "@/hooks/useHorizontalRatio";
+import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
 import { useGetCafeQuery } from "@/services/gql-outputs/graphql";
 import { useTypedSearchParams } from "react-router-typesafe-routes/dom";
 import { ROUTES } from "@/router";
@@ -14,6 +14,7 @@ import CafeDetailedInfoSection from "../organisms/CafeDetailedInfoSection";
 import { Navigate } from "react-router";
 import openURL from "@/utils/openURL";
 import useBottomSheet from "@/hooks/useBottomSheet";
+import { ReactComponent as CloseSVGR } from "@/assets/svgr/ic/close.svg";
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -74,12 +75,12 @@ const FooterInfo = styled.div`
   align-items: flex-start;
 `;
 
-const PriceRow = styled.div`
+const FeeRow = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const Price = styled.div`
+const Fee = styled.div`
   ${({ theme }) => theme.fontFaces["body1/14-Medium"]};
   color: ${({ theme }) => theme.colors.black};
 `;
@@ -102,6 +103,51 @@ const ShowInfoButton = styled.button`
   letter-spacing: -0.4px;
   text-decoration-line: underline;
   background: none;
+`;
+
+const SheetContent = styled.div`
+  padding: ${hScalePx(16)} 0 ${hScalePx(4)} 0;
+`;
+const SheetTitle = styled.div`
+  ${({ theme }) => theme.fontFaces["body1/14-Medium"]};
+  color: ${({ theme }) => theme.colors.gray900};
+  width: 100%;
+  height: ${hScalePx(20)};
+  padding: 0 ${hScalePx(20)};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const FeeInfoContent = styled.div`
+  padding: ${hScalePx(12)} ${hScalePx(20)} ${hScalePx(16)} ${hScalePx(20)};
+`;
+const HorSep = styled.div`
+  border-bottom: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
+  width: 100%;
+`;
+const FeeInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: ${hScalePx(12)} 0;
+`;
+const FeeTitle = styled.div`
+  ${({ theme }) => theme.fontFaces["body2/12-Medium"]};
+  color: ${({ theme }) => theme.colors.gray900};
+  margin: 0 0 ${hScalePx(6)} 0;
+`;
+const FeeInfoDesc = styled.div`
+  display: flex;
+  gap: ${hScalePx(12)};
+`;
+const FeeDesc = styled.div`
+  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  color: ${({ theme }) => theme.colors.gray800};
+`;
+const FeeDisclaimer = styled.div`
+  ${({ theme }) => theme.fontFaces["caption/10-Regular"]};
+  color: ${({ theme }) => theme.colors.gray500};
+  margin: ${hScalePx(12)} 0 0 0;
 `;
 
 const ContactButton = styled.button`
@@ -128,8 +174,7 @@ const CafeDetailPage = () => {
   );
 
   const {
-    show: showBottomSheet,
-    setShow: setShowBottomSheet,
+    setShow: setShowFeeInfo,
     register,
     BottomSheet,
   } = useBottomSheet(false);
@@ -147,6 +192,8 @@ const CafeDetailPage = () => {
       setSelectedImageIdx(emblaApi.selectedScrollSnap());
     });
   }, [emblaApi]);
+
+  const hr = useHorizontalRatio();
 
   const landscapeImages = cafe?.imageFileList
     .filter(isNotNull)
@@ -185,11 +232,11 @@ const CafeDetailPage = () => {
       {<CafeDetailedInfoSection cafe={cafe} />}
       <Footer>
         <FooterInfo>
-          <PriceRow>
-            <Price>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Price>
+          <FeeRow>
+            <Fee>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Fee>
             <Unit>/일</Unit>
-          </PriceRow>
-          <ShowInfoButton onClick={() => setShowBottomSheet(true)}>
+          </FeeRow>
+          <ShowInfoButton onClick={() => setShowFeeInfo(true)}>
             정보보기
           </ShowInfoButton>
         </FooterInfo>
@@ -197,7 +244,39 @@ const CafeDetailPage = () => {
           문의하기
         </ContactButton>
       </Footer>
-      <BottomSheet {...register}>foo</BottomSheet>
+      <BottomSheet {...register}>
+        <SheetContent>
+          <SheetTitle>
+            대관료 정보
+            <CloseSVGR
+              style={{ cursor: "pointer" }}
+              width={hr * 18}
+              height={hr * 18}
+              onClick={() => setShowFeeInfo(false)}
+            />
+          </SheetTitle>
+          <FeeInfoContent>
+            <HorSep />
+            <FeeInfo>
+              <FeeTitle>평균 대관료</FeeTitle>
+              <FeeInfoDesc>
+                <FeeDesc>1일 평균 가격</FeeDesc>
+                <FeeDesc>{cafe.feeInfo.dailyCharge.toLocaleString()}원</FeeDesc>
+              </FeeInfoDesc>
+              <FeeDisclaimer>
+                *가격은 카페마다 상이하며 정확한 가격은 문의를 통해 확인해주세요
+              </FeeDisclaimer>
+            </FeeInfo>
+            <HorSep />
+            <FeeInfo>
+              <FeeTitle>최소 보증인원</FeeTitle>
+              <FeeInfoDesc>
+                <FeeDesc>{cafe.feeInfo.guaranteeCount}명</FeeDesc>
+              </FeeInfoDesc>
+            </FeeInfo>
+          </FeeInfoContent>
+        </SheetContent>
+      </BottomSheet>
     </PageFrame>
   );
 };
