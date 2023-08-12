@@ -64,6 +64,7 @@ const Footer = styled.div`
   position: sticky;
   z-index: 100;
   background: ${({ theme }) => theme.colors.white};
+  border-top: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
   bottom: 0;
 `;
 
