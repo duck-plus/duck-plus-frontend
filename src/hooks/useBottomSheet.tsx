@@ -23,10 +23,10 @@ const BackgroundFrame = styled(FadeInOut)`
     ${({ show }) => (show ? "0.15s" : "0s")} ease-out forwards;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: ${hScalePx(20)} ${hScalePx(20)} 0 0;
-  bottom: 0;
   display: flex;
   flex-direction: column;
-  padding: 0;
+  bottom: 0;
+  padding: 0 0 env(safe-area-inset-bottom, 0) 0;
   position: absolute;
   right: 0;
   width: 100%;
