@@ -84,6 +84,7 @@ const VerticalSep = styled.div`
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
   position: relative;
+  cursor: pointer;
 `;
 
 const Container = styled(EmblaCarousel.Container)`
@@ -162,7 +163,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
   return (
     <CafeListItemFrame key={cafe.name}>
       {/* 캐로샐 */}
-      <CafeCarousel ref={emblaRef}>
+      <CafeCarousel ref={emblaRef} onClick={() => handleCafeClick(cafe.code)}>
         <Container>
           {cafe.imageFileList.map((img) =>
             img ? (
@@ -188,7 +189,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
         </CarouselDots>
       </CafeCarousel>
       {/* 설명 */}
-      <CafeDesc onClick={() => handleCafeClick(cafe.code)}>
+      <CafeDesc>
         {/* 이름 주소 등 */}
         <DescItem>
           <Name>{cafe.name}</Name>
