@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Cafe } from "@/services/gql-outputs/graphql";
 import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
 import styled, { useTheme } from "styled-components";
@@ -7,6 +7,9 @@ import { ReactComponent as DotSVGR } from "@/assets/svgr/ic/dot.svg";
 import { ReactComponent as ZoomInSVGR } from "@/assets/svgr/ic/zoom-in.svg";
 import Zoom from "react-medium-image-zoom";
 import LocationFillSVG from "@/assets/svgr/ic/location-fill.svg";
+import useInViewIdxObserver from "@/hooks/useInViewIdxObserver";
+
+const CSSDetailInfoNavBarHeight = hScalePx(40);
 
 const CafeDetailedInfoSectionFrame = styled.div`
   display: flex;
@@ -20,7 +23,7 @@ const DetailInfoNavBar = styled.div`
   position: sticky;
   top: calc(${AppTopBar.CSSAppTopBarHeight} - 1px);
   display: flex;
-  height: ${hScalePx(40)};
+  height: ${CSSDetailInfoNavBarHeight};
   z-index: 100;
 `;
 
@@ -35,6 +38,9 @@ const DetailInfoNavBarItem = styled.div<{ selected: boolean }>`
 `;
 
 const DetailedInfo = styled.div`
+  scroll-margin-top: calc(
+    ${AppTopBar.CSSAppTopBarHeight} + ${CSSDetailInfoNavBarHeight} - 1px
+  );
   padding: ${hScalePx(24)} ${hScalePx(20)};
   display: flex;
   flex-direction: column;
@@ -180,6 +186,21 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
   const menuImage = cafe.imageFileList?.find((s) => s?.category === "MENU");
   const mapElement = useRef<HTMLDivElement>(null);
 
+  // navbar selection
+  const [selectedIdx, setSelectedIdx] = useState(0);
+  const { observe: observe0 } = useInViewIdxObserver(0, setSelectedIdx);
+  const { observe: observe1 } = useInViewIdxObserver(1, setSelectedIdx);
+  const { observe: observe2 } = useInViewIdxObserver(2, setSelectedIdx);
+  const { observe: observe3 } = useInViewIdxObserver(3, setSelectedIdx);
+  const observers = [observe0, observe1, observe2, observe3];
+
+  // scroll
+  const ref0 = useRef<HTMLDivElement>(null);
+  const ref1 = useRef<HTMLDivElement>(null);
+  const ref2 = useRef<HTMLDivElement>(null);
+  const ref3 = useRef<HTMLDivElement>(null);
+  const refs = [ref0, ref1, ref2, ref3];
+
   useEffect(() => {
     if (!mapElement.current || !naver || !cafe) return;
 
@@ -217,9 +238,18 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
         }}
       />
       <DetailInfoNavBar>
-        {detailInfoItems.map((item) => (
-          // TODO) inView 활용해서, selected 컨트롤
-          <DetailInfoNavBarItem selected key={item}>
+        {detailInfoItems.map((item, idx) => (
+          <DetailInfoNavBarItem
+            selected={idx === selectedIdx}
+            key={item}
+            onClick={() => {
+              setSelectedIdx(idx);
+              refs[idx].current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }}
+          >
             {item}
           </DetailInfoNavBarItem>
         ))}
@@ -227,96 +257,105 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
       <HorSep style={{ margin: "0" }} />
 
       {/* 카페정보 */}
-      <DetailedInfo>
-        <Title>카페정보</Title>
-        <Info>{cafe.detailedInfo}</Info>
-      </DetailedInfo>
-      <HorSep />
+      <div ref={observers[0]}>
+        <DetailedInfo ref={ref0}>
+          <Title>카페정보</Title>
+          <Info>{cafe.detailedInfo}</Info>
+        </DetailedInfo>
+        <HorSep />
 
-      {/* 시설안내 */}
-      {!facilityList ? null : (
-        <>
-          <DetailedInfo>
-            <Title>시설안내</Title>
-            <InfoList>
-              {facilityList.map((facility) => (
-                <InfoListItem key={facility}>{facility}</InfoListItem>
-              ))}
-            </InfoList>
-          </DetailedInfo>
-          <HorSep />
-        </>
-      )}
+        {/* 시설안내 */}
+        {!facilityList ? null : (
+          <>
+            <DetailedInfo>
+              <Title>시설안내</Title>
+              <InfoList>
+                {facilityList.map((facility) => (
+                  <InfoListItem key={facility}>{facility}</InfoListItem>
+                ))}
+              </InfoList>
+            </DetailedInfo>
+            <HorSep />
+          </>
+        )}
 
-      {/* 특이사항 */}
-      {!cafe.remarkList ? null : (
-        <>
-          <DetailedInfo>
-            <Title>특이사항</Title>
-            <InfoTags>
-              {cafe.remarkList.map((benefit) => (
-                <InfoTag key={benefit}>{benefit}</InfoTag>
-              ))}
-            </InfoTags>
-          </DetailedInfo>
-          <HorSep />
-        </>
-      )}
+        {/* 특이사항 */}
+        {!cafe.remarkList ? null : (
+          <>
+            <DetailedInfo>
+              <Title>특이사항</Title>
+              <InfoTags>
+                {cafe.remarkList.map((benefit) => (
+                  <InfoTag key={benefit}>{benefit}</InfoTag>
+                ))}
+              </InfoTags>
+            </DetailedInfo>
+            <HorSep />
+          </>
+        )}
+      </div>
 
       {/* 지원 특전 목록 */}
-      <DetailedInfo>
-        <Title>지원특전목록</Title>
-        <InfoList>
-          {!specialBenefitList ? (
-            <InfoListItem>정보 없음</InfoListItem>
-          ) : (
-            specialBenefitList.map((benefit) => (
-              <InfoListItem key={benefit}>{benefit}</InfoListItem>
-            ))
-          )}
-        </InfoList>
-      </DetailedInfo>
-      <HorSep />
+      <div ref={observers[1]}>
+        <DetailedInfo ref={ref1}>
+          <Title>지원특전목록</Title>
+          <InfoList>
+            {!specialBenefitList ? (
+              <InfoListItem>정보 없음</InfoListItem>
+            ) : (
+              specialBenefitList.map((benefit) => (
+                <InfoListItem key={benefit}>{benefit}</InfoListItem>
+              ))
+            )}
+          </InfoList>
+        </DetailedInfo>
+        <HorSep />
+      </div>
 
       {/* 음료 및 디저트 메뉴판 */}
-      <DetailedInfo>
-        <Title>음료 및 디저트 메뉴판</Title>
-        {!menuImage ? (
-          <InfoList>
-            <InfoListItem>정보 없음</InfoListItem>
-          </InfoList>
-        ) : (
-          <MenuInfo>
-            {/* 이미지 */}
-            <MenuImageFrame>
-              <Zoom>
-                <MenuImage src={menuImage.url} />
-              </Zoom>
-              {/* 돋보기 */}
-              <ZoomInIcon>
-                <ZoomInSVGR width="100%" height="100%" />
-              </ZoomInIcon>
-            </MenuImageFrame>
+      <div ref={observers[2]}>
+        <DetailedInfo ref={ref2}>
+          <Title>음료 및 디저트 메뉴판</Title>
+          {!menuImage ? (
+            <InfoList>
+              <InfoListItem>정보 없음</InfoListItem>
+            </InfoList>
+          ) : (
+            <MenuInfo>
+              {/* 이미지 */}
+              <MenuImageFrame>
+                <Zoom>
+                  <MenuImage src={menuImage.url} />
+                </Zoom>
+                {/* 돋보기 */}
+                <ZoomInIcon>
+                  <ZoomInSVGR width="100%" height="100%" />
+                </ZoomInIcon>
+              </MenuImageFrame>
 
-            {/* 면책 조항 */}
-            <MenuDisclaimer>
-              *이벤트 메뉴와는 상이하며 구성 및 금액은 문의를 통해 확인해주세요
-            </MenuDisclaimer>
-          </MenuInfo>
-        )}
-      </DetailedInfo>
-      <HorSep />
+              {/* 면책 조항 */}
+              <MenuDisclaimer>
+                *이벤트 메뉴와는 상이하며 구성 및 금액은 문의를 통해
+                확인해주세요
+              </MenuDisclaimer>
+            </MenuInfo>
+          )}
+        </DetailedInfo>
+        <HorSep />
+      </div>
 
       {/* 상세위치 */}
-      <DetailedInfo>
-        <Title>상세위치</Title>
-        <MapContainer>
-          <NaverMap ref={mapElement} onClick={() => alert("foo")} />
-          <MapOverlay>
-            {cafe.address.briefAddress} {cafe.address.detailedAddress}
-          </MapOverlay>
-        </MapContainer>
-      </DetailedInfo>
+      <div ref={observers[3]}>
+        <DetailedInfo ref={ref3}>
+          <Title>상세위치</Title>
+          <MapContainer>
+            <NaverMap ref={mapElement} onClick={() => alert("foo")} />
+            <MapOverlay>
+              {cafe.address.briefAddress} {cafe.address.detailedAddress}
+            </MapOverlay>
+          </MapContainer>
+        </DetailedInfo>
+      </div>
 
       {/* TODO) TBD */}
       {/* ?? */}
