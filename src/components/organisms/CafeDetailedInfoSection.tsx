@@ -279,32 +279,33 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
       <HorSep />
 
       {/* 음료 및 디저트 메뉴판 */}
-      {!menuImage ? null : (
-        <>
-          <DetailedInfo>
-            <Title>음료 및 디저트 메뉴판</Title>
-            <MenuInfo>
-              {/* 이미지 */}
-              <MenuImageFrame>
-                <Zoom>
-                  <MenuImage src={menuImage.url} />
-                </Zoom>
-                {/* 돋보기 */}
-                <ZoomInIcon>
-                  <ZoomInSVGR width="100%" height="100%" />
-                </ZoomInIcon>
-              </MenuImageFrame>
+      <DetailedInfo>
+        <Title>음료 및 디저트 메뉴판</Title>
+        {!menuImage ? (
+          <InfoList>
+            <InfoListItem>정보 없음</InfoListItem>
+          </InfoList>
+        ) : (
+          <MenuInfo>
+            {/* 이미지 */}
+            <MenuImageFrame>
+              <Zoom>
+                <MenuImage src={menuImage.url} />
+              </Zoom>
+              {/* 돋보기 */}
+              <ZoomInIcon>
+                <ZoomInSVGR width="100%" height="100%" />
+              </ZoomInIcon>
+            </MenuImageFrame>
 
-              {/* 면책 조항 */}
-              <MenuDisclaimer>
-                *이벤트 메뉴와는 상이하며 구성 및 금액은 문의를 통해
-                확인해주세요
-              </MenuDisclaimer>
-            </MenuInfo>
-          </DetailedInfo>
-          <HorSep />
-        </>
-      )}
+            {/* 면책 조항 */}
+            <MenuDisclaimer>
+              *이벤트 메뉴와는 상이하며 구성 및 금액은 문의를 통해 확인해주세요
+            </MenuDisclaimer>
+          </MenuInfo>
+        )}
+      </DetailedInfo>
+      <HorSep />
 
       {/* 상세위치 */}
       <DetailedInfo>
