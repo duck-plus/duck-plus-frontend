@@ -7,6 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import EmblaCarousel from "./EmblaCarousel";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/router";
+import isNotNull from "@/utils/isNotNull";
 
 const ScrollFrame = styled(SimpleBar)`
   width: ${hScalePx(360)};
@@ -160,12 +161,16 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
     });
   }, [emblaApi]);
 
+  const landscapeImages = cafe.imageFileList
+    .filter(isNotNull)
+    .filter(({ category }) => category === "LANDSCAPE");
+
   return (
     <CafeListItemFrame key={cafe.name}>
       {/* 캐로샐 */}
       <CafeCarousel ref={emblaRef} onClick={() => handleCafeClick(cafe.code)}>
         <Container>
-          {cafe.imageFileList.map((img) =>
+          {landscapeImages.map((img) =>
             img ? (
               <Slide key={img.filename}>
                 {/* 생카성지는 인기 딱지 노출 */}
@@ -177,7 +182,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
         </Container>
         {/* 캐로샐 탐색용 점들 */}
         <CarouselDots>
-          {cafe.imageFileList.map((_, idx) => {
+          {landscapeImages.map((_, idx) => {
             return (
               <CarouselDot
                 key={`${cafe.name}_${idx}`}
