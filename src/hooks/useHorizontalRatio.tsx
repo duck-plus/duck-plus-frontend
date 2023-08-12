@@ -21,11 +21,15 @@ const RatioContainer = styled.div`
 `;
 
 interface IProps extends React.PropsWithChildren {
+  className?: string;
   designWidth?: number;
+  style?: React.CSSProperties;
 }
 
 /** 디자인 상의 px => 100vw 비례한 값으로 변환하기 위한 값인 'hr'을 컨텍스트로 뿌려주는 HoC */
 export function HorizontalRatioBoundary({
+  className,
+  style,
   designWidth = 360,
   children,
 }: IProps) {
@@ -47,7 +51,7 @@ export function HorizontalRatioBoundary({
   });
 
   return (
-    <RatioContainer ref={containerRef}>
+    <RatioContainer className={className} style={style} ref={containerRef}>
       <HorizontalRatioProvider value={ratio}>
         {children}
       </HorizontalRatioProvider>
