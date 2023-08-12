@@ -10,7 +10,7 @@ import useFeaturedRegionList from "@/hooks/useFeaturedRegionList";
 const CategoryTabList = styled(TabBar.TabList)`
   position: sticky;
   top: ${AppTopBar.CSSAppTopBarHeight};
-  z-index: 100;
+  z-index: 1000;
 `;
 
 const RegionTabList = styled(TabBar.TabList)`
@@ -18,7 +18,7 @@ const RegionTabList = styled(TabBar.TabList)`
   position: sticky;
   top: calc(${AppTopBar.CSSAppTopBarHeight} + ${TabBar.CSSTabBarHeight});
   padding: ${hScalePx(12)} ${hScalePx(14)};
-  z-index: 100;
+  z-index: 1000;
 
   .simplebar-content {
     gap: ${hScalePx(6)};
