@@ -39,7 +39,7 @@ const App = () => {
             <Outlet />
           </Suspense>
         </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactQueryDevtools initialIsOpen={false} position="top-right" />
       </QueryClientProvider>
     </HorizontalRatioBoundary>
   );
