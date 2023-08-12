@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Cafe } from "@/services/gql-outputs/graphql";
 import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
 import styled, { useTheme } from "styled-components";
 import AppTopBar from "./AppTopBar";
 import { ReactComponent as DotSVGR } from "@/assets/svgr/ic/dot.svg";
 import { ReactComponent as ZoomInSVGR } from "@/assets/svgr/ic/zoom-in.svg";
-import { Magnifier, MagnifierContainer } from "react-image-magnifiers";
+import Zoom from "react-medium-image-zoom";
 
 const CafeDetailedInfoSectionFrame = styled.div`
   display: flex;
@@ -98,10 +98,13 @@ const MenuInfo = styled.div`
 
 const MenuImageFrame = styled.div`
   position: relative;
+  width: 100%;
+`;
 
-  img {
-    cursor: pointer;
-  }
+const MenuImage = styled.img`
+  width: 100%;
+  height: ${hScalePx(187)};
+  object-fit: cover;
 `;
 
 const MenuDisclaimer = styled.div`
@@ -117,7 +120,8 @@ const ZoomInIcon = styled.div`
   width: ${hScalePx(32)};
   height: ${hScalePx(32)};
   padding: ${hScalePx(4)};
-  cursor: pointer;
+  cursor: zoom-in;
+  pointer-events: none;
 `;
 
 const detailInfoItems = ["카페정보", "특전안내", "메뉴", "지도"] as const;
@@ -143,7 +147,6 @@ interface IProps {
 
 /** 카페 상세 페이지 > 상세 정보들 */
 const CafeDetailedInfoSection = ({ cafe }: IProps) => {
-  const [showMagnifier, setShowMagnifier] = useState<boolean>(false);
   const theme = useTheme();
 
   const facilityList = splitToArray(cafe?.specialBenefit);
@@ -229,15 +232,15 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
             <Title>음료 및 디저트 메뉴판</Title>
             <MenuInfo>
               {/* 이미지 */}
-              <MagnifierContainer>
-                <MenuImageFrame>
-                  <Magnifier imageSrc={menuImage.url} />
-                  {/* 돋보기 */}
-                  <ZoomInIcon onClick={() => setShowMagnifier(!showMagnifier)}>
-                    <ZoomInSVGR width="100%" height="100%" />
-                  </ZoomInIcon>
-                </MenuImageFrame>
-              </MagnifierContainer>
+              <MenuImageFrame>
+                <Zoom>
+                  <MenuImage src={menuImage.url} />
+                </Zoom>
+                {/* 돋보기 */}
+                <ZoomInIcon>
+                  <ZoomInSVGR width="100%" height="100%" />
+                </ZoomInIcon>
+              </MenuImageFrame>
 
               {/* 면책 조항 */}
               <MenuDisclaimer>
