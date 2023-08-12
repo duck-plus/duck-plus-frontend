@@ -146,7 +146,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
   const navigate = useNavigate();
 
   const handleCafeClick = (cafeCode: string) => {
-    navigate(ROUTES.CAFE.DETAILS.buildPath({ code: cafeCode }));
+    navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
   };
 
   const handleDotClick = (e: React.MouseEvent, idx: number) => {
@@ -201,7 +201,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
         </DescItem>
         {/* 금액 관련 */}
         <DescItem>
-          <Price>{cafe.feeInfo.dailyCharge}원~</Price>
+          <Price>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Price>
           <Disclaimer>
             /일 기준
             <VerticalSep />
