@@ -194,7 +194,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
         </CarouselDots>
       </CafeCarousel>
       {/* 설명 */}
-      <CafeDesc>
+      <CafeDesc onClick={() => handleCafeClick(cafe.code)}>
         {/* 이름 주소 등 */}
         <DescItem>
           <Name>{cafe.name}</Name>
