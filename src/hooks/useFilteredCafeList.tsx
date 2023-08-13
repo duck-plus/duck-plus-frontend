@@ -1,5 +1,5 @@
 import { useGetCafeListQuery } from "@/services/gql-outputs/graphql";
-import isNotNull from "@/utils/isNotNull";
+import isNonNullable from "@/utils/isNonNullable";
 
 // feature, region에 해당하는 cafe만 모아 반환
 export default function useFilteredCafeList(
@@ -11,7 +11,7 @@ export default function useFilteredCafeList(
     {
       select: ({ cafeList }) =>
         (cafeList || [])
-          .filter(isNotNull)
+          .filter(isNonNullable)
           .filter(
             (cafe) =>
               !feature ||

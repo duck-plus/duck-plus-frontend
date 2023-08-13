@@ -7,7 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import EmblaCarousel from "./EmblaCarousel";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/router";
-import isNotNull from "@/utils/isNotNull";
+import isNonNullable from "@/utils/isNonNullable";
 
 const ScrollFrame = styled(SimpleBar)`
   width: ${hScalePx(360)};
@@ -162,7 +162,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
   }, [emblaApi]);
 
   const landscapeImages = cafe.imageFileList
-    .filter(isNotNull)
+    .filter(isNonNullable)
     .filter(({ category }) => category === "LANDSCAPE");
 
   return (

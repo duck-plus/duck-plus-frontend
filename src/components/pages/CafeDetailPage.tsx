@@ -8,7 +8,7 @@ import { useGetCafeQuery } from "@/services/gql-outputs/graphql";
 import { useTypedSearchParams } from "react-router-typesafe-routes/dom";
 import { ROUTES } from "@/router";
 import useEmblaCarousel from "embla-carousel-react";
-import isNotNull from "@/utils/isNotNull";
+import isNonNullable from "@/utils/isNonNullable";
 import CafeBriefInfoSection from "../organisms/CafeBriefInfoSection";
 import CafeDetailedInfoSection from "../organisms/CafeDetailedInfoSection";
 import { Navigate } from "react-router";
@@ -196,7 +196,7 @@ const CafeDetailPage = () => {
   const hr = useHorizontalRatio();
 
   const landscapeImages = cafe?.imageFileList
-    .filter(isNotNull)
+    .filter(isNonNullable)
     .filter(({ category }) => category === "LANDSCAPE");
 
   return !code || !cafe ? (
