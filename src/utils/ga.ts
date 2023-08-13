@@ -1,5 +1,5 @@
 type EventParamsMap = {
-  page_view: {};
+  page_view: { path: string };
   contact_btn: {};
   calc_btn: { dayCnt: string; cost: string; dailyCharge: number };
   sns_btn: { type: string; url: string; channelName: string };

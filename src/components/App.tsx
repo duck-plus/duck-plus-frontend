@@ -20,7 +20,7 @@ const App = () => {
   const location = useLocation();
 
   useEffect(() => {
-    ga.send("page_view", {});
+    ga.send("page_view", { path: location.pathname });
   }, [location.pathname]);
 
   return (
