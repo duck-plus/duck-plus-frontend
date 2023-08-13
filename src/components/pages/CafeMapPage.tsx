@@ -85,7 +85,8 @@ const CafeMapPage = () => {
   const hr = useHorizontalRatio();
 
   const mapRef = useRef<naver.maps.Map>();
-  const myLocationMarkerRef = useRef<naver.maps.Marker>();
+  const selfMarkerRef = useRef<naver.maps.Marker>();
+  const selfMarkerWatchIdRef = useRef<number | null>(null);
 
   // NaverMap
   useEffect(() => {
@@ -121,31 +122,47 @@ const CafeMapPage = () => {
       return;
     }
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const location = new naver.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude
-          );
-          map.setCenter(location); // 얻은 좌표를 지도의 중심으로 설정합니다.
-          map.setZoom(17); // 지도의 줌 레벨을 변경합니다.
+      // 새 마커 배치 (on)
+      if (!selfMarkerRef.current) {
+        // 내 위치 마커 초기화
+        navigator.geolocation.getCurrentPosition(
+          ({ coords: { latitude, longitude } }) => {
+            const position = new naver.maps.LatLng(latitude, longitude);
+            map.setCenter(position); // 얻은 좌표를 지도의 중심으로 설정합니다.
+            map.setZoom(17); // 지도의 줌 레벨을 변경합니다.
+            selfMarkerRef.current = new naver.maps.Marker({
+              position,
+              map,
+            });
+          },
+          sentry.captureException,
+          {
+            enableHighAccuracy: true,
+          }
+        );
 
-          // 기존 마커 삭제
-          myLocationMarkerRef.current?.setMap(null);
-
-          // 새 마커 배치
-          myLocationMarkerRef.current = new naver.maps.Marker({
-            position: location,
-            map,
-          });
-        },
-        (e) => {
-          sentry.captureException(e);
-        },
-        {
-          enableHighAccuracy: true,
+        // 내 위치 마커 모니터링
+        selfMarkerWatchIdRef.current = navigator.geolocation.watchPosition(
+          ({ coords: { latitude, longitude } }) => {
+            const position = new naver.maps.LatLng(latitude, longitude);
+            map.setCenter(position); // 얻은 좌표를 지도의 중심으로 설정합니다.
+            selfMarkerRef.current?.setPosition(position);
+          },
+          sentry.captureException,
+          {
+            enableHighAccuracy: true,
+          }
+        );
+      }
+      // 기존 마커가 있으면 마커 제거 (off)
+      else {
+        // 맵에서 제거
+        selfMarkerRef.current?.setMap(null);
+        // 모니터 제거
+        if (typeof selfMarkerWatchIdRef?.current === "number") {
+          navigator.geolocation.clearWatch(selfMarkerWatchIdRef.current);
         }
-      );
+      }
     } else {
       sentry.captureMessage("위치 권한이 없습니다", "warning");
     }
