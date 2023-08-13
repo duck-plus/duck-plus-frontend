@@ -23,7 +23,11 @@ export const ROUTES = {
           code: string().default(""),
         },
       }),
-      MAP: route("cafe-map", {}),
+      MAP: route("cafe-map", {
+        searchParams: {
+          code: string().default(""),
+        },
+      }),
     }
   ),
 } as const;

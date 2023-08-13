@@ -8,6 +8,8 @@ import { ReactComponent as ZoomInSVGR } from "@/assets/svgr/ic/zoom-in.svg";
 import Zoom from "react-medium-image-zoom";
 import LocationFillSVG from "@/assets/svgr/ic/location-fill.svg";
 import useInViewIdxObserver from "@/hooks/useInViewIdxObserver";
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/router";
 
 const CSSDetailInfoNavBarHeight = hScalePx(40);
 
@@ -131,7 +133,7 @@ const ZoomInIcon = styled.div`
   pointer-events: none;
 `;
 
-const MapContainer = styled.div`
+const MapContainer = styled(Link)`
   width: 100%;
   height: ${hScalePx(176)};
   position: relative;
@@ -139,6 +141,7 @@ const MapContainer = styled.div`
   justify-content: center;
   * {
     cursor: pointer;
+    pointer-events: none;
   }
 `;
 const NaverMap = styled.div`
@@ -201,6 +204,7 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
   const ref3 = useRef<HTMLDivElement>(null);
   const refs = [ref0, ref1, ref2, ref3];
 
+  // NaverMap
   useEffect(() => {
     if (!mapElement.current || !naver || !cafe) return;
 
@@ -348,8 +352,8 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
       <div ref={observers[3]}>
         <DetailedInfo ref={ref3}>
           <Title>상세위치</Title>
-          <MapContainer>
-            <NaverMap ref={mapElement} onClick={() => alert("foo")} />
+          <MapContainer to={ROUTES.CAFE.MAP.buildPath({}, { code: cafe.code })}>
+            <NaverMap ref={mapElement} />
             <MapOverlay>
               {cafe.address.briefAddress} {cafe.address.detailedAddress}
             </MapOverlay>
