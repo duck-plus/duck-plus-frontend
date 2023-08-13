@@ -3,6 +3,7 @@ import { hScalePx } from "@/hooks/useHorizontalRatio";
 import { ReactComponent as LogoSVGR } from "@/assets/svgr/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as ICArrowBackSVGR } from "@/assets/svgr/ic/arrow-back.svg";
+import React from "react";
 
 const CSSAppTopBarHeight = hScalePx(50);
 
@@ -37,9 +38,9 @@ const BackButton = styled.button`
 `;
 
 /** [Duck+] */
-const LogoLeft = () => {
+const LogoLeft = (props: React.ComponentProps<typeof Container>) => {
   return (
-    <Container>
+    <Container {...props}>
       <LogoFrame>
         <LogoSVGR width="100%" height="100%" />
       </LogoFrame>
@@ -48,10 +49,13 @@ const LogoLeft = () => {
 };
 
 /** [<-] {children} */
-const Center = ({ children }: React.PropsWithChildren) => {
+const Center = ({
+  children,
+  ...leftOver
+}: React.PropsWithChildren<React.ComponentProps<typeof Container>>) => {
   const navigate = useNavigate();
   return (
-    <Container>
+    <Container {...leftOver}>
       <BackButton onClick={() => navigate(-1)}>
         <ICArrowBackSVGR width="100%" height="100%" />
       </BackButton>
@@ -61,10 +65,10 @@ const Center = ({ children }: React.PropsWithChildren) => {
 };
 
 /** [<-]  */
-const LeftIcon = () => {
+const LeftIcon = (props: React.ComponentProps<typeof Container>) => {
   const navigate = useNavigate();
   return (
-    <Container>
+    <Container {...props}>
       <BackButton onClick={() => navigate(-1)}>
         <ICArrowBackSVGR width="100%" height="100%" />
       </BackButton>
