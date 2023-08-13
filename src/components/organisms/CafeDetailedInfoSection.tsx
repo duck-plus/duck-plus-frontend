@@ -144,6 +144,7 @@ const MapContainer = styled(Link)`
     pointer-events: none;
   }
 `;
+
 const NaverMap = styled.div`
   width: 100%;
   height: 100%;
@@ -208,11 +209,12 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
   useEffect(() => {
     if (!mapElement.current || !naver || !cafe) return;
 
-    // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
+    // 지도에 표시할 중심/마커의 위도와 경도 좌표.
     const [lng, lat] = cafe.address.location?.coordinates || [0, 0];
     const location = new naver.maps.LatLng(lat, lng);
 
-    const mapOptions: naver.maps.MapOptions = {
+    // 맵 생성
+    const map = new naver.maps.Map(mapElement.current, {
       center: location,
       zoom: 17,
       minZoom: 17,
@@ -221,9 +223,9 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
       scaleControl: false,
       scrollWheel: false,
       draggable: false,
-    };
+    });
 
-    const map = new naver.maps.Map(mapElement.current, mapOptions);
+    // 마커 배치
     new naver.maps.Marker({
       position: location,
       map,
