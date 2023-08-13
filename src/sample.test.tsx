@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
-import Home from "./components/pages/HomePage";
 import App from "./components/App";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import RouteErrorElement from "./components/atoms/RouteErrorElement";
-import CafeDetail from "./components/pages/CafeDetailPage";
-import CafeList from "./components/pages/CafeListPage";
-import CafeMap from "./components/pages/CafeMapPage";
+import HomePage from "./components/pages/HomePage";
+import CafeDetailPage from "./components/pages/CafeDetailPage";
+import CafeListPage from "./components/pages/CafeListPage";
+import CafeMapPage from "./components/pages/CafeMapPage";
 import { ROUTES } from "./router";
 
 // react-lottie-player
@@ -32,19 +32,19 @@ const memoryRouter = createMemoryRouter(
       children: [
         {
           path: ROUTES.HOME.path,
-          element: <Home />,
+          element: <HomePage />,
         },
         {
           path: ROUTES.CAFE.LIST.path,
-          element: <CafeList />,
+          element: <CafeListPage />,
         },
         {
           path: ROUTES.CAFE.DETAILS.path,
-          element: <CafeDetail />,
+          element: <CafeDetailPage />,
         },
         {
           path: ROUTES.CAFE.MAP.path,
-          element: <CafeMap />,
+          element: <CafeMapPage />,
         },
       ],
     },

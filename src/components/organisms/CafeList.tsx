@@ -7,7 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import EmblaCarousel from "./EmblaCarousel";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/router";
-import isNotNull from "@/utils/isNotNull";
+import isNonNullable from "@/utils/isNonNullable";
 
 const ScrollFrame = styled(SimpleBar)`
   width: ${hScalePx(360)};
@@ -162,7 +162,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
   }, [emblaApi]);
 
   const landscapeImages = cafe.imageFileList
-    .filter(isNotNull)
+    .filter(isNonNullable)
     .filter(({ category }) => category === "LANDSCAPE");
 
   return (
@@ -194,7 +194,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
         </CarouselDots>
       </CafeCarousel>
       {/* 설명 */}
-      <CafeDesc>
+      <CafeDesc onClick={() => handleCafeClick(cafe.code)}>
         {/* 이름 주소 등 */}
         <DescItem>
           <Name>{cafe.name}</Name>
@@ -219,12 +219,11 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
 };
 
 interface IProps {
-  feature: string | undefined;
-  region: string;
+  filter: Parameters<typeof useFilteredCafeList>[0];
 }
 // 카페 목록
-const CafeList = ({ feature, region }: IProps) => {
-  const { data: cafeList } = useFilteredCafeList(feature, region);
+const CafeList = ({ filter }: IProps) => {
+  const { data: cafeList } = useFilteredCafeList(filter);
 
   return (
     <ScrollFrame>

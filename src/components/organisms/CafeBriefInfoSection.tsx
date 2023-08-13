@@ -7,8 +7,9 @@ import { ReactComponent as InstagramSVGR } from "@/assets/svgr/ic/instagram.svg"
 import { ReactComponent as KakaoSVGR } from "@/assets/svgr/ic/kakao.svg";
 import { ReactComponent as TwitterSVGR } from "@/assets/svgr/ic/twitter.svg";
 import styled, { useTheme } from "styled-components";
-import isNotNull from "@/utils/isNotNull";
+import isNonNullable from "@/utils/isNonNullable";
 import openURL from "@/utils/openURL";
+import ga from "@/utils/ga";
 
 const BreifIntro = styled.div`
   padding: ${hScalePx(16)} ${hScalePx(20)} ${hScalePx(12)} ${hScalePx(20)};
@@ -97,27 +98,39 @@ const CafeBriefInfoSection = ({ cafe }: IProps) => {
           {cafe.address.briefAddress}
         </DetailItem>
         {/* SNS */}
-        {cafe.snsList.filter(isNotNull).map(({ type, channelName, url }) => {
-          const SNSIcon =
-            type === "KAKAO"
-              ? KakaoSVGR
-              : type === "INSTAGRAM"
-              ? InstagramSVGR
-              : TwitterSVGR;
+        {cafe.snsList
+          .filter(isNonNullable)
+          .map(({ type, channelName, url }) => {
+            const SNSIcon =
+              type === "KAKAO"
+                ? KakaoSVGR
+                : type === "INSTAGRAM"
+                ? InstagramSVGR
+                : TwitterSVGR;
 
-          return (
-            <DetailItem key={`${channelName}_${url}`}>
-              <SNSIcon
-                width={hr * 16}
-                height={hr * 16}
-                fill={theme.colors.gray800}
-              />
-              <SNSChannelName onClick={() => openURL(url)}>
-                {channelName}
-              </SNSChannelName>
-            </DetailItem>
-          );
-        })}
+            return (
+              <DetailItem key={`${channelName}_${url}`}>
+                <SNSIcon
+                  width={hr * 16}
+                  height={hr * 16}
+                  fill={theme.colors.gray800}
+                />
+                <SNSChannelName
+                  onClick={() => {
+                    ga.send("sns_btn", {
+                      type,
+                      cafeName: cafe.name,
+                      channelName,
+                      url,
+                    });
+                    openURL(url);
+                  }}
+                >
+                  {channelName}
+                </SNSChannelName>
+              </DetailItem>
+            );
+          })}
         {/* 운영 시간 */}
         <DetailItem>
           <TimeSVGR
@@ -129,7 +142,7 @@ const CafeBriefInfoSection = ({ cafe }: IProps) => {
           {cafe.businessHour.businessDayList.length === 7
             ? "매일"
             : cafe.businessHour.businessDayList
-                .filter(isNotNull)
+                .filter(isNonNullable)
                 .reduce(
                   (prev, day, idx) =>
                     `${prev}${idx > 0 ? " " : ""}${dayToLocaleStringMap[day]}`,

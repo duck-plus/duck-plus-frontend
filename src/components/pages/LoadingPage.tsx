@@ -16,6 +16,7 @@ const LoadingPageFrame = styled.div`
   align-items: center;
   justify-content: center;
   gap: ${hScalePx(12)};
+  background-color: ${({ theme }) => theme.colors.white};
 
   ${({ theme }) => theme.fontFaces["body2/12-Medium"]};
 `;

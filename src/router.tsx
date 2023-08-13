@@ -1,18 +1,29 @@
 import { createBrowserRouter } from "react-router-dom";
-import { route, string } from "react-router-typesafe-routes/dom";
-import CafeList from "./components/pages/CafeListPage";
-import CafeDetail from "./components/pages/CafeDetailPage";
-import CafeMap from "./components/pages/CafeMapPage";
+import { number, route, string } from "react-router-typesafe-routes/dom";
+import CafeListPage from "./components/pages/CafeListPage";
+import CafeDetailPage from "./components/pages/CafeDetailPage";
+import CafeMapPage from "./components/pages/CafeMapPage";
 // import Home from "./components/pages/Home";
-import Calc from "./components/pages/CalcPage";
 import RouteErrorElement from "./components/atoms/RouteErrorElement";
 import App from "./components/App";
 import CommingSoon from "./components/pages/CommingSoonPage";
+import CalcResultPage from "./components/pages/CalcResultPage";
+import CalcPage from "./components/pages/CalcPage";
 
 // typed Routes
 export const ROUTES = {
   HOME: route("", {}),
-  CALC: route("calc", {}),
+  CALC: route(
+    "calc",
+    {},
+    {
+      RESULT: route("result", {
+        searchParams: {
+          dailyCharge: number().default(0),
+        },
+      }),
+    }
+  ),
   CAFE: route(
     "",
     {},
@@ -23,7 +34,11 @@ export const ROUTES = {
           code: string().default(""),
         },
       }),
-      MAP: route("cafe-map", {}),
+      MAP: route("cafe-map", {
+        searchParams: {
+          code: string().default(""),
+        },
+      }),
     }
   ),
 } as const;
@@ -39,21 +54,29 @@ const router = createBrowserRouter([
         // element: <Home />,
         element: <CommingSoon />,
       },
+
+      // Calc
       {
         path: ROUTES.CALC.path,
-        element: <Calc />,
+        element: <CalcPage />,
       },
       {
+        path: ROUTES.CALC.RESULT.relativePath,
+        element: <CalcResultPage />,
+      },
+
+      // Cafe
+      {
         path: ROUTES.CAFE.LIST.path,
-        element: <CafeList />,
+        element: <CafeListPage />,
       },
       {
         path: ROUTES.CAFE.DETAILS.path,
-        element: <CafeDetail />,
+        element: <CafeDetailPage />,
       },
       {
         path: ROUTES.CAFE.MAP.path,
-        element: <CafeMap />,
+        element: <CafeMapPage />,
       },
     ],
   },

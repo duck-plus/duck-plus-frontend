@@ -8,13 +8,14 @@ import { useGetCafeQuery } from "@/services/gql-outputs/graphql";
 import { useTypedSearchParams } from "react-router-typesafe-routes/dom";
 import { ROUTES } from "@/router";
 import useEmblaCarousel from "embla-carousel-react";
-import isNotNull from "@/utils/isNotNull";
+import isNonNullable from "@/utils/isNonNullable";
 import CafeBriefInfoSection from "../organisms/CafeBriefInfoSection";
 import CafeDetailedInfoSection from "../organisms/CafeDetailedInfoSection";
 import { Navigate } from "react-router";
 import openURL from "@/utils/openURL";
 import useBottomSheet from "@/hooks/useBottomSheet";
 import { ReactComponent as CloseSVGR } from "@/assets/svgr/ic/close.svg";
+import ga from "@/utils/ga";
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -196,7 +197,7 @@ const CafeDetailPage = () => {
   const hr = useHorizontalRatio();
 
   const landscapeImages = cafe?.imageFileList
-    .filter(isNotNull)
+    .filter(isNonNullable)
     .filter(({ category }) => category === "LANDSCAPE");
 
   return !code || !cafe ? (
@@ -240,7 +241,12 @@ const CafeDetailPage = () => {
             정보보기
           </ShowInfoButton>
         </FooterInfo>
-        <ContactButton onClick={() => openURL(cafe.askingUrl)}>
+        <ContactButton
+          onClick={() => {
+            ga.send("contact_btn", { cafeName: cafe.name });
+            openURL(cafe.askingUrl);
+          }}
+        >
           문의하기
         </ContactButton>
       </Footer>
