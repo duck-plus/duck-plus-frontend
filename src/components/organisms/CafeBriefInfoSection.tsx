@@ -4,10 +4,8 @@ import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
 import { ReactComponent as LocationSVGR } from "@/assets/svgr/ic/location.svg";
 import { ReactComponent as TimeSVGR } from "@/assets/svgr/ic/time.svg";
 import { ReactComponent as InstagramSVGR } from "@/assets/svgr/ic/instagram.svg";
-// FIXME) 카카오 svg 나오면 교체 필요
-import { ReactComponent as KakaoSVGR } from "@/assets/svgr/ic/instagram.svg";
-// FIXME) 트위터 svg 나오면 교체 필요
-import { ReactComponent as TwitterSVGR } from "@/assets/svgr/ic/instagram.svg";
+import { ReactComponent as KakaoSVGR } from "@/assets/svgr/ic/kakao.svg";
+import { ReactComponent as TwitterSVGR } from "@/assets/svgr/ic/twitter.svg";
 import styled, { useTheme } from "styled-components";
 import isNotNull from "@/utils/isNotNull";
 import openURL from "@/utils/openURL";
