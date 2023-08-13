@@ -119,6 +119,7 @@ const CafeBriefInfoSection = ({ cafe }: IProps) => {
                   onClick={() => {
                     ga.send("sns_btn", {
                       type,
+                      cafeName: cafe.name,
                       channelName,
                       url,
                     });

@@ -144,7 +144,7 @@ const CalcPage = () => {
     const dailyCharge = Number(cost.replace(/,/g, "")) / Number(dayCnt);
     ga.send("calc_btn", {
       cost,
-      dailyCharge,
+      dailyCharge: dailyCharge.toString(),
       dayCnt,
     });
     navigate(

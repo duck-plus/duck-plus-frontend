@@ -243,7 +243,7 @@ const CafeDetailPage = () => {
         </FooterInfo>
         <ContactButton
           onClick={() => {
-            ga.send("contact_btn", {});
+            ga.send("contact_btn", { cafeName: cafe.name });
             openURL(cafe.askingUrl);
           }}
         >
