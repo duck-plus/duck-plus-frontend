@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "@/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ga from "@/utils/ga";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,11 +20,7 @@ const App = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (process.env.REACT_APP_GA_ID) {
-      gtag("event", "page_view", {
-        send_to: process.env.REACT_APP_GA_ID,
-      });
-    }
+    ga.send("page_view", {});
   }, [location.pathname]);
 
   return (

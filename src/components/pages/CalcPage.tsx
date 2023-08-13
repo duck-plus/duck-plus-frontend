@@ -6,6 +6,7 @@ import HSeperator from "../atoms/HSeperator";
 import AppTopBar from "../organisms/AppTopBar";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/router";
+import ga from "@/utils/ga";
 
 const InputRow = styled.div`
   display: flex;
@@ -140,11 +141,17 @@ const CalcPage = () => {
   };
 
   const handleCalcClick = () => {
+    const dailyCharge = Number(cost.replace(/,/g, "")) / Number(dayCnt);
+    ga.send("calc_btn", {
+      cost,
+      dailyCharge,
+      dayCnt,
+    });
     navigate(
       ROUTES.CALC.RESULT.buildPath(
         {},
         {
-          dailyCharge: Number(cost.replace(/,/g, "")) / Number(dayCnt),
+          dailyCharge,
         }
       )
     );

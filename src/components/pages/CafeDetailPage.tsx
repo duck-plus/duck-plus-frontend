@@ -15,6 +15,7 @@ import { Navigate } from "react-router";
 import openURL from "@/utils/openURL";
 import useBottomSheet from "@/hooks/useBottomSheet";
 import { ReactComponent as CloseSVGR } from "@/assets/svgr/ic/close.svg";
+import ga from "@/utils/ga";
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -240,7 +241,12 @@ const CafeDetailPage = () => {
             정보보기
           </ShowInfoButton>
         </FooterInfo>
-        <ContactButton onClick={() => openURL(cafe.askingUrl)}>
+        <ContactButton
+          onClick={() => {
+            ga.send("contact_btn", {});
+            openURL(cafe.askingUrl);
+          }}
+        >
           문의하기
         </ContactButton>
       </Footer>
