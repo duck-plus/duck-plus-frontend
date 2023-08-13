@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { route, string } from "react-router-typesafe-routes/dom";
+import { number, route, string } from "react-router-typesafe-routes/dom";
 import CafeListPage from "./components/pages/CafeListPage";
 import CafeDetailPage from "./components/pages/CafeDetailPage";
 import CafeMapPage from "./components/pages/CafeMapPage";
@@ -7,12 +7,23 @@ import CafeMapPage from "./components/pages/CafeMapPage";
 import RouteErrorElement from "./components/atoms/RouteErrorElement";
 import App from "./components/App";
 import CommingSoon from "./components/pages/CommingSoonPage";
+import CalcResultPage from "./components/pages/CalcResultPage";
 import CalcPage from "./components/pages/CalcPage";
 
 // typed Routes
 export const ROUTES = {
   HOME: route("", {}),
-  CALC: route("calc", {}),
+  CALC: route(
+    "calc",
+    {},
+    {
+      RESULT: route("result", {
+        searchParams: {
+          dailyCharge: number().default(0),
+        },
+      }),
+    }
+  ),
   CAFE: route(
     "",
     {},
@@ -44,10 +55,17 @@ const router = createBrowserRouter([
         element: <CommingSoon />,
       },
 
+      // Calc
       {
         path: ROUTES.CALC.path,
         element: <CalcPage />,
       },
+      {
+        path: ROUTES.CALC.RESULT.relativePath,
+        element: <CalcResultPage />,
+      },
+
+      // Cafe
       {
         path: ROUTES.CAFE.LIST.path,
         element: <CafeListPage />,

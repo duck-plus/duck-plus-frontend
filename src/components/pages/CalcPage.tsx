@@ -4,6 +4,8 @@ import { styled } from "styled-components";
 import { hScalePx } from "@/hooks/useHorizontalRatio";
 import HSeperator from "../atoms/HSeperator";
 import AppTopBar from "../organisms/AppTopBar";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/router";
 
 const InputRow = styled.div`
   display: flex;
@@ -100,6 +102,7 @@ const CalcButton = styled.button`
 const CalcPage = () => {
   const [dayCnt, setDayCnt] = useState<string>("");
   const [cost, setCost] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleCntChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.value === "") {
@@ -137,7 +140,14 @@ const CalcPage = () => {
   };
 
   const handleCalcClick = () => {
-    alert("TODO) 견적내기 Page 연동");
+    navigate(
+      ROUTES.CALC.RESULT.buildPath(
+        {},
+        {
+          dailyCharge: Number(cost.replace(/,/g, "")) / Number(dayCnt),
+        }
+      )
+    );
   };
 
   return (

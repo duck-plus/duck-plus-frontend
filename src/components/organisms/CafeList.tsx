@@ -219,12 +219,11 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
 };
 
 interface IProps {
-  feature: string | undefined;
-  region: string;
+  filter: Parameters<typeof useFilteredCafeList>[0];
 }
 // 카페 목록
-const CafeList = ({ feature, region }: IProps) => {
-  const { data: cafeList } = useFilteredCafeList(feature, region);
+const CafeList = ({ filter }: IProps) => {
+  const { data: cafeList } = useFilteredCafeList(filter);
 
   return (
     <ScrollFrame>
