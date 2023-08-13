@@ -2,6 +2,7 @@ type EventParamsMap = {
   page_view: {};
   contact_btn: {};
   calc_btn: { dayCnt: string; cost: string; dailyCharge: number };
+  sns_btn: { type: string; url: string; channelName: string };
 };
 
 type EventName = keyof EventParamsMap;

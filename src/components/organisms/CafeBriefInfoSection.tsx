@@ -9,6 +9,7 @@ import { ReactComponent as TwitterSVGR } from "@/assets/svgr/ic/twitter.svg";
 import styled, { useTheme } from "styled-components";
 import isNonNullable from "@/utils/isNonNullable";
 import openURL from "@/utils/openURL";
+import ga from "@/utils/ga";
 
 const BreifIntro = styled.div`
   padding: ${hScalePx(16)} ${hScalePx(20)} ${hScalePx(12)} ${hScalePx(20)};
@@ -114,7 +115,16 @@ const CafeBriefInfoSection = ({ cafe }: IProps) => {
                   height={hr * 16}
                   fill={theme.colors.gray800}
                 />
-                <SNSChannelName onClick={() => openURL(url)}>
+                <SNSChannelName
+                  onClick={() => {
+                    ga.send("sns_btn", {
+                      type,
+                      channelName,
+                      url,
+                    });
+                    openURL(url);
+                  }}
+                >
                   {channelName}
                 </SNSChannelName>
               </DetailItem>
