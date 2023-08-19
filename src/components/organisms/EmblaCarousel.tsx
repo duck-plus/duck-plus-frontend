@@ -15,8 +15,9 @@ const Container = styled.div.attrs((props) => ({
 const Slide = styled.div.attrs((props) => ({
   className: `${props.className || "default"} embla__slide`,
 }))`
-  flex: 0 0 100%;
+  width: 100%;
   min-width: 0;
+  flex-shrink: 0;
 `;
 
 const EmblaCarousel = {
