@@ -31,18 +31,6 @@ const Slide = styled(EmblaCarousel.Slide)`
   }
 `;
 
-const OverlayContainer = styled.div`
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
-  background-position: 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-`;
-
 const PaginationContainer = styled.div`
   position: absolute;
   flex-direction: row;
@@ -94,12 +82,9 @@ const MainCurationSection = () => {
     <CafeCarousel ref={emblaRef}>
       <Container>
         {mainBannerData?.imageFileList?.filter(isNonNullable).map((item, index) => (
-          <>
-            <Slide onClick={() => handleCafeClick(item.cafeCode)} key={item.cafeCode}>
-              <img alt={'main-cafe-banner'} src={item.url} />
-              <OverlayContainer />
-            </Slide>
-          </>
+          <Slide onClick={() => handleCafeClick(item.cafeCode)} key={item.cafeCode}>
+            <img alt={'main-cafe-banner'} src={item.url} />
+          </Slide>
         ))}
         <PaginationContainer className="slide-index">
           <SlideIndex $current>{selectedImageIdx + 1}</SlideIndex>
