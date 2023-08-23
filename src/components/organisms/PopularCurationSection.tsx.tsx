@@ -35,7 +35,6 @@ const Slide = styled(EmblaCarousel.Slide)`
     object-fit: cover;
   }
   flex-direction: column;
-
   &::after {
     background-color: #000000;
     opacity: 0.1;

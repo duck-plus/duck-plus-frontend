@@ -23,19 +23,13 @@ const Slide = styled(EmblaCarousel.Slide)`
   position: relative;
   width: 100%;
   aspect-ratio: 20/21;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%),
+    url(<path-to-image>), lightgray 50% / cover no-repeat;
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     position: relative;
-    &::after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      content: '';
-    }
   }
 `;
 
@@ -106,14 +100,14 @@ const MainCurationSection = () => {
                 }
               />
             </Slide>
-            <PaginationContainer className="slide-index">
-              <SlideIndex current>{index + 1}</SlideIndex>
-              <VerticalSep />
-              <SlideIndex>{CafeCurations?.cafeList?.length}</SlideIndex>
-              <ICArrowRightSVGR width={hr * 12} height={hr * 12} fill={theme.colors.white} />
-            </PaginationContainer>
           </>
         ))}
+        <PaginationContainer className="slide-index">
+          <SlideIndex current>{selectedImageIdx + 1}</SlideIndex>
+          <VerticalSep />
+          <SlideIndex>{CafeCurations?.cafeList?.length}</SlideIndex>
+          <ICArrowRightSVGR width={hr * 12} height={hr * 12} fill={theme.colors.white} />
+        </PaginationContainer>
       </Container>
     </CafeCarousel>
   );
