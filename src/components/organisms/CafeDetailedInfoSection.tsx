@@ -293,7 +293,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
         )}
 
         {/* 특이사항 */}
-        {!cafe?.remarkList ? null : (
+        {!cafe?.remarkList || !cafe.remarkList.length ? null : (
           <>
             <DetailedInfo>
               <Title>특이사항</Title>
@@ -313,7 +313,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
         <DetailedInfo ref={ref1}>
           <Title>지원특전목록</Title>
           <InfoList>
-            {!specialBenefitList ? (
+            {!specialBenefitList || specialBenefitList.length ? (
               <InfoListItem>정보 없음</InfoListItem>
             ) : (
               specialBenefitList.map(benefit => (
