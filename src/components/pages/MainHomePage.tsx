@@ -8,7 +8,6 @@ import { ROUTES } from '@/router';
 import { ReactComponent as ICArrowRightSVGR } from '@/assets/svgr/ic/arrow-line-right.svg';
 import MainCurationSection from '../organisms/MainCurationSection';
 import CafeSortButtonList from '../organisms/CafeSortButtonList';
-import NewOpenCuraionSection from '../organisms/NewOpenCurationSection';
 import CustomGoodsSection from '../organisms/CustomGoodsSection';
 import ConceptCurationSection from '../organisms/ConceptCurationSection';
 import FreeFeeCurationSection from '../organisms/FreeFeeCurationSection';

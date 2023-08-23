@@ -38,6 +38,18 @@ const Slide = styled(EmblaCarousel.Slide)`
   flex-direction: column;
 `;
 
+const OverlayContainer = styled.div`
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  background-position: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+`;
+
 const Badge = styled.div`
   border-radius: 100px;
   background: ${({ theme }) => theme.colors.black};
@@ -96,7 +108,6 @@ const FreeFeeCurationSection = () => {
         <Container>
           {CafeCurations?.cafeList?.filter(isNonNullable).map((cafe, index) => (
             <Slide key={cafe.code} onClick={() => handleCafeClick(cafe.code)}>
-              <Badge>FREE</Badge>
               <img
                 alt={cafe.name}
                 src={
@@ -109,6 +120,8 @@ const FreeFeeCurationSection = () => {
                   width: 'auto',
                 }}
               />
+              <OverlayContainer />
+              <Badge>FREE</Badge>
               <CafeName>{cafe.name}</CafeName>
               <HashTags>{cafe.hashtag}</HashTags>
             </Slide>

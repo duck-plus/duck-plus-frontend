@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import EmblaCarousel from '../organisms/EmblaCarousel';
 import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
-import useEmblaCarousel from 'embla-carousel-react';
+import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
 import isNonNullable from '@/utils/isNonNullable';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '@/router';
@@ -23,14 +23,24 @@ const Slide = styled(EmblaCarousel.Slide)`
   position: relative;
   width: 100%;
   aspect-ratio: 20/21;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%),
-    url(<path-to-image>), lightgray 50% / cover no-repeat;
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     position: relative;
   }
+`;
+
+const OverlayContainer = styled.div`
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  background-position: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 `;
 
 const PaginationContainer = styled.div`
@@ -69,11 +79,6 @@ const MainCurationSection = () => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
   };
 
-  const handleDotClick = (e: React.MouseEvent, idx: number) => {
-    e.stopPropagation();
-    emblaApi?.scrollTo(idx);
-  };
-
   const { data: CafeCurations } = useGetCafeCurationsQuery();
 
   useEffect(() => {
@@ -90,7 +95,7 @@ const MainCurationSection = () => {
       <Container>
         {CafeCurations?.cafeList?.filter(isNonNullable).map((cafe, index) => (
           <>
-            <Slide key={cafe.code}>
+            <Slide onClick={() => handleCafeClick(cafe.code)} key={cafe.code}>
               <img
                 alt={cafe.name}
                 src={
@@ -99,6 +104,7 @@ const MainCurationSection = () => {
                     .filter(({ category }) => category === 'BANNER')[0]?.url
                 }
               />
+              <OverlayContainer />
             </Slide>
           </>
         ))}
