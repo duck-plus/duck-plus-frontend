@@ -241,7 +241,11 @@ const CafeDetailPage = () => {
       <Footer>
         <FooterInfo>
           <FeeRow>
-            <Fee>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Fee>
+            <Fee>
+              {cafe.feeInfo.dailyCharge
+                ? `${cafe.feeInfo.dailyCharge.toLocaleString()}원~`
+                : '무료'}
+            </Fee>
             <Unit>/일</Unit>
           </FeeRow>
           <ShowInfoButton onClick={() => setShowFeeInfo(true)}>정보보기</ShowInfoButton>
@@ -272,7 +276,11 @@ const CafeDetailPage = () => {
               <FeeTitle>평균 대관료</FeeTitle>
               <FeeInfoDesc>
                 <FeeDesc>1일 평균 가격</FeeDesc>
-                <FeeDesc>{cafe.feeInfo.dailyCharge.toLocaleString()}원</FeeDesc>
+                <FeeDesc>
+                  {cafe.feeInfo.dailyCharge
+                    ? `${cafe.feeInfo.dailyCharge.toLocaleString()}원`
+                    : '무료'}
+                </FeeDesc>
               </FeeInfoDesc>
               <FeeDisclaimer>
                 *가격은 카페마다 상이하며 정확한 가격은 문의를 통해 확인해주세요
@@ -282,7 +290,9 @@ const CafeDetailPage = () => {
             <FeeInfo>
               <FeeTitle>최소 보증인원</FeeTitle>
               <FeeInfoDesc>
-                <FeeDesc>{cafe.feeInfo.guaranteeCount}명</FeeDesc>
+                <FeeDesc>
+                  {cafe.feeInfo.guaranteeCount === 0 ? '없음' : `${cafe.feeInfo.guaranteeCount}명`}
+                </FeeDesc>
               </FeeInfoDesc>
             </FeeInfo>
           </FeeInfoContent>

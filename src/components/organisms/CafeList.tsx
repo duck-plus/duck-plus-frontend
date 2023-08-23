@@ -217,7 +217,9 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
         </DescItem>
         {/* 금액 관련 */}
         <DescItem>
-          <Price>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Price>
+          <Price>
+            {cafe.feeInfo.dailyCharge ? `${cafe.feeInfo.dailyCharge.toLocaleString()}원~` : '무료'}
+          </Price>
           <Disclaimer>
             /일 기준
             <VerticalSep />
