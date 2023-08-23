@@ -12,6 +12,7 @@ import CustomGoodsSection from '../organisms/CustomGoodsSection';
 import ConceptCurationSection from '../organisms/ConceptCurationSection';
 import FreeFeeCurationSection from '../organisms/FreeFeeCurationSection';
 import PopularCurationSection from '../organisms/PopularCurationSection';
+import NewOpenCuraionSection from '../organisms/NewOpenCurationSection';
 
 const CalcNaviBarHeight = hScalePx(44);
 
@@ -78,6 +79,7 @@ const HomePage = () => {
       <ConceptCurationSection />
       <FreeFeeCurationSection />
       <PopularCurationSection />
+      <NewOpenCuraionSection />
     </PageFrame>
   );
 };
