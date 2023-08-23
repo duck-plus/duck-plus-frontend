@@ -26,7 +26,6 @@ const ButtonContainer = styled.button`
 
 const ButtonImgContianer = styled.div`
   display: flex;
-  /* padding: ${hScalePx(16)} ${hScalePx(14)}; */
   justify-content: center;
   align-items: center;
   width: ${hScalePx(52)};

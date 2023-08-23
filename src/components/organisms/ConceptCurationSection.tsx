@@ -22,6 +22,29 @@ const Container = styled(EmblaCarousel.Container)`
   gap: ${hScalePx(4)};
 `;
 
+const ButtonContainer = styled.div`
+  flex-direction: row;
+  gap: ${hScalePx(6)};
+  display: flex;
+  width: 100%;
+  padding-left: ${hScalePx(20)};
+  margin-bottom: ${hScalePx(16)};
+`;
+
+const ConceptButton = styled.button<{ selected?: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: ${hScalePx(4)} ${hScalePx(12)};
+  background-color: ${({ theme, selected }) =>
+    selected ? theme.colors.black : theme.colors.white};
+  border-radius: ${hScalePx(100)};
+  ${({ theme }) => theme.fontFaces['body2/12-Regular']};
+  color: ${({ theme, selected }) => (selected ? theme.colors.white : theme.colors.gray800)};
+  border: ${hScalePx(1)} solid
+    ${({ theme, selected }) => (selected ? theme.colors.white : theme.colors.gray100)};
+`;
+
 // carousel slide item
 const Slide = styled(EmblaCarousel.Slide)`
   width: ${hScalePx(152)};
@@ -69,11 +92,33 @@ const OPTIONS: EmblaOptionsType = {
   containScroll: 'trimSnaps',
 };
 
+const concepts = [
+  {
+    id: 0,
+    text: '모던',
+  },
+  {
+    id: 1,
+    text: '아기자기',
+  },
+  {
+    id: 2,
+    text: '코지',
+  },
+  {
+    id: 3,
+    text: '내추럴',
+  },
+];
+
 const ConceptCurationSection = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
   const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
+  const [selectedButtonIdx, setSelectedButtonIdx] = useState<number>(0);
   const navigate = useNavigate();
-  const { data: CafeCurations } = useGetCafeCurationsQuery({ args: { feature: '무료대관' } });
+  const { data: CafeCurations } = useGetCafeCurationsQuery({
+    args: { concept: concepts.find(concept => concept.id === selectedButtonIdx)?.text },
+  });
 
   const handleCafeClick = (cafeCode: string) => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
@@ -88,6 +133,16 @@ const ConceptCurationSection = () => {
   return (
     <>
       <CurationHeader title={'내 아이돌과 어울리는 컨셉 카페'} />
+      <ButtonContainer>
+        {concepts.map((item, idx) => (
+          <ConceptButton
+            onClick={() => setSelectedButtonIdx(idx)}
+            selected={idx === selectedButtonIdx}
+          >
+            {item.text}
+          </ConceptButton>
+        ))}
+      </ButtonContainer>
       <CafeCarousel ref={emblaRef}>
         <Container>
           {CafeCurations?.cafeList?.filter(isNonNullable).map(cafe => (
