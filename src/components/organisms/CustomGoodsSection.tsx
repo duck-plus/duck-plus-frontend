@@ -83,7 +83,7 @@ const CustomGoodsSection = () => {
                 src={
                   cafe.imageFileList
                     .filter(isNonNullable)
-                    .filter(({ category }) => category === 'LANDSCAPE')[0].url
+                    .filter(({ category }) => category === 'LANDSCAPE')[0]?.url
                 }
               />
               <CafeName>{cafe.name}</CafeName>

@@ -103,7 +103,7 @@ const FreeFeeCurationSection = () => {
                 src={
                   cafe.imageFileList
                     .filter(isNonNullable)
-                    .filter(({ category }) => category === 'LANDSCAPE')[0].url
+                    .filter(({ category }) => category === 'LANDSCAPE')[0]?.url
                 }
                 style={{
                   height: index === selectedImageIdx ? hr * 328 : hr * 304,
