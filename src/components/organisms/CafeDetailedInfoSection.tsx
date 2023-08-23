@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Cafe } from "@/services/gql-outputs/graphql";
+import { useGetCafeQuery } from "@/services/gql-outputs/graphql";
 import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
 import styled, { useTheme } from "styled-components";
 import AppTopBar from "./AppTopBar";
@@ -176,18 +176,28 @@ const InfoListItem = ({ children }: React.PropsWithChildren) => {
 };
 
 interface IProps {
-  cafe: Cafe;
+  cafeCode: string;
 }
 
 /** 카페 상세 페이지 > 상세 정보들 */
-const CafeDetailedInfoSection = ({ cafe }: IProps) => {
+const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
+  const { data: cafe } = useGetCafeQuery(
+    {
+      code: cafeCode,
+    },
+    {
+      enabled: !!cafeCode,
+      select: (s) => s.cafe,
+    }
+  );
+
   const theme = useTheme();
 
-  const facilityList = splitToArray(cafe.specialBenefit);
+  const facilityList = splitToArray(cafe?.specialBenefit);
 
-  const specialBenefitList = splitToArray(cafe.specialBenefit);
+  const specialBenefitList = splitToArray(cafe?.specialBenefit);
 
-  const menuImage = cafe.imageFileList?.find((s) => s?.category === "MENU");
+  const menuImage = cafe?.imageFileList?.find((s) => s?.category === "MENU");
   const mapElement = useRef<HTMLDivElement>(null);
 
   // navbar selection
@@ -210,7 +220,7 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
     if (!mapElement.current || !naver || !cafe) return;
 
     // 지도에 표시할 중심/마커의 위도와 경도 좌표.
-    const [lng, lat] = cafe.address.location?.coordinates || [0, 0];
+    const [lng, lat] = cafe?.address.location?.coordinates || [0, 0];
     const location = new naver.maps.LatLng(lat, lng);
 
     // 맵 생성
@@ -266,7 +276,7 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
       <div ref={observers[0]}>
         <DetailedInfo ref={ref0}>
           <Title>카페정보</Title>
-          <Info>{cafe.detailedInfo}</Info>
+          <Info>{cafe?.detailedInfo}</Info>
         </DetailedInfo>
         <HorSep />
 
@@ -286,12 +296,12 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
         )}
 
         {/* 특이사항 */}
-        {!cafe.remarkList ? null : (
+        {!cafe?.remarkList ? null : (
           <>
             <DetailedInfo>
               <Title>특이사항</Title>
               <InfoTags>
-                {cafe.remarkList.map((benefit) => (
+                {cafe?.remarkList.map((benefit) => (
                   <InfoTag key={benefit}>{benefit}</InfoTag>
                 ))}
               </InfoTags>
@@ -354,10 +364,12 @@ const CafeDetailedInfoSection = ({ cafe }: IProps) => {
       <div ref={observers[3]}>
         <DetailedInfo ref={ref3}>
           <Title>상세위치</Title>
-          <MapContainer to={ROUTES.CAFE.MAP.buildPath({}, { code: cafe.code })}>
+          <MapContainer
+            to={ROUTES.CAFE?.MAP.buildPath({}, { code: cafe?.code })}
+          >
             <NaverMap ref={mapElement} />
             <MapOverlay>
-              {cafe.address.briefAddress} {cafe.address.detailedAddress}
+              {cafe?.address.briefAddress} {cafe?.address.detailedAddress}
             </MapOverlay>
           </MapContainer>
         </DetailedInfo>

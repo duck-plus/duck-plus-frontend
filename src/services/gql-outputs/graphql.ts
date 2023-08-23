@@ -16,6 +16,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
   /**
    * GPS 좌표를 나타내는 스칼라 타입
    *
@@ -34,6 +35,8 @@ export type Cafe = {
   code: Scalars['ID']['output'];
   /** 컨셉 ex.) 힙한 무드, 우드톤 무드, 핑크 무드 ... */
   concept?: Maybe<Scalars['String']['output']>;
+  /** UTC time 사용 */
+  createdAt?: Maybe<Scalars['Date']['output']>;
   detailedInfo: Scalars['String']['output'];
   /** 시설 안내 */
   facility?: Maybe<Scalars['String']['output']>;
@@ -98,6 +101,10 @@ export type CafeFeeInfo = {
 
 export type CafeQryArgs = {
   concept?: InputMaybe<Scalars['String']['input']>;
+  /** UTC time 사용 */
+  createdAtFrom?: InputMaybe<Scalars['Date']['input']>;
+  /** UTC time 사용 */
+  createdAtTo?: InputMaybe<Scalars['Date']['input']>;
   feature?: InputMaybe<Scalars['String']['input']>;
   isPopular?: InputMaybe<Scalars['Boolean']['input']>;
   isSpecialBenefitCustomable?: InputMaybe<Scalars['Boolean']['input']>;
@@ -114,6 +121,8 @@ export type Day =
   | 'WED';
 
 export type FileCategory =
+  /** 대형 배너 */
+  | 'BANNER'
   /** 카페 사진 */
   | 'LANDSCAPE'
   /** 메뉴 사진 */
@@ -123,15 +132,22 @@ export type FileCategory =
 
 export type ImageFile = {
   __typename?: 'ImageFile';
+  cafeCode: Scalars['String']['output'];
   category: FileCategory;
   filename: Scalars['String']['output'];
   url: Scalars['String']['output'];
+};
+
+export type ImageFileQryArgs = {
+  cafeCode?: InputMaybe<Scalars['ID']['input']>;
+  category?: InputMaybe<FileCategory>;
 };
 
 export type Query = {
   __typename?: 'Query';
   cafe?: Maybe<Cafe>;
   cafeList?: Maybe<Array<Maybe<Cafe>>>;
+  imageFileList?: Maybe<Array<Maybe<ImageFile>>>;
 };
 
 
@@ -142,6 +158,11 @@ export type QuerycafeArgs = {
 
 export type QuerycafeListArgs = {
   args?: InputMaybe<CafeQryArgs>;
+};
+
+
+export type QueryimageFileListArgs = {
+  args?: InputMaybe<ImageFileQryArgs>;
 };
 
 export type Sns = {
@@ -172,7 +193,7 @@ export type GetCafeListQuery = { __typename?: 'Query', cafeList?: Array<{ __type
 export const GetCafeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCafe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cafe"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"briefInfo"}},{"kind":"Field","name":{"kind":"Name","value":"detailedInfo"}},{"kind":"Field","name":{"kind":"Name","value":"imageFileList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"snsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"channelName"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"askingUrl"}},{"kind":"Field","name":{"kind":"Name","value":"seatCount"}},{"kind":"Field","name":{"kind":"Name","value":"facility"}},{"kind":"Field","name":{"kind":"Name","value":"specialBenefit"}},{"kind":"Field","name":{"kind":"Name","value":"hashtag"}},{"kind":"Field","name":{"kind":"Name","value":"remarkList"}},{"kind":"Field","name":{"kind":"Name","value":"featureList"}},{"kind":"Field","name":{"kind":"Name","value":"concept"}},{"kind":"Field","name":{"kind":"Name","value":"isSpecialBenefitCustomable"}},{"kind":"Field","name":{"kind":"Name","value":"isPopular"}},{"kind":"Field","name":{"kind":"Name","value":"region"}},{"kind":"Field","name":{"kind":"Name","value":"businessHour"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"openingTime"}},{"kind":"Field","name":{"kind":"Name","value":"closingTime"}},{"kind":"Field","name":{"kind":"Name","value":"businessDayList"}},{"kind":"Field","name":{"kind":"Name","value":"workingOnHoliday"}}]}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sigungu"}},{"kind":"Field","name":{"kind":"Name","value":"briefAddress"}},{"kind":"Field","name":{"kind":"Name","value":"detailedAddress"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}},{"kind":"Field","name":{"kind":"Name","value":"feeInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"minPeriod"}},{"kind":"Field","name":{"kind":"Name","value":"dailyCharge"}},{"kind":"Field","name":{"kind":"Name","value":"guaranteeCount"}},{"kind":"Field","name":{"kind":"Name","value":"depositAmount"}},{"kind":"Field","name":{"kind":"Name","value":"bookingAmount"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]}}]} as unknown as DocumentNode<GetCafeQuery, GetCafeQueryVariables>;
 export const GetCafeListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCafeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cafeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"briefInfo"}},{"kind":"Field","name":{"kind":"Name","value":"detailedInfo"}},{"kind":"Field","name":{"kind":"Name","value":"imageFileList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"snsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"channelName"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"askingUrl"}},{"kind":"Field","name":{"kind":"Name","value":"seatCount"}},{"kind":"Field","name":{"kind":"Name","value":"facility"}},{"kind":"Field","name":{"kind":"Name","value":"specialBenefit"}},{"kind":"Field","name":{"kind":"Name","value":"hashtag"}},{"kind":"Field","name":{"kind":"Name","value":"remarkList"}},{"kind":"Field","name":{"kind":"Name","value":"featureList"}},{"kind":"Field","name":{"kind":"Name","value":"concept"}},{"kind":"Field","name":{"kind":"Name","value":"isSpecialBenefitCustomable"}},{"kind":"Field","name":{"kind":"Name","value":"isPopular"}},{"kind":"Field","name":{"kind":"Name","value":"region"}},{"kind":"Field","name":{"kind":"Name","value":"businessHour"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"openingTime"}},{"kind":"Field","name":{"kind":"Name","value":"closingTime"}},{"kind":"Field","name":{"kind":"Name","value":"businessDayList"}},{"kind":"Field","name":{"kind":"Name","value":"workingOnHoliday"}}]}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sigungu"}},{"kind":"Field","name":{"kind":"Name","value":"briefAddress"}},{"kind":"Field","name":{"kind":"Name","value":"detailedAddress"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}},{"kind":"Field","name":{"kind":"Name","value":"feeInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"minPeriod"}},{"kind":"Field","name":{"kind":"Name","value":"dailyCharge"}},{"kind":"Field","name":{"kind":"Name","value":"guaranteeCount"}},{"kind":"Field","name":{"kind":"Name","value":"depositAmount"}},{"kind":"Field","name":{"kind":"Name","value":"bookingAmount"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]}}]} as unknown as DocumentNode<GetCafeListQuery, GetCafeListQueryVariables>;
 export const DAY = ['FRI', 'MON', 'SAT', 'SUN', 'THU', 'TUE', 'WED'] as const;
-export const FILE_CATEGORY = ['LANDSCAPE', 'MENU', 'THUMBNAIL'] as const;
+export const FILE_CATEGORY = ['BANNER', 'LANDSCAPE', 'MENU', 'THUMBNAIL'] as const;
 export const SNS_TYPE = ['INSTAGRAM', 'KAKAO', 'TWITTER'] as const;
 
 export const GetCafeQueryString = `

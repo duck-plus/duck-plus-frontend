@@ -1,5 +1,5 @@
 import React from "react";
-import { Cafe, Day } from "@/services/gql-outputs/graphql";
+import { Day, useGetCafeQuery } from "@/services/gql-outputs/graphql";
 import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
 import { ReactComponent as LocationSVGR } from "@/assets/svgr/ic/location.svg";
 import { ReactComponent as TimeSVGR } from "@/assets/svgr/ic/time.svg";
@@ -74,17 +74,27 @@ const NoHolidayBadge = styled.div`
 `;
 
 interface IProps {
-  cafe: Cafe;
+  cafeCode: string;
 }
 
-const CafeBriefInfoSection = ({ cafe }: IProps) => {
+const CafeBriefInfoSection = ({ cafeCode }: IProps) => {
   const hr = useHorizontalRatio();
   const theme = useTheme();
+  const { data: cafe } = useGetCafeQuery(
+    {
+      code: cafeCode,
+    },
+    {
+      enabled: !!cafeCode,
+      select: (s) => s.cafe,
+    }
+  );
+
   return (
     <div>
       <BreifIntro>
-        <Name>{cafe.name}</Name>
-        <BriefIntro>{cafe.briefInfo}</BriefIntro>
+        <Name>{cafe?.name}</Name>
+        <BriefIntro>{cafe?.briefInfo}</BriefIntro>
       </BreifIntro>
       <HorSep></HorSep>
       <CafeBriefInfo>
@@ -95,10 +105,10 @@ const CafeBriefInfoSection = ({ cafe }: IProps) => {
             height={hr * 16}
             fill={theme.colors.gray800}
           />
-          {cafe.address.briefAddress}
+          {cafe?.address.briefAddress}
         </DetailItem>
         {/* SNS */}
-        {cafe.snsList
+        {cafe?.snsList
           .filter(isNonNullable)
           .map(({ type, channelName, url }) => {
             const SNSIcon =
@@ -139,9 +149,9 @@ const CafeBriefInfoSection = ({ cafe }: IProps) => {
             fill={theme.colors.gray800}
           />
           {/* 요일 */}
-          {cafe.businessHour.businessDayList.length === 7
+          {cafe?.businessHour.businessDayList.length === 7
             ? "매일"
-            : cafe.businessHour.businessDayList
+            : cafe?.businessHour.businessDayList
                 .filter(isNonNullable)
                 .reduce(
                   (prev, day, idx) =>
@@ -149,9 +159,9 @@ const CafeBriefInfoSection = ({ cafe }: IProps) => {
                   ""
                 ) + " "}
           {/* 시간 */}
-          {cafe.businessHour.openingTime}~{cafe.businessHour.closingTime}
+          {cafe?.businessHour.openingTime}~{cafe?.businessHour.closingTime}
           {/* 휴일에도 운영 하면 휴무없음 딱지*/}
-          {cafe.businessHour.workingOnHoliday ? (
+          {cafe?.businessHour.workingOnHoliday ? (
             <NoHolidayBadge>휴무없음</NoHolidayBadge>
           ) : null}
         </DetailItem>
