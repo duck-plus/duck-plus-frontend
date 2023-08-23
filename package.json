@@ -34,6 +34,7 @@
     "react-scripts": "5.0.1",
     "react-tabs": "^6.0.2",
     "resize-observer-polyfill": "^1.5.1",
+    "rimraf": "^5.0.1",
     "simplebar": "^6.2.5",
     "simplebar-react": "^3.2.4",
     "styled-components": "^6.0.5",
@@ -50,7 +51,7 @@
     "_codegen": "graphql-codegen --config src/services/gqlCodegenConfig.ts --watch",
     "eject": "react-scripts eject",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org duckplus-0200c069e --project duckplus-frontend ./build",
-    "postbuild": "rm -rf ./build/**/*.js.map"
+    "postbuild": "rimraf --glob ./build/**/*.js.map"
   },
   "eslintConfig": {
     "extends": [
