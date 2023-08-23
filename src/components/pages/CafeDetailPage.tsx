@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import PageFrame from "../atoms/PageFrame";
-import AppTopBar from "../organisms/AppTopBar";
-import styled from "styled-components";
-import EmblaCarousel from "../organisms/EmblaCarousel";
-import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
-import { useGetCafeQuery } from "@/services/gql-outputs/graphql";
-import { useTypedSearchParams } from "react-router-typesafe-routes/dom";
-import { ROUTES } from "@/router";
-import useEmblaCarousel from "embla-carousel-react";
-import isNonNullable from "@/utils/isNonNullable";
-import CafeBriefInfoSection from "../organisms/CafeBriefInfoSection";
-import CafeDetailedInfoSection from "../organisms/CafeDetailedInfoSection";
-import { Navigate } from "react-router";
-import openURL from "@/utils/openURL";
-import useBottomSheet from "@/hooks/useBottomSheet";
-import { ReactComponent as CloseSVGR } from "@/assets/svgr/ic/close.svg";
-import ga from "@/utils/ga";
+import React, { useEffect, useState } from 'react';
+import PageFrame from '../atoms/PageFrame';
+import AppTopBar from '../organisms/AppTopBar';
+import styled from 'styled-components';
+import EmblaCarousel from '../organisms/EmblaCarousel';
+import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
+import { useGetCafeQuery } from '@/services/gql-outputs/graphql';
+import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
+import { ROUTES } from '@/router';
+import useEmblaCarousel from 'embla-carousel-react';
+import isNonNullable from '@/utils/isNonNullable';
+import CafeBriefInfoSection from '../organisms/CafeBriefInfoSection';
+import CafeDetailedInfoSection from '../organisms/CafeDetailedInfoSection';
+import { Navigate } from 'react-router';
+import openURL from '@/utils/openURL';
+import useBottomSheet from '@/hooks/useBottomSheet';
+import { ReactComponent as CloseSVGR } from '@/assets/svgr/ic/close.svg';
+import ga from '@/utils/ga';
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -36,6 +36,17 @@ const Slide = styled(EmblaCarousel.Slide)`
     height: 100%;
     object-fit: cover;
   }
+
+  &::after {
+    background-color: #000000;
+    opacity: 0.1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+  }
 `;
 
 const CarouselDots = styled.div`
@@ -51,7 +62,7 @@ const CarouselDot = styled.div<{ selected: boolean }>`
   width: ${hScalePx(6)};
   height: ${hScalePx(6)};
   background-color: ${({ selected, theme }) =>
-    selected ? theme.colors.white : "rgba(255, 255, 255, 0.6)"};
+    selected ? theme.colors.white : 'rgba(255, 255, 255, 0.6)'};
   border-radius: 100%;
   cursor: pointer;
 `;
@@ -82,12 +93,12 @@ const FeeRow = styled.div`
 `;
 
 const Fee = styled.div`
-  ${({ theme }) => theme.fontFaces["body1/14-Medium"]};
+  ${({ theme }) => theme.fontFaces['body1/14-Medium']};
   color: ${({ theme }) => theme.colors.black};
 `;
 
 const Unit = styled.div`
-  ${({ theme }) => theme.fontFaces["caption/10-Regular"]};
+  ${({ theme }) => theme.fontFaces['caption/10-Regular']};
   color: ${({ theme }) => theme.colors.gray500};
 `;
 
@@ -110,7 +121,7 @@ const SheetContent = styled.div`
   padding: ${hScalePx(16)} 0 ${hScalePx(4)} 0;
 `;
 const SheetTitle = styled.div`
-  ${({ theme }) => theme.fontFaces["body1/14-Medium"]};
+  ${({ theme }) => theme.fontFaces['body1/14-Medium']};
   color: ${({ theme }) => theme.colors.gray900};
   width: 100%;
   height: ${hScalePx(20)};
@@ -133,7 +144,7 @@ const FeeInfo = styled.div`
   margin: ${hScalePx(12)} 0;
 `;
 const FeeTitle = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Medium"]};
+  ${({ theme }) => theme.fontFaces['body2/12-Medium']};
   color: ${({ theme }) => theme.colors.gray900};
   margin: 0 0 ${hScalePx(6)} 0;
 `;
@@ -142,11 +153,11 @@ const FeeInfoDesc = styled.div`
   gap: ${hScalePx(12)};
 `;
 const FeeDesc = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  ${({ theme }) => theme.fontFaces['body2/12-Regular']};
   color: ${({ theme }) => theme.colors.gray800};
 `;
 const FeeDisclaimer = styled.div`
-  ${({ theme }) => theme.fontFaces["caption/10-Regular"]};
+  ${({ theme }) => theme.fontFaces['caption/10-Regular']};
   color: ${({ theme }) => theme.colors.gray500};
   margin: ${hScalePx(12)} 0 0 0;
 `;
@@ -154,7 +165,7 @@ const FeeDisclaimer = styled.div`
 const ContactButton = styled.button`
   cursor: pointer;
   padding: ${hScalePx(12)} ${hScalePx(46)};
-  ${({ theme }) => theme.fontFaces["body1/14-Regular"]};
+  ${({ theme }) => theme.fontFaces['body1/14-Regular']};
   color: ${({ theme }) => theme.colors.white};
   outline: 0;
   border: 0;
@@ -170,15 +181,11 @@ const CafeDetailPage = () => {
     },
     {
       enabled: !!code,
-      select: (s) => s.cafe,
+      select: s => s.cafe,
     }
   );
 
-  const {
-    setShow: setShowFeeInfo,
-    register,
-    BottomSheet,
-  } = useBottomSheet(false);
+  const { setShow: setShowFeeInfo, register, BottomSheet } = useBottomSheet(false);
 
   const [emblaRef, emblaApi] = useEmblaCarousel();
   const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
@@ -189,7 +196,7 @@ const CafeDetailPage = () => {
   };
 
   useEffect(() => {
-    emblaApi?.on("select", (emblaApi) => {
+    emblaApi?.on('select', emblaApi => {
       setSelectedImageIdx(emblaApi.selectedScrollSnap());
     });
   }, [emblaApi]);
@@ -198,7 +205,7 @@ const CafeDetailPage = () => {
 
   const landscapeImages = cafe?.imageFileList
     .filter(isNonNullable)
-    .filter(({ category }) => category === "LANDSCAPE");
+    .filter(({ category }) => category === 'LANDSCAPE');
 
   return !code || !cafe ? (
     <Navigate to="/" replace />
@@ -208,7 +215,7 @@ const CafeDetailPage = () => {
       {/* Cafe Image Carousel */}
       <CafeCarousel ref={emblaRef}>
         <Container>
-          {landscapeImages?.map((img) =>
+          {landscapeImages?.map(img =>
             img ? (
               <Slide key={img.url}>
                 <img alt={cafe.name} src={img.url} />
@@ -221,9 +228,9 @@ const CafeDetailPage = () => {
           {landscapeImages?.map((_, idx) => {
             return (
               <CarouselDot
-                key={`${cafe.name || ""}_${idx}`}
+                key={`${cafe.name || ''}_${idx}`}
                 selected={idx === selectedImageIdx}
-                onClick={(e) => handleDotClick(e, idx)}
+                onClick={e => handleDotClick(e, idx)}
               />
             );
           })}
@@ -237,13 +244,11 @@ const CafeDetailPage = () => {
             <Fee>{cafe.feeInfo.dailyCharge.toLocaleString()}원~</Fee>
             <Unit>/일</Unit>
           </FeeRow>
-          <ShowInfoButton onClick={() => setShowFeeInfo(true)}>
-            정보보기
-          </ShowInfoButton>
+          <ShowInfoButton onClick={() => setShowFeeInfo(true)}>정보보기</ShowInfoButton>
         </FooterInfo>
         <ContactButton
           onClick={() => {
-            ga.send("contact_btn", { cafeName: cafe.name });
+            ga.send('contact_btn', { cafeName: cafe.name });
             openURL(cafe.askingUrl);
           }}
         >
@@ -255,7 +260,7 @@ const CafeDetailPage = () => {
           <SheetTitle>
             대관료 정보
             <CloseSVGR
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
               width={hr * 18}
               height={hr * 18}
               onClick={() => setShowFeeInfo(false)}
