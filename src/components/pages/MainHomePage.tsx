@@ -31,10 +31,10 @@ const Row = styled.div`
   flex-direction: row;
 `;
 
-const CalcNaviText = styled.div<{ emphasis?: boolean }>`
+const CalcNaviText = styled.div<{ $emphasis?: boolean }>`
   white-space: pre-wrap;
   ${({ theme }) => theme.fontFaces['body2/12-Regular']}
-  color: ${({ theme, emphasis }) => (emphasis ? theme.colors.orange500 : theme.colors.white)};
+  color: ${({ theme, $emphasis }) => ($emphasis ? theme.colors.orange500 : theme.colors.white)};
 `;
 
 const IconConatiner = styled.div`
@@ -57,7 +57,7 @@ const CalcNaviBar = () => {
       >
         <Row>
           <CalcNaviText>기간+예산 조건에 맞는 </CalcNaviText>
-          <CalcNaviText emphasis>카페추천 및 견적 받기</CalcNaviText>
+          <CalcNaviText $emphasis>카페추천 및 견적 받기</CalcNaviText>
         </Row>
         <IconConatiner>
           <ICArrowRightSVGR width="100%" height="100%" />
