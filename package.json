@@ -43,7 +43,7 @@
   "scripts": {
     "start": "dotenv -o -e envs/.env.dev craco start",
     "start:prod": "dotenv -o -e envs/.env.prod craco start",
-    "build": "dotenv -o -e envs/.env.prod craco build && yarn sentry:sourcemaps && yarn run sentry:sourcemaps",
+    "build": "dotenv -o -e envs/.env.prod craco build && yarn sentry:sourcemaps",
     "test": "dotenv -o -e envs/.env.dev craco test",
     "codegen": "dotenv -o -e envs/.env.dev yarn _codegen",
     "codegen:prod": "dotenv -o -e envs/.env.prod yarn _codegen",
