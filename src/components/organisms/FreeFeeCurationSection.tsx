@@ -123,7 +123,13 @@ const FreeFeeCurationSection = () => {
               <OverlayContainer />
               <Badge>FREE</Badge>
               <CafeName>{cafe.name}</CafeName>
-              <HashTags>{cafe.hashtag}</HashTags>
+              <HashTags>
+                {cafe.hashtag
+                  ?.split(' ')
+                  .filter(tag => tag.startsWith('#'))
+                  .slice(0, 3)
+                  .join(' ')}
+              </HashTags>
             </Slide>
           ))}
         </Container>
