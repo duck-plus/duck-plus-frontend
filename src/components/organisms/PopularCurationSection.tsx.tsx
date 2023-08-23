@@ -29,12 +29,17 @@ const Slide = styled(EmblaCarousel.Slide)`
   flex: 0 0 auto; /* Adapt slide size to its content */
   min-width: 0;
   max-width: 100%; /* Prevent from growing larger than viewport */
+  flex-direction: column;
+`;
+
+const SlideImgFrame = styled.div`
+  position: relative;
+  width: 100%;
   img {
     width: 100%;
     height: ${hScalePx(264)};
     object-fit: cover;
   }
-  flex-direction: column;
   &::after {
     background-color: #000000;
     opacity: 0.1;
@@ -86,14 +91,16 @@ const PopularCurationSection = () => {
         <Container>
           {CafeCurations?.cafeList?.filter(isNonNullable).map(cafe => (
             <Slide key={cafe.code} onClick={() => handleCafeClick(cafe.code)}>
-              <img
-                alt={cafe.name}
-                src={
-                  cafe.imageFileList
-                    .filter(isNonNullable)
-                    .filter(({ category }) => category === 'LANDSCAPE')[0]?.url
-                }
-              />
+              <SlideImgFrame>
+                <img
+                  alt={cafe.name}
+                  src={
+                    cafe.imageFileList
+                      .filter(isNonNullable)
+                      .filter(({ category }) => category === 'LANDSCAPE')[0]?.url
+                  }
+                />
+              </SlideImgFrame>
               <CafeName>{cafe.name}</CafeName>
               <HashTags>{cafe.hashtag}</HashTags>
             </Slide>

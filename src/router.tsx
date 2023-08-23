@@ -30,7 +30,11 @@ export const ROUTES = {
     '',
     {},
     {
-      LIST: route('cafe-list', {}),
+      LIST: route('cafe-list', {
+        searchParams: {
+          initFeat: string(),
+        },
+      }),
       DETAILS: route('cafe-details', {
         searchParams: {
           code: string().default(''),

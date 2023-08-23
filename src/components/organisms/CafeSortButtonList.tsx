@@ -4,6 +4,7 @@ import CategoryLottie from '@/assets/lotties/categori.json';
 import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '@/router';
+import useCafeFeatureList from '@/hooks/useCafeFeatureList';
 
 const Container = styled.div`
   flex-direction: row;
@@ -13,7 +14,6 @@ const Container = styled.div`
   padding: ${hScalePx(24)} ${hScalePx(20)};
   display: flex;
   gap: ${hScalePx(15)};
-  cursor: pointer;
   border-bottom: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
 `;
 
@@ -21,6 +21,7 @@ const ButtonContainer = styled.button`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
   border-width: 0;
+  cursor: pointer;
 `;
 
 const ButtonImgContianer = styled.div`
@@ -53,14 +54,18 @@ const buttons = [
 const CafeSortButtonList = () => {
   const navigate = useNavigate();
   const hr = useHorizontalRatio();
-  const handleButtonClick = (feature: string) => {
-    navigate(ROUTES.CAFE.LIST.buildPath({}));
+  const handleButtonClick = (feature: string | undefined) => {
+    navigate(ROUTES.CAFE.LIST.buildPath({}, { initFeat: feature }));
   };
+
+  const { data: features } = useCafeFeatureList();
 
   return (
     <Container>
       {buttons.map(button => (
-        <ButtonContainer onClick={() => handleButtonClick(button.title)}>
+        <ButtonContainer
+          onClick={() => handleButtonClick(features?.find(feature => feature === button.title))}
+        >
           {button.lottie ? (
             <>
               <ButtonImgContianer>

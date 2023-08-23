@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useGetCafeQuery } from "@/services/gql-outputs/graphql";
-import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
-import styled, { useTheme } from "styled-components";
-import AppTopBar from "./AppTopBar";
-import { ReactComponent as DotSVGR } from "@/assets/svgr/ic/dot.svg";
-import { ReactComponent as ZoomInSVGR } from "@/assets/svgr/ic/zoom-in.svg";
-import Zoom from "react-medium-image-zoom";
-import LocationFillSVG from "@/assets/svgr/ic/location-fill.svg";
-import useInViewIdxObserver from "@/hooks/useInViewIdxObserver";
-import { Link } from "react-router-dom";
-import { ROUTES } from "@/router";
+import React, { useEffect, useRef, useState } from 'react';
+import { useGetCafeQuery } from '@/services/gql-outputs/graphql';
+import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
+import styled, { useTheme } from 'styled-components';
+import AppTopBar from './AppTopBar';
+import { ReactComponent as DotSVGR } from '@/assets/svgr/ic/dot.svg';
+import { ReactComponent as ZoomInSVGR } from '@/assets/svgr/ic/zoom-in.svg';
+import Zoom from 'react-medium-image-zoom';
+import LocationFillSVG from '@/assets/svgr/ic/location-fill.svg';
+import useInViewIdxObserver from '@/hooks/useInViewIdxObserver';
+import { Link } from 'react-router-dom';
+import { ROUTES } from '@/router';
 
 const CSSDetailInfoNavBarHeight = hScalePx(40);
 
@@ -33,16 +33,13 @@ const DetailInfoNavBarItem = styled.div<{ selected: boolean }>`
   height: 100%;
   display: flex;
   align-items: center;
-  ${({ theme }) => theme.fontFaces["body2/12-Medium"]};
-  color: ${({ theme, selected }) =>
-    selected ? theme.colors.gray900 : theme.colors.gray500};
+  ${({ theme }) => theme.fontFaces['body2/12-Medium']};
+  color: ${({ theme, selected }) => (selected ? theme.colors.gray900 : theme.colors.gray500)};
   cursor: pointer;
 `;
 
 const DetailedInfo = styled.div`
-  scroll-margin-top: calc(
-    ${AppTopBar.CSSAppTopBarHeight} + ${CSSDetailInfoNavBarHeight} - 1px
-  );
+  scroll-margin-top: calc(${AppTopBar.CSSAppTopBarHeight} + ${CSSDetailInfoNavBarHeight} - 1px);
   padding: ${hScalePx(24)} ${hScalePx(20)};
   display: flex;
   flex-direction: column;
@@ -56,20 +53,20 @@ const HorSep = styled.div`
 `;
 
 const Title = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  ${({ theme }) => theme.fontFaces['body2/12-Regular']};
   color: ${({ theme }) => theme.colors.gray500};
   height: ${hScalePx(20)};
 `;
 
 const Info = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  ${({ theme }) => theme.fontFaces['body2/12-Regular']};
   color: ${({ theme }) => theme.colors.gray900};
   display: flex;
   align-items: center;
 `;
 
 const InfoList = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  ${({ theme }) => theme.fontFaces['body2/12-Regular']};
   display: flex;
   flex-direction: column;
 `;
@@ -87,7 +84,7 @@ const InfoTags = styled.div`
 `;
 
 const InfoTag = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  ${({ theme }) => theme.fontFaces['body2/12-Regular']};
   color: ${({ theme }) => theme.colors.gray900};
   padding: 0 ${hScalePx(12)};
   min-height: ${hScalePx(28)};
@@ -98,7 +95,7 @@ const InfoTag = styled.div`
 `;
 
 const MenuInfo = styled.div`
-  ${({ theme }) => theme.fontFaces["caption/10-Regular"]};
+  ${({ theme }) => theme.fontFaces['caption/10-Regular']};
   color: ${({ theme }) => theme.colors.gray500};
   display: flex;
   flex-direction: column;
@@ -117,7 +114,7 @@ const MenuImage = styled.img`
 `;
 
 const MenuDisclaimer = styled.div`
-  ${({ theme }) => theme.fontFaces["caption/10-Regular"]};
+  ${({ theme }) => theme.fontFaces['caption/10-Regular']};
   color: ${({ theme }) => theme.colors.gray500};
 `;
 
@@ -151,17 +148,17 @@ const NaverMap = styled.div`
 `;
 
 const MapOverlay = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  ${({ theme }) => theme.fontFaces['body2/12-Regular']};
   color: ${({ theme }) => theme.colors.gray900};
   position: absolute;
   bottom: ${hScalePx(14)};
   padding: ${hScalePx(4)} ${hScalePx(16)};
 `;
 
-const detailInfoItems = ["카페정보", "특전안내", "메뉴", "지도"] as const;
+const detailInfoItems = ['카페정보', '특전안내', '메뉴', '지도'] as const;
 
 const splitToArray = (s: string | undefined | null) =>
-  s && s.split(/\r\n|\r|\n/).map((s) => s.trim());
+  s && s.split(/\r\n|\r|\n/).map(s => s.trim());
 
 const InfoListItem = ({ children }: React.PropsWithChildren) => {
   const hr = useHorizontalRatio();
@@ -187,17 +184,17 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
     },
     {
       enabled: !!cafeCode,
-      select: (s) => s.cafe,
+      select: s => s.cafe,
     }
   );
 
   const theme = useTheme();
 
-  const facilityList = splitToArray(cafe?.specialBenefit);
+  const facilityList = splitToArray(cafe?.facility);
 
   const specialBenefitList = splitToArray(cafe?.specialBenefit);
 
-  const menuImage = cafe?.imageFileList?.find((s) => s?.category === "MENU");
+  const menuImage = cafe?.imageFileList?.find(s => s?.category === 'MENU');
   const mapElement = useRef<HTMLDivElement>(null);
 
   // navbar selection
@@ -249,7 +246,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
     <CafeDetailedInfoSectionFrame>
       <HorSep
         style={{
-          margin: "0",
+          margin: '0',
           borderBottom: `${hScalePx(8)} solid ${theme.colors.gray50}`,
         }}
       />
@@ -261,8 +258,8 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
             onClick={() => {
               setSelectedIdx(idx);
               refs[idx].current?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
+                behavior: 'smooth',
+                block: 'start',
               });
             }}
           >
@@ -270,7 +267,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
           </DetailInfoNavBarItem>
         ))}
       </DetailInfoNavBar>
-      <HorSep style={{ margin: "0" }} />
+      <HorSep style={{ margin: '0' }} />
 
       {/* 카페정보 */}
       <div ref={observers[0]}>
@@ -286,7 +283,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
             <DetailedInfo>
               <Title>시설안내</Title>
               <InfoList>
-                {facilityList.map((facility) => (
+                {facilityList.map(facility => (
                   <InfoListItem key={facility}>{facility}</InfoListItem>
                 ))}
               </InfoList>
@@ -301,7 +298,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
             <DetailedInfo>
               <Title>특이사항</Title>
               <InfoTags>
-                {cafe?.remarkList.map((benefit) => (
+                {cafe?.remarkList.map(benefit => (
                   <InfoTag key={benefit}>{benefit}</InfoTag>
                 ))}
               </InfoTags>
@@ -319,7 +316,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
             {!specialBenefitList ? (
               <InfoListItem>정보 없음</InfoListItem>
             ) : (
-              specialBenefitList.map((benefit) => (
+              specialBenefitList.map(benefit => (
                 <InfoListItem key={benefit}>{benefit}</InfoListItem>
               ))
             )}
@@ -351,8 +348,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
 
               {/* 면책 조항 */}
               <MenuDisclaimer>
-                *이벤트 메뉴와는 상이하며 구성 및 금액은 문의를 통해
-                확인해주세요
+                *이벤트 메뉴와는 상이하며 구성 및 금액은 문의를 통해 확인해주세요
               </MenuDisclaimer>
             </MenuInfo>
           )}
@@ -364,9 +360,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
       <div ref={observers[3]}>
         <DetailedInfo ref={ref3}>
           <Title>상세위치</Title>
-          <MapContainer
-            to={ROUTES.CAFE?.MAP.buildPath({}, { code: cafe?.code })}
-          >
+          <MapContainer to={ROUTES.CAFE?.MAP.buildPath({}, { code: cafe?.code })}>
             <NaverMap ref={mapElement} />
             <MapOverlay>
               {cafe?.address.briefAddress} {cafe?.address.detailedAddress}

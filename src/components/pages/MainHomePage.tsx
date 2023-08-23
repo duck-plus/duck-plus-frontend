@@ -23,6 +23,7 @@ const CalcNaviContainer = styled.div`
   display: flex;
   height: ${CalcNaviBarHeight};
   padding: ${hScalePx(12)} ${hScalePx(20)} ${hScalePx(12)} ${hScalePx(16)};
+  cursor: pointer;
 `;
 
 const Row = styled.div`
