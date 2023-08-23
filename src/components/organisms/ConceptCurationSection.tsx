@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import EmblaCarousel from './EmblaCarousel';
 import { hScalePx } from '@/hooks/useHorizontalRatio';
@@ -112,8 +112,7 @@ const concepts = [
 ];
 
 const ConceptCurationSection = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
-  const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
+  const [emblaRef] = useEmblaCarousel(OPTIONS);
   const [selectedButtonIdx, setSelectedButtonIdx] = useState<number>(0);
   const navigate = useNavigate();
   const { data: CafeCurations } = useGetCafeCurationsQuery({
@@ -123,12 +122,6 @@ const ConceptCurationSection = () => {
   const handleCafeClick = (cafeCode: string) => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
   };
-
-  useEffect(() => {
-    emblaApi?.on('select', emblaApi => {
-      setSelectedImageIdx(emblaApi.selectedScrollSnap());
-    });
-  }, [emblaApi]);
 
   return (
     <>
