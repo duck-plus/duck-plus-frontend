@@ -1,23 +1,25 @@
-import { createBrowserRouter } from "react-router-dom";
-import { number, route, string } from "react-router-typesafe-routes/dom";
-import CafeListPage from "./components/pages/CafeListPage";
-import CafeDetailPage from "./components/pages/CafeDetailPage";
-import CafeMapPage from "./components/pages/CafeMapPage";
+import { createBrowserRouter } from 'react-router-dom';
+import { number, route, string } from 'react-router-typesafe-routes/dom';
+import CafeListPage from './components/pages/CafeListPage';
+import CafeDetailPage from './components/pages/CafeDetailPage';
+import CafeMapPage from './components/pages/CafeMapPage';
+import MainHomePage from './components/pages/MainHomePage';
 // import Home from "./components/pages/Home";
-import RouteErrorElement from "./components/atoms/RouteErrorElement";
-import App from "./components/App";
-import CommingSoon from "./components/pages/CommingSoonPage";
-import CalcResultPage from "./components/pages/CalcResultPage";
-import CalcPage from "./components/pages/CalcPage";
+import RouteErrorElement from './components/atoms/RouteErrorElement';
+import App from './components/App';
+import CommingSoon from './components/pages/CommingSoonPage';
+import CalcResultPage from './components/pages/CalcResultPage';
+import CalcPage from './components/pages/CalcPage';
+import HomePage from './components/pages/HomePage';
 
 // typed Routes
 export const ROUTES = {
-  HOME: route("", {}),
+  HOME: route('', {}),
   CALC: route(
-    "calc",
+    'calc',
     {},
     {
-      RESULT: route("result", {
+      RESULT: route('result', {
         searchParams: {
           dailyCharge: number().default(0),
         },
@@ -25,18 +27,18 @@ export const ROUTES = {
     }
   ),
   CAFE: route(
-    "",
+    '',
     {},
     {
-      LIST: route("cafe-list", {}),
-      DETAILS: route("cafe-details", {
+      LIST: route('cafe-list', {}),
+      DETAILS: route('cafe-details', {
         searchParams: {
-          code: string().default(""),
+          code: string().default(''),
         },
       }),
-      MAP: route("cafe-map", {
+      MAP: route('cafe-map', {
         searchParams: {
-          code: string().default(""),
+          code: string().default(''),
         },
       }),
     }
@@ -51,8 +53,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: ROUTES.HOME.path,
-        // element: <Home />,
-        element: <CommingSoon />,
+        element: <MainHomePage />,
       },
 
       // Calc

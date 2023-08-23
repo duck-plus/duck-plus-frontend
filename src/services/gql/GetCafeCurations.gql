@@ -1,0 +1,13 @@
+query GetCafeCurations($args: CafeQryArgs) {
+  cafeList(args: $args) {
+    code
+    name
+    briefInfo
+    imageFileList {
+      url
+      filename
+      category
+    }
+    hashtag
+  }
+}
