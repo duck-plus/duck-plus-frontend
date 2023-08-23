@@ -14,13 +14,13 @@ const Container = styled.div`
   padding: ${hScalePx(24)} ${hScalePx(20)};
   display: flex;
   gap: ${hScalePx(15)};
-  cursor: pointer;
 `;
 
 const ButtonContainer = styled.button`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.white};
   border-width: 0;
+  cursor: pointer;
 `;
 
 const ButtonImgContianer = styled.div`

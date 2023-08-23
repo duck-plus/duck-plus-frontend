@@ -4,6 +4,7 @@ const Embla = styled.div.attrs(props => ({
   className: `${props.className || 'default'} emlba`,
 }))`
   width: 100%;
+  overflow: hidden;
 `;
 
 const Container = styled.div.attrs(props => ({
