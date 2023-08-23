@@ -35,6 +35,16 @@ const Slide = styled(EmblaCarousel.Slide)`
     object-fit: cover;
   }
   flex-direction: column;
+  &::after {
+    background-color: #000000;
+    opacity: 0.1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+  }
 `;
 
 const CafeName = styled.div`

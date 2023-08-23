@@ -29,12 +29,23 @@ const Slide = styled(EmblaCarousel.Slide)`
   flex: 0 0 auto; /* Adapt slide size to its content */
   min-width: 0;
   max-width: 100%; /* Prevent from growing larger than viewport */
+
+  flex-direction: column;
   img {
     width: 100%;
     height: ${hScalePx(152)};
     object-fit: cover;
   }
-  flex-direction: column;
+  &::after {
+    background-color: #000000;
+    opacity: 0.1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+  }
 `;
 
 const CafeName = styled.div`
