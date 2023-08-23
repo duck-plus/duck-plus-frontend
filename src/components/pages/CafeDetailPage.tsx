@@ -225,8 +225,8 @@ const CafeDetailPage = () => {
           })}
         </CarouselDots>
       </CafeCarousel>
-      {<CafeBriefInfoSection cafe={cafe} />}
-      {<CafeDetailedInfoSection cafe={cafe} />}
+      <CafeBriefInfoSection cafeCode={cafe.code} />
+      <CafeDetailedInfoSection cafeCode={cafe.code} />
       <Footer>
         <FooterInfo>
           <FeeRow>
