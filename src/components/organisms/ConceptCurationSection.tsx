@@ -136,6 +136,7 @@ const ConceptCurationSection = () => {
       <ButtonContainer>
         {concepts.map((item, idx) => (
           <ConceptButton
+            key={item.id}
             onClick={() => setSelectedButtonIdx(idx)}
             $selected={idx === selectedButtonIdx}
           >
