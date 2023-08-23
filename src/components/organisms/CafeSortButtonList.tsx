@@ -4,6 +4,7 @@ import CategoryLottie from '@/assets/lotties/categori.json';
 import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '@/router';
+import useCafeFeatureList from '@/hooks/useCafeFeatureList';
 
 const Container = styled.div`
   flex-direction: row;
@@ -52,14 +53,18 @@ const buttons = [
 const CafeSortButtonList = () => {
   const navigate = useNavigate();
   const hr = useHorizontalRatio();
-  const handleButtonClick = (feature: string) => {
-    navigate(ROUTES.CAFE.LIST.buildPath({}));
+  const handleButtonClick = (feature: string | undefined) => {
+    navigate(ROUTES.CAFE.LIST.buildPath({}, { initFeat: feature }));
   };
+
+  const { data: features } = useCafeFeatureList();
 
   return (
     <Container>
       {buttons.map(button => (
-        <ButtonContainer onClick={() => handleButtonClick(button.title)}>
+        <ButtonContainer
+          onClick={() => handleButtonClick(features?.find(feature => feature === button.title))}
+        >
           {button.lottie ? (
             <>
               <ButtonImgContianer>

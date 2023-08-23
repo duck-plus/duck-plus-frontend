@@ -59,6 +59,7 @@ const Row = styled.div`
 const Sigungu = styled.div`
   ${({ theme }) => theme.fontFaces['caption/10-Medium']};
   color: ${({ theme }) => theme.colors.gray800};
+  flex-shrink: 0;
 `;
 
 const HashTags = styled.div`
