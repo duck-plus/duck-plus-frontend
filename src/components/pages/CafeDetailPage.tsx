@@ -295,6 +295,17 @@ const CafeDetailPage = () => {
                 </FeeDesc>
               </FeeInfoDesc>
             </FeeInfo>
+            {cafe.feeInfo.note ? (
+              <>
+                <HorSep />
+                <FeeInfo>
+                  <FeeTitle>특이사항</FeeTitle>
+                  <FeeInfoDesc>
+                    <FeeDesc>{cafe.feeInfo.note}</FeeDesc>
+                  </FeeInfoDesc>
+                </FeeInfo>
+              </>
+            ) : null}
           </FeeInfoContent>
         </SheetContent>
       </BottomSheet>
