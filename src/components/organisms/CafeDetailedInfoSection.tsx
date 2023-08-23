@@ -190,7 +190,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
 
   const theme = useTheme();
 
-  const facilityList = splitToArray(cafe?.specialBenefit);
+  const facilityList = splitToArray(cafe?.facility);
 
   const specialBenefitList = splitToArray(cafe?.specialBenefit);
 
