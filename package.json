@@ -50,8 +50,8 @@
     "codegen:prod": "dotenv -o -e envs/.env.prod yarn _codegen",
     "_codegen": "graphql-codegen --config src/services/gqlCodegenConfig.ts --watch",
     "eject": "react-scripts eject",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org tigeryoo --project duckplus-frontend ./build && sentry-cli sourcemaps upload --org tigeryoo --project duckplus-frontend ./build",
-    "postbuild": "rimraf ./build/**/*.js.map"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org duckplus-0200c069e --project duckplus-frontend ./build",
+    "postbuild": "rm -rf ./build/**/*.js.map"
   },
   "eslintConfig": {
     "extends": [

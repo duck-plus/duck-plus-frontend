@@ -70,19 +70,12 @@ const OPTIONS: EmblaOptionsType = {
 
 const NewOpenCuraionSection = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
-  const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
   const navigate = useNavigate();
   const { data: CafeCurations } = useGetCafeCurationsQuery({ args: { feature: '무료대관' } });
 
   const handleCafeClick = (cafeCode: string) => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
   };
-
-  useEffect(() => {
-    emblaApi?.on('select', emblaApi => {
-      setSelectedImageIdx(emblaApi.selectedScrollSnap());
-    });
-  }, [emblaApi]);
 
   return (
     <>
