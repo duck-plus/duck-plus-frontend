@@ -97,6 +97,12 @@ const Slide = styled(EmblaCarousel.Slide)`
   position: relative;
   background-color: ${({ theme }) => theme.colors.gray100};
   aspect-ratio: 40/23;
+`;
+
+const SlideImgFrame = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
   img {
     width: 100%;
     height: 100%;
@@ -186,7 +192,9 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
               <Slide key={img.filename}>
                 {/* 생카성지는 인기 딱지 노출 */}
                 {isHot ? <HotBadge>인기</HotBadge> : null}
-                <img alt={cafe.name} src={img.url} />
+                <SlideImgFrame>
+                  <img alt={cafe.name} src={img.url} />
+                </SlideImgFrame>
               </Slide>
             ) : null
           )}

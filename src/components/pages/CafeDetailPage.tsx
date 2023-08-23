@@ -31,6 +31,10 @@ const Slide = styled(EmblaCarousel.Slide)`
   position: relative;
   background-color: ${({ theme }) => theme.colors.gray100};
   aspect-ratio: 20/21;
+`;
+
+const SlideImgFrame = styled.div`
+  width: 100%;
   img {
     width: 100%;
     height: 100%;
@@ -218,7 +222,9 @@ const CafeDetailPage = () => {
           {landscapeImages?.map(img =>
             img ? (
               <Slide key={img.url}>
-                <img alt={cafe.name} src={img.url} />
+                <SlideImgFrame>
+                  <img alt={cafe.name} src={img.url} />
+                </SlideImgFrame>
               </Slide>
             ) : null
           )}
