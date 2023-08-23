@@ -3,14 +3,11 @@ import { number, route, string } from 'react-router-typesafe-routes/dom';
 import CafeListPage from './components/pages/CafeListPage';
 import CafeDetailPage from './components/pages/CafeDetailPage';
 import CafeMapPage from './components/pages/CafeMapPage';
-import MainHomePage from './components/pages/MainHomePage';
-// import Home from "./components/pages/Home";
+import HomePage from './components/pages/HomePage';
 import RouteErrorElement from './components/atoms/RouteErrorElement';
 import App from './components/App';
-import CommingSoon from './components/pages/CommingSoonPage';
 import CalcResultPage from './components/pages/CalcResultPage';
 import CalcPage from './components/pages/CalcPage';
-import HomePage from './components/pages/HomePage';
 
 // typed Routes
 export const ROUTES = {
@@ -57,7 +54,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: ROUTES.HOME.path,
-        element: <MainHomePage />,
+        element: <HomePage />,
       },
 
       // Calc
