@@ -57,7 +57,7 @@ const PopularCurationSection = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
   const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
   const navigate = useNavigate();
-  const { data: CafeCurations } = useGetCafeCurationsQuery({ args: { feature: '무료대관' } });
+  const { data: CafeCurations } = useGetCafeCurationsQuery({ args: { isPopular: true } });
 
   const handleCafeClick = (cafeCode: string) => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));

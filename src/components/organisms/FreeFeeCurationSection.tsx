@@ -34,6 +34,7 @@ const Slide = styled(EmblaCarousel.Slide)`
     width: 100%;
     height: auto;
     object-fit: cover;
+    opacity: 0.1;
   }
   flex-direction: column;
 `;
@@ -78,24 +79,6 @@ const FreeFeeCurationSection = () => {
   const navigate = useNavigate();
   const { data: CafeCurations } = useGetCafeCurationsQuery({ args: { feature: '무료대관' } });
   const hr = useHorizontalRatio();
-  const [slideList, setSlideList] = useState([
-    {
-      id: 1,
-      content: 'Slide 1',
-      imgUrl: 'http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg',
-    },
-    {
-      id: 2,
-      content: 'Slide 2',
-      imgUrl:
-        'https://post-phinf.pstatic.net/MjAxOTEyMjZfMjk5/MDAxNTc3MzQ4MDk1MTMz.3-IH8N4OhdqsSvVLWVWLVslhfNzTdAdgzcLf3zJX-oUg.BRbb5duYN3IRzl4WhvRlwbbg1lYTXHaRERmyquDBdtIg.JPEG/EMKK31LXsAUTo8C.jpg?type=w1200',
-    },
-    {
-      id: 3,
-      content: 'Slide 3',
-      imgUrl: 'http://image.dongascience.com/Photo/2020/03/5bddba7b6574b95d37b6079c199d7101.jpg',
-    },
-  ]);
 
   const handleCafeClick = (cafeCode: string) => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
@@ -111,23 +94,6 @@ const FreeFeeCurationSection = () => {
     <>
       <CurationHeader title={'대관료 무료 카페'} />
       <CafeCarousel ref={emblaRef}>
-        {/* <Container>
-          {slideList.map((slide, index) => (
-            <Slide key={slide.id}>
-              <Badge>FREE</Badge>
-              <img
-                style={{
-                  height: index === selectedImageIdx ? hr * 328 : hr * 304,
-                  width: 'auto',
-                }}
-                alt={`Slide ${slide.id}`}
-                src={slide.imgUrl}
-              />
-              <CafeName>{'bbbb'}</CafeName>
-              <HashTags>{'#화난강쥬'}</HashTags>
-            </Slide>
-          ))}
-        </Container> */}
         <Container>
           {CafeCurations?.cafeList?.filter(isNonNullable).map((cafe, index) => (
             <Slide key={cafe.code} onClick={() => handleCafeClick(cafe.code)}>

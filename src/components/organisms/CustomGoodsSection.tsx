@@ -57,7 +57,9 @@ const CustomGoodsSection = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
   const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
   const navigate = useNavigate();
-  const { data: CafeCurations } = useGetCafeCurationsQuery({ args: { feature: '무료대관' } });
+  const { data: CafeCurations } = useGetCafeCurationsQuery({
+    args: { isSpecialBenefitCustomable: true },
+  });
 
   const handleCafeClick = (cafeCode: string) => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
@@ -75,14 +77,7 @@ const CustomGoodsSection = () => {
       <CafeCarousel ref={emblaRef}>
         <Container>
           {CafeCurations?.cafeList?.filter(isNonNullable).map(cafe => (
-            <Slide
-              key={
-                cafe.imageFileList
-                  .filter(isNonNullable)
-                  .filter(({ category }) => category === 'LANDSCAPE')[0].url
-              }
-              onClick={() => handleCafeClick(cafe.code)}
-            >
+            <Slide key={cafe.code} onClick={() => handleCafeClick(cafe.code)}>
               <img
                 alt={cafe.name}
                 src={
