@@ -29,8 +29,6 @@ const Slide = styled(EmblaCarousel.Slide)`
     object-fit: cover;
     position: relative;
     &::after {
-      background-color: #000000;
-      opacity: 0.5;
       position: absolute;
       top: 0;
       left: 0;
@@ -104,7 +102,7 @@ const MainCurationSection = () => {
                 src={
                   cafe.imageFileList
                     .filter(isNonNullable)
-                    .filter(({ category }) => category === 'LANDSCAPE')[0].url
+                    .filter(({ category }) => category === 'LANDSCAPE')[0]?.url
                 }
               />
             </Slide>
