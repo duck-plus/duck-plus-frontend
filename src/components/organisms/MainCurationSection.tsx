@@ -6,7 +6,10 @@ import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
 import isNonNullable from '@/utils/isNonNullable';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '@/router';
-import { useGetCafeCurationsQuery } from '@/services/gql-outputs/graphql';
+import {
+  useGetCafeCurationsQuery,
+  useGetMainCafeBannerQuery,
+} from '@/services/gql-outputs/graphql';
 import { ReactComponent as ICArrowRightSVGR } from '@/assets/svgr/ic/arrow-line-right.svg';
 
 // carousel
@@ -79,7 +82,7 @@ const MainCurationSection = () => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
   };
 
-  const { data: CafeCurations } = useGetCafeCurationsQuery();
+  const { data: mainBannerData } = useGetMainCafeBannerQuery({ args: { category: 'BANNER' } });
 
   useEffect(() => {
     emblaApi?.on('select', emblaApi => {
@@ -93,17 +96,10 @@ const MainCurationSection = () => {
   return (
     <CafeCarousel ref={emblaRef}>
       <Container>
-        {CafeCurations?.cafeList?.filter(isNonNullable).map((cafe, index) => (
+        {mainBannerData?.imageFileList?.filter(isNonNullable).map((item, index) => (
           <>
-            <Slide onClick={() => handleCafeClick(cafe.code)} key={cafe.code}>
-              <img
-                alt={cafe.name}
-                src={
-                  cafe.imageFileList
-                    .filter(isNonNullable)
-                    .filter(({ category }) => category === 'BANNER')[0]?.url
-                }
-              />
+            <Slide onClick={() => handleCafeClick(item.cafeCode)} key={item.cafeCode}>
+              <img alt={'main-cafe-banner'} src={item.url} />
               <OverlayContainer />
             </Slide>
           </>
@@ -111,7 +107,7 @@ const MainCurationSection = () => {
         <PaginationContainer className="slide-index">
           <SlideIndex current>{selectedImageIdx + 1}</SlideIndex>
           <VerticalSep />
-          <SlideIndex>{CafeCurations?.cafeList?.length}</SlideIndex>
+          <SlideIndex>{mainBannerData?.imageFileList?.length}</SlideIndex>
           <ICArrowRightSVGR width={hr * 12} height={hr * 12} fill={theme.colors.white} />
         </PaginationContainer>
       </Container>

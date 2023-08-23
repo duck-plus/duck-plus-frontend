@@ -14,6 +14,7 @@ const Container = styled.div`
   display: flex;
   gap: ${hScalePx(15)};
   cursor: pointer;
+  border-bottom: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
 `;
 
 const ButtonContainer = styled.button`

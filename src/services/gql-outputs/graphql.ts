@@ -196,10 +196,18 @@ export type GetCafeListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCafeListQuery = { __typename?: 'Query', cafeList?: Array<{ __typename?: 'Cafe', code: string, name: string, briefInfo: string, detailedInfo: string, askingUrl: string, seatCount?: number | null, facility?: string | null, specialBenefit?: string | null, hashtag?: string | null, remarkList?: Array<string | null> | null, featureList: Array<string | null>, concept?: string | null, isSpecialBenefitCustomable: boolean, isPopular: boolean, region: string, imageFileList: Array<{ __typename?: 'ImageFile', url: string, filename: string, category: FileCategory } | null>, snsList: Array<{ __typename?: 'Sns', type: SnsType, channelName: string, url: string } | null>, businessHour: { __typename?: 'CafeBusinessHour', openingTime?: string | null, closingTime?: string | null, businessDayList: Array<Day | null>, workingOnHoliday?: boolean | null }, address: { __typename?: 'CafeAddress', sigungu: string, briefAddress: string, detailedAddress: string, location?: any | null }, feeInfo: { __typename?: 'CafeFeeInfo', minPeriod: number, dailyCharge: number, guaranteeCount: number, depositAmount: number, bookingAmount: number, note?: string | null } } | null> | null };
 
+export type GetMainCafeBannerQueryVariables = Exact<{
+  args?: InputMaybe<ImageFileQryArgs>;
+}>;
+
+
+export type GetMainCafeBannerQuery = { __typename?: 'Query', imageFileList?: Array<{ __typename?: 'ImageFile', url: string, filename: string, cafeCode: string } | null> | null };
+
 
 export const GetCafeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCafe"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cafe"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"briefInfo"}},{"kind":"Field","name":{"kind":"Name","value":"detailedInfo"}},{"kind":"Field","name":{"kind":"Name","value":"imageFileList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"snsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"channelName"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"askingUrl"}},{"kind":"Field","name":{"kind":"Name","value":"seatCount"}},{"kind":"Field","name":{"kind":"Name","value":"facility"}},{"kind":"Field","name":{"kind":"Name","value":"specialBenefit"}},{"kind":"Field","name":{"kind":"Name","value":"hashtag"}},{"kind":"Field","name":{"kind":"Name","value":"remarkList"}},{"kind":"Field","name":{"kind":"Name","value":"featureList"}},{"kind":"Field","name":{"kind":"Name","value":"concept"}},{"kind":"Field","name":{"kind":"Name","value":"isSpecialBenefitCustomable"}},{"kind":"Field","name":{"kind":"Name","value":"isPopular"}},{"kind":"Field","name":{"kind":"Name","value":"region"}},{"kind":"Field","name":{"kind":"Name","value":"businessHour"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"openingTime"}},{"kind":"Field","name":{"kind":"Name","value":"closingTime"}},{"kind":"Field","name":{"kind":"Name","value":"businessDayList"}},{"kind":"Field","name":{"kind":"Name","value":"workingOnHoliday"}}]}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sigungu"}},{"kind":"Field","name":{"kind":"Name","value":"briefAddress"}},{"kind":"Field","name":{"kind":"Name","value":"detailedAddress"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}},{"kind":"Field","name":{"kind":"Name","value":"feeInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"minPeriod"}},{"kind":"Field","name":{"kind":"Name","value":"dailyCharge"}},{"kind":"Field","name":{"kind":"Name","value":"guaranteeCount"}},{"kind":"Field","name":{"kind":"Name","value":"depositAmount"}},{"kind":"Field","name":{"kind":"Name","value":"bookingAmount"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]}}]} as unknown as DocumentNode<GetCafeQuery, GetCafeQueryVariables>;
 export const GetCafeCurationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCafeCurations"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"args"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CafeQryArgs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cafeList"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"Variable","name":{"kind":"Name","value":"args"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"briefInfo"}},{"kind":"Field","name":{"kind":"Name","value":"imageFileList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"hashtag"}}]}}]}}]} as unknown as DocumentNode<GetCafeCurationsQuery, GetCafeCurationsQueryVariables>;
 export const GetCafeListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCafeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cafeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"briefInfo"}},{"kind":"Field","name":{"kind":"Name","value":"detailedInfo"}},{"kind":"Field","name":{"kind":"Name","value":"imageFileList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"snsList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"channelName"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"askingUrl"}},{"kind":"Field","name":{"kind":"Name","value":"seatCount"}},{"kind":"Field","name":{"kind":"Name","value":"facility"}},{"kind":"Field","name":{"kind":"Name","value":"specialBenefit"}},{"kind":"Field","name":{"kind":"Name","value":"hashtag"}},{"kind":"Field","name":{"kind":"Name","value":"remarkList"}},{"kind":"Field","name":{"kind":"Name","value":"featureList"}},{"kind":"Field","name":{"kind":"Name","value":"concept"}},{"kind":"Field","name":{"kind":"Name","value":"isSpecialBenefitCustomable"}},{"kind":"Field","name":{"kind":"Name","value":"isPopular"}},{"kind":"Field","name":{"kind":"Name","value":"region"}},{"kind":"Field","name":{"kind":"Name","value":"businessHour"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"openingTime"}},{"kind":"Field","name":{"kind":"Name","value":"closingTime"}},{"kind":"Field","name":{"kind":"Name","value":"businessDayList"}},{"kind":"Field","name":{"kind":"Name","value":"workingOnHoliday"}}]}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sigungu"}},{"kind":"Field","name":{"kind":"Name","value":"briefAddress"}},{"kind":"Field","name":{"kind":"Name","value":"detailedAddress"}},{"kind":"Field","name":{"kind":"Name","value":"location"}}]}},{"kind":"Field","name":{"kind":"Name","value":"feeInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"minPeriod"}},{"kind":"Field","name":{"kind":"Name","value":"dailyCharge"}},{"kind":"Field","name":{"kind":"Name","value":"guaranteeCount"}},{"kind":"Field","name":{"kind":"Name","value":"depositAmount"}},{"kind":"Field","name":{"kind":"Name","value":"bookingAmount"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]}}]} as unknown as DocumentNode<GetCafeListQuery, GetCafeListQueryVariables>;
+export const GetMainCafeBannerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMainCafeBanner"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"args"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ImageFileQryArgs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"imageFileList"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"Variable","name":{"kind":"Name","value":"args"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"cafeCode"}}]}}]}}]} as unknown as DocumentNode<GetMainCafeBannerQuery, GetMainCafeBannerQueryVariables>;
 export const DAY = ['FRI', 'MON', 'SAT', 'SUN', 'THU', 'TUE', 'WED'] as const;
 export const FILE_CATEGORY = ['BANNER', 'LANDSCAPE', 'MENU', 'THUMBNAIL'] as const;
 export const SNS_TYPE = ['INSTAGRAM', 'KAKAO', 'TWITTER'] as const;
@@ -424,4 +432,48 @@ export const useInfiniteGetCafeListQuery = <
 
 
 useInfiniteGetCafeListQuery.getKey = (variables?: GetCafeListQueryVariables) => variables === undefined ? ['GetCafeList.infinite'] : ['GetCafeList.infinite', variables];
+;
+
+export const GetMainCafeBannerQueryString = `
+    query GetMainCafeBanner($args: ImageFileQryArgs) {
+  imageFileList(args: $args) {
+    url
+    filename
+    cafeCode
+  }
+}
+    `;
+export const useGetMainCafeBannerQuery = <
+      TData = GetMainCafeBannerQuery,
+      TError = unknown
+    >(
+      variables?: GetMainCafeBannerQueryVariables,
+      options?: UseQueryOptions<GetMainCafeBannerQuery, TError, TData>
+    ) =>
+    useQuery<GetMainCafeBannerQuery, TError, TData>(
+      variables === undefined ? ['GetMainCafeBanner'] : ['GetMainCafeBanner', variables],
+      useFetchData<GetMainCafeBannerQuery, GetMainCafeBannerQueryVariables>(GetMainCafeBannerQueryString).bind(null, variables),
+      options
+    );
+
+useGetMainCafeBannerQuery.getKey = (variables?: GetMainCafeBannerQueryVariables) => variables === undefined ? ['GetMainCafeBanner'] : ['GetMainCafeBanner', variables];
+;
+
+export const useInfiniteGetMainCafeBannerQuery = <
+      TData = GetMainCafeBannerQuery,
+      TError = unknown
+    >(
+      pageParamKey: keyof GetMainCafeBannerQueryVariables,
+      variables?: GetMainCafeBannerQueryVariables,
+      options?: UseInfiniteQueryOptions<GetMainCafeBannerQuery, TError, TData>
+    ) =>{
+    const query = useFetchData<GetMainCafeBannerQuery, GetMainCafeBannerQueryVariables>(GetMainCafeBannerQueryString)
+    return useInfiniteQuery<GetMainCafeBannerQuery, TError, TData>(
+      variables === undefined ? ['GetMainCafeBanner.infinite'] : ['GetMainCafeBanner.infinite', variables],
+      (metaData) => query({...variables, ...(metaData.pageParam ?? {})}),
+      options
+    )};
+
+
+useInfiniteGetMainCafeBannerQuery.getKey = (variables?: GetMainCafeBannerQueryVariables) => variables === undefined ? ['GetMainCafeBanner.infinite'] : ['GetMainCafeBanner.infinite', variables];
 ;

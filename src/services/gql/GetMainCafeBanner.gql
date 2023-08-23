@@ -1,0 +1,7 @@
+query GetMainCafeBanner($args: ImageFileQryArgs) {
+  imageFileList(args: $args) {
+    url
+    filename
+    cafeCode
+  }
+}
