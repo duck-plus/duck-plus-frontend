@@ -51,14 +51,14 @@ const buttons = [
 const CafeSortButtonList = () => {
   const navigate = useNavigate();
   const hr = useHorizontalRatio();
-  const handleButtonClick = () => {
+  const handleButtonClick = (feature: string) => {
     navigate(ROUTES.CAFE.LIST.buildPath({}));
   };
 
   return (
     <Container>
       {buttons.map(button => (
-        <ButtonContainer>
+        <ButtonContainer onClick={() => handleButtonClick(button.title)}>
           {button.lottie ? (
             <>
               <ButtonImgContianer>

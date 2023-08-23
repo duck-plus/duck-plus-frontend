@@ -36,7 +36,8 @@ const EmblaCarousel = {
           <EmblaCarousel.Slide>
           3
           </EmblaCarousel.Slide>
-        </EmblaCarousel.Container>      </EmblaCarousel.Embla>
+        </EmblaCarousel.Container>
+      </EmblaCarousel.Embla>
    * ```
    */
   Embla,
