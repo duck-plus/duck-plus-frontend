@@ -86,13 +86,13 @@ const MainCurationSection = () => {
             <img alt={'main-cafe-banner'} src={item.url} />
           </Slide>
         ))}
-        <PaginationContainer className="slide-index">
-          <SlideIndex $current>{selectedImageIdx + 1}</SlideIndex>
-          <VerticalSep />
-          <SlideIndex>{mainBannerData?.imageFileList?.length}</SlideIndex>
-          <ICArrowRightSVGR width={hr * 12} height={hr * 12} fill={theme.colors.white} />
-        </PaginationContainer>
       </Container>
+      <PaginationContainer className="slide-index">
+        <SlideIndex $current>{selectedImageIdx + 1}</SlideIndex>
+        <VerticalSep />
+        <SlideIndex>{mainBannerData?.imageFileList?.length}</SlideIndex>
+        <ICArrowRightSVGR width={hr * 12} height={hr * 12} fill={theme.colors.white} />
+      </PaginationContainer>
     </CafeCarousel>
   );
 };
