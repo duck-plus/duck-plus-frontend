@@ -31,18 +31,18 @@ const ButtonContainer = styled.div`
   margin-bottom: ${hScalePx(16)};
 `;
 
-const ConceptButton = styled.button<{ selected?: boolean }>`
+const ConceptButton = styled.button<{ $selected?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   padding: ${hScalePx(4)} ${hScalePx(12)};
-  background-color: ${({ theme, selected }) =>
-    selected ? theme.colors.black : theme.colors.white};
+  background-color: ${({ theme, $selected }) =>
+    $selected ? theme.colors.black : theme.colors.white};
   border-radius: ${hScalePx(100)};
   ${({ theme }) => theme.fontFaces['body2/12-Regular']};
-  color: ${({ theme, selected }) => (selected ? theme.colors.white : theme.colors.gray800)};
+  color: ${({ theme, $selected }) => ($selected ? theme.colors.white : theme.colors.gray800)};
   border: ${hScalePx(1)} solid
-    ${({ theme, selected }) => (selected ? theme.colors.white : theme.colors.gray100)};
+    ${({ theme, $selected }) => ($selected ? theme.colors.white : theme.colors.gray100)};
 `;
 
 // carousel slide item
@@ -137,7 +137,7 @@ const ConceptCurationSection = () => {
         {concepts.map((item, idx) => (
           <ConceptButton
             onClick={() => setSelectedButtonIdx(idx)}
-            selected={idx === selectedButtonIdx}
+            $selected={idx === selectedButtonIdx}
           >
             {item.text}
           </ConceptButton>

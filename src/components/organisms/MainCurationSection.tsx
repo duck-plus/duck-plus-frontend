@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import EmblaCarousel from '../organisms/EmblaCarousel';
 import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
-import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
+import useEmblaCarousel from 'embla-carousel-react';
 import isNonNullable from '@/utils/isNonNullable';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '@/router';
-import {
-  useGetCafeCurationsQuery,
-  useGetMainCafeBannerQuery,
-} from '@/services/gql-outputs/graphql';
+import { useGetMainCafeBannerQuery } from '@/services/gql-outputs/graphql';
 import { ReactComponent as ICArrowRightSVGR } from '@/assets/svgr/ic/arrow-line-right.svg';
 
 // carousel
@@ -62,8 +59,8 @@ const PaginationContainer = styled.div`
   ${({ theme }) => theme.fontFaces['body2/12-SemiBold']};
 `;
 
-const SlideIndex = styled.div<{ current?: boolean }>`
-  color: ${({ theme, current }) => (current ? theme.colors.white : theme.colors.gray500)};
+const SlideIndex = styled.div<{ $current?: boolean }>`
+  color: ${({ theme, $current }) => ($current ? theme.colors.white : theme.colors.gray500)};
   ${({ theme }) => theme.fontFaces['caption/10-Medium']};
 `;
 
@@ -105,7 +102,7 @@ const MainCurationSection = () => {
           </>
         ))}
         <PaginationContainer className="slide-index">
-          <SlideIndex current>{selectedImageIdx + 1}</SlideIndex>
+          <SlideIndex $current>{selectedImageIdx + 1}</SlideIndex>
           <VerticalSep />
           <SlideIndex>{mainBannerData?.imageFileList?.length}</SlideIndex>
           <ICArrowRightSVGR width={hr * 12} height={hr * 12} fill={theme.colors.white} />

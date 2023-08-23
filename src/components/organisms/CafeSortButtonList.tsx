@@ -63,6 +63,7 @@ const CafeSortButtonList = () => {
     <Container>
       {buttons.map(button => (
         <ButtonContainer
+          key={button.id}
           onClick={() => handleButtonClick(features?.find(feature => feature === button.title))}
         >
           {button.lottie ? (
