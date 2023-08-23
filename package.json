@@ -34,7 +34,6 @@
     "react-scripts": "5.0.1",
     "react-tabs": "^6.0.2",
     "resize-observer-polyfill": "^1.5.1",
-    "rimraf": "^5.0.1",
     "simplebar": "^6.2.5",
     "simplebar-react": "^3.2.4",
     "styled-components": "^6.0.5",
@@ -44,7 +43,7 @@
   "scripts": {
     "start": "dotenv -o -e envs/.env.dev craco start",
     "start:prod": "dotenv -o -e envs/.env.prod craco start",
-    "build": "dotenv -o -e envs/.env.prod craco build && yarn sentry:sourcemaps",
+    "build": "dotenv -o -e envs/.env.prod craco build && yarn sentry:sourcemaps && yarn run sentry:sourcemaps",
     "test": "dotenv -o -e envs/.env.dev craco test",
     "codegen": "dotenv -o -e envs/.env.dev yarn _codegen",
     "codegen:prod": "dotenv -o -e envs/.env.prod yarn _codegen",
