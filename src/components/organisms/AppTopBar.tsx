@@ -1,14 +1,14 @@
-import { styled } from "styled-components";
-import { hScalePx } from "@/hooks/useHorizontalRatio";
-import { ReactComponent as LogoSVGR } from "@/assets/svgr/logo.svg";
-import { useNavigate } from "react-router-dom";
-import { ReactComponent as ICArrowBackSVGR } from "@/assets/svgr/ic/arrow-back.svg";
-import React from "react";
+import { styled } from 'styled-components';
+import { hScalePx } from '@/hooks/useHorizontalRatio';
+import { ReactComponent as LogoSVGR } from '@/assets/svgr/logo.svg';
+import { useNavigate } from 'react-router-dom';
+import { ReactComponent as ICArrowBackSVGR } from '@/assets/svgr/ic/arrow-back.svg';
+import React from 'react';
 
 const CSSAppTopBarHeight = hScalePx(50);
 
 const Container = styled.div`
-  ${({ theme }) => theme.fontFaces["body1/14-Medium"]}
+  ${({ theme }) => theme.fontFaces['body1/14-Medium']}
   color: ${({ theme }) => theme.colors.gray900};
   height: ${CSSAppTopBarHeight};
   width: 100%;
@@ -23,6 +23,7 @@ const Container = styled.div`
 `;
 
 const LogoFrame = styled.div`
+  margin-left: ${hScalePx(20)};
   height: ${hScalePx(18)};
 `;
 
@@ -40,7 +41,7 @@ const BackButton = styled.button`
 /** [Duck+] */
 const LogoLeft = (props: React.ComponentProps<typeof Container>) => {
   return (
-    <Container {...props}>
+    <Container {...props} style={{ justifyContent: 'flex-start' }}>
       <LogoFrame>
         <LogoSVGR width="100%" height="100%" />
       </LogoFrame>
