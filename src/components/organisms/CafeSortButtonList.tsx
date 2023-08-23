@@ -13,6 +13,7 @@ const Container = styled.div`
   padding: ${hScalePx(24)} ${hScalePx(20)};
   display: flex;
   gap: ${hScalePx(15)};
+  cursor: pointer;
 `;
 
 const ButtonContainer = styled.button`

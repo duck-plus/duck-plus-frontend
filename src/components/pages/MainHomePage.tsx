@@ -78,7 +78,6 @@ const MainHomePage = () => {
       <ConceptCurationSection />
       <FreeFeeCurationSection />
       <PopularCurationSection />
-      <NewOpenCuraionSection />
     </PageFrame>
   );
 };

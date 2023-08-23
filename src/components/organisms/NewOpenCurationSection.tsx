@@ -85,20 +85,13 @@ const NewOpenCuraionSection = () => {
       <CafeCarousel ref={emblaRef}>
         <Container>
           {CafeCurations?.cafeList?.filter(isNonNullable).map(cafe => (
-            <Slide
-              key={
-                cafe.imageFileList
-                  .filter(isNonNullable)
-                  .filter(({ category }) => category === 'LANDSCAPE')[0].url
-              }
-              onClick={() => handleCafeClick(cafe.code)}
-            >
+            <Slide key={cafe.code} onClick={() => handleCafeClick(cafe.code)}>
               <img
                 alt={cafe.name}
                 src={
                   cafe.imageFileList
                     .filter(isNonNullable)
-                    .filter(({ category }) => category === 'LANDSCAPE')[0].url
+                    .filter(({ category }) => category === 'LANDSCAPE')[0]?.url
                 }
               />
               <CafeName>{cafe.name}</CafeName>
