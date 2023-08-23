@@ -14,6 +14,7 @@ const Container = styled.div`
   padding: ${hScalePx(24)} ${hScalePx(20)};
   display: flex;
   gap: ${hScalePx(15)};
+  border-bottom: ${hScalePx(1)} solid ${({ theme }) => theme.colors.gray100};
 `;
 
 const ButtonContainer = styled.button`
@@ -25,7 +26,6 @@ const ButtonContainer = styled.button`
 
 const ButtonImgContianer = styled.div`
   display: flex;
-  /* padding: ${hScalePx(16)} ${hScalePx(14)}; */
   justify-content: center;
   align-items: center;
   width: ${hScalePx(52)};
