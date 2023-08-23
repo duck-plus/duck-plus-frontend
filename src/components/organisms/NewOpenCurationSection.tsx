@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import EmblaCarousel from '../organisms/EmblaCarousel';
 import { hScalePx } from '@/hooks/useHorizontalRatio';
@@ -29,17 +28,18 @@ const Slide = styled(EmblaCarousel.Slide)`
   flex: 0 0 auto; /* Adapt slide size to its content */
   min-width: 0;
   max-width: 100%; /* Prevent from growing larger than viewport */
+  flex-direction: column;
 `;
 
 const SlideImgFrame = styled.div`
   position: relative;
   width: 100%;
+  height: ${hScalePx(152)};
   img {
     width: 100%;
-    height: ${hScalePx(152)};
+    height: 100%;
     object-fit: cover;
   }
-  flex-direction: column;
   &::after {
     background-color: #000000;
     opacity: 0.1;
@@ -69,9 +69,9 @@ const OPTIONS: EmblaOptionsType = {
 };
 
 const NewOpenCuraionSection = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
+  const [emblaRef] = useEmblaCarousel(OPTIONS);
   const navigate = useNavigate();
-  const { data: CafeCurations } = useGetCafeCurationsQuery({ args: { feature: '무료대관' } });
+  const { data: CafeCurations } = useGetCafeCurationsQuery();
 
   const handleCafeClick = (cafeCode: string) => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
@@ -82,22 +82,25 @@ const NewOpenCuraionSection = () => {
       <CurationHeader title={'[NEW] 신상 이벤트 카페'} />
       <CafeCarousel ref={emblaRef}>
         <Container>
-          {CafeCurations?.cafeList?.filter(isNonNullable).map(cafe => (
-            <Slide key={cafe.code} onClick={() => handleCafeClick(cafe.code)}>
-              <SlideImgFrame>
-                <img
-                  alt={cafe.name}
-                  src={
-                    cafe.imageFileList
-                      .filter(isNonNullable)
-                      .filter(({ category }) => category === 'LANDSCAPE')[0]?.url
-                  }
-                />
-              </SlideImgFrame>
-              <CafeName>{cafe.name}</CafeName>
-              <HashTags>{cafe.hashtag}</HashTags>
-            </Slide>
-          ))}
+          {CafeCurations?.cafeList
+            ?.slice(0, 10)
+            .filter(isNonNullable)
+            .map(cafe => (
+              <Slide key={cafe.code} onClick={() => handleCafeClick(cafe.code)}>
+                <SlideImgFrame>
+                  <img
+                    alt={cafe.name}
+                    src={
+                      cafe.imageFileList
+                        .filter(isNonNullable)
+                        .filter(({ category }) => category === 'LANDSCAPE')[0]?.url
+                    }
+                  />
+                </SlideImgFrame>
+                <CafeName>{cafe.name}</CafeName>
+                <HashTags>{cafe.hashtag}</HashTags>
+              </Slide>
+            ))}
         </Container>
       </CafeCarousel>
     </>
