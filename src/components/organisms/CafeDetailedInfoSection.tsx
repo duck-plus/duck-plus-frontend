@@ -10,6 +10,7 @@ import LocationFillSVG from '@/assets/svgr/ic/location-fill.svg';
 import useInViewIdxObserver from '@/hooks/useInViewIdxObserver';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '@/router';
+import isNonNullable from '@/utils/isNonNullable';
 
 const CSSDetailInfoNavBarHeight = hScalePx(40);
 
@@ -157,8 +158,8 @@ const MapOverlay = styled.div`
 
 const detailInfoItems = ['카페정보', '특전안내', '메뉴', '지도'] as const;
 
-const splitToArray = (s: string | undefined | null) =>
-  s && s.split(/\r\n|\r|\n/).map(s => s.trim());
+const splitToArray = (s: string | undefined | null): string[] =>
+  s?.split(/\r\n|\r|\n/).map(s => s.trim()) || [];
 
 const InfoListItem = ({ children }: React.PropsWithChildren) => {
   const hr = useHorizontalRatio();
@@ -278,19 +279,19 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
         <HorSep />
 
         {/* 시설안내 */}
-        {!facilityList ? null : (
-          <>
-            <DetailedInfo>
-              <Title>시설안내</Title>
-              <InfoList>
-                {facilityList.map(facility => (
-                  <InfoListItem key={facility}>{facility}</InfoListItem>
-                ))}
-              </InfoList>
-            </DetailedInfo>
-            <HorSep />
-          </>
-        )}
+        <DetailedInfo>
+          <Title>시설안내</Title>
+          <InfoList>
+            {isNonNullable(cafe?.seatCount) && (
+              <InfoListItem>의자 {cafe?.seatCount}개</InfoListItem>
+            )}
+
+            {facilityList?.map(facility => (
+              <InfoListItem key={facility}>{facility}</InfoListItem>
+            ))}
+          </InfoList>
+        </DetailedInfo>
+        <HorSep />
 
         {/* 특이사항 */}
         {!cafe?.remarkList || !cafe.remarkList.length ? null : (
