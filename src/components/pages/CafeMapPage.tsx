@@ -1,17 +1,17 @@
-import React, { useEffect, useRef } from "react";
-import PageFrame from "@/components/atoms/PageFrame";
-import AppTopBar from "../organisms/AppTopBar";
-import { useGetCafeQuery } from "@/services/gql-outputs/graphql";
-import styled from "styled-components";
-import useHorizontalRatio, { hScalePx } from "@/hooks/useHorizontalRatio";
-import { useTypedSearchParams } from "react-router-typesafe-routes/dom";
-import { ROUTES } from "@/router";
-import { Navigate } from "react-router-dom";
-import LocationFill56SVG from "@/assets/svgr/ic/location-fill-56.svg";
-import { ReactComponent as GPSSVGR } from "@/assets/svgr/ic/gps.svg";
-import { ReactComponent as CopyFillSVGR } from "@/assets/svgr/ic/copy-fill.svg";
-import copy from "copy-to-clipboard";
-import sentry from "@/utils/sentry";
+import React, { useEffect, useRef } from 'react';
+import PageFrame from '@/components/atoms/PageFrame';
+import AppTopBar from '../organisms/AppTopBar';
+import { useGetCafeQuery } from '@/services/gql-outputs/graphql';
+import styled from 'styled-components';
+import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
+import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
+import { ROUTES } from '@/router';
+import { Navigate } from 'react-router-dom';
+import LocationFill56SVG from '@/assets/svgr/ic/location-fill-56.svg';
+import { ReactComponent as GPSSVGR } from '@/assets/svgr/ic/gps.svg';
+import { ReactComponent as CopyFillSVGR } from '@/assets/svgr/ic/copy-fill.svg';
+import copy from 'copy-to-clipboard';
+import sentry from '@/utils/sentry';
 
 const MapContainer = styled.div`
   width: 100%;
@@ -28,7 +28,7 @@ const NaverMap = styled.div`
 `;
 
 const Address = styled.div`
-  ${({ theme }) => theme.fontFaces["body2/12-Regular"]};
+  ${({ theme }) => theme.fontFaces['body2/12-Regular']};
   color: ${({ theme }) => theme.colors.gray900};
 `;
 
@@ -37,6 +37,8 @@ const GotoMyLocationButton = styled.button`
   border: 0;
   top: ${hScalePx(40)};
   right: ${hScalePx(20)};
+  width: ${hScalePx(32)};
+  height: ${hScalePx(32)};
   padding: ${hScalePx(2)};
   border-radius: ${hScalePx(100)};
   background: #fff;
@@ -78,7 +80,7 @@ const CafeMapPage = () => {
       code,
     },
     {
-      select: (s) => s.cafe,
+      select: s => s.cafe,
     }
   );
 
@@ -86,7 +88,6 @@ const CafeMapPage = () => {
 
   const mapRef = useRef<naver.maps.Map>();
   const selfMarkerRef = useRef<naver.maps.Marker>();
-  const selfMarkerWatchIdRef = useRef<number | null>(null);
 
   // NaverMap
   useEffect(() => {
@@ -122,49 +123,28 @@ const CafeMapPage = () => {
       return;
     }
     if (navigator.geolocation) {
-      // 새 마커 배치 (on)
-      if (!selfMarkerRef.current) {
-        // 내 위치 마커 초기화
-        navigator.geolocation.getCurrentPosition(
-          ({ coords: { latitude, longitude } }) => {
-            const position = new naver.maps.LatLng(latitude, longitude);
-            map.setCenter(position); // 얻은 좌표를 지도의 중심으로 설정합니다.
-            map.setZoom(17); // 지도의 줌 레벨을 변경합니다.
-            selfMarkerRef.current = new naver.maps.Marker({
-              position,
-              map,
-            });
-          },
-          sentry.captureException,
-          {
-            enableHighAccuracy: true,
-          }
-        );
-
-        // 내 위치 마커 모니터링
-        selfMarkerWatchIdRef.current = navigator.geolocation.watchPosition(
-          ({ coords: { latitude, longitude } }) => {
-            const position = new naver.maps.LatLng(latitude, longitude);
-            map.setCenter(position); // 얻은 좌표를 지도의 중심으로 설정합니다.
-            selfMarkerRef.current?.setPosition(position);
-          },
-          sentry.captureException,
-          {
-            enableHighAccuracy: true,
-          }
-        );
-      }
-      // 기존 마커가 있으면 마커 제거 (off)
-      else {
+      if (selfMarkerRef.current) {
         // 맵에서 제거
         selfMarkerRef.current?.setMap(null);
-        // 모니터 제거
-        if (typeof selfMarkerWatchIdRef?.current === "number") {
-          navigator.geolocation.clearWatch(selfMarkerWatchIdRef.current);
-        }
       }
+      // 내 위치 마커 초기화
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          const position = new naver.maps.LatLng(latitude, longitude);
+          map.setCenter(position); // 얻은 좌표를 지도의 중심으로 설정합니다.
+          map.setZoom(17); // 지도의 줌 레벨을 변경합니다.
+          selfMarkerRef.current = new naver.maps.Marker({
+            position,
+            map,
+          });
+        },
+        sentry.captureException,
+        {
+          enableHighAccuracy: true,
+        }
+      );
     } else {
-      sentry.captureMessage("위치 권한이 없습니다", "warning");
+      sentry.captureMessage('위치 권한이 없습니다', 'warning');
     }
   };
 
@@ -186,7 +166,7 @@ const CafeMapPage = () => {
         </OverlayTopBar>
         {/* 우상단 내 위치로 버튼 */}
         <GotoMyLocationButton onClick={handleGotoMyLocationClick}>
-          <GPSSVGR width={32 * hr} height={32 * hr} />
+          <GPSSVGR width="100%" height="100%" />
         </GotoMyLocationButton>
       </MapContainer>
     </PageFrame>
