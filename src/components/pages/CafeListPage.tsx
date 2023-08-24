@@ -79,7 +79,7 @@ const CafeListPage = () => {
               {/* 지역 필터*/}
               <RegionTabList>
                 {regionList?.map(region => (
-                  <RegionTab key={region}>{region}</RegionTab>
+                  <RegionTab key={region || ''}>{region || '전국'}</RegionTab>
                 ))}
               </RegionTabList>
               {regionList?.map(region => (
