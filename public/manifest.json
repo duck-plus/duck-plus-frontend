@@ -1,6 +1,6 @@
 {
-  "short_name": "DEV 덕플",
-  "name": "DEV 덕플 PWA",
+  "short_name": "DEV 덕플러스 (duck-plus)",
+  "name": "DEV 덕플러스 (duck-plus) PWA",
   "icons": [
     {
       "src": "favicon.dev.ico",
