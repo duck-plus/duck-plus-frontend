@@ -158,8 +158,8 @@ const MapOverlay = styled.div`
 
 const detailInfoItems = ['카페정보', '특전안내', '메뉴', '지도'] as const;
 
-const splitToArray = (s: string | undefined | null): string[] =>
-  s?.split(/\r\n|\r|\n/).map(s => s.trim()) || [];
+const splitToArray = (s: string | undefined | null): string[] | undefined =>
+  s?.split(/\r\n|\r|\n/).map(s => s.trim()) || undefined;
 
 const InfoListItem = ({ children }: React.PropsWithChildren) => {
   const hr = useHorizontalRatio();
@@ -286,9 +286,11 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
               <InfoListItem>의자 {cafe?.seatCount}개</InfoListItem>
             )}
 
-            {facilityList?.map(facility => (
-              <InfoListItem key={facility}>{facility}</InfoListItem>
-            ))}
+            {facilityList
+              ?.filter(v => v !== '')
+              .map(facility => (
+                <InfoListItem key={facility}>{facility}</InfoListItem>
+              ))}
           </InfoList>
         </DetailedInfo>
         <HorSep />
