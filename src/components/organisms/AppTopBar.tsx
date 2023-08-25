@@ -43,7 +43,7 @@ const LogoLeft = (props: React.ComponentProps<typeof Container>) => {
   return (
     <Container {...props} style={{ justifyContent: 'flex-start' }}>
       <LogoFrame>
-        <LogoSVGR width="100%" height="100%" />
+        <LogoSVGR height={hScalePx(18)}/>
       </LogoFrame>
     </Container>
   );
