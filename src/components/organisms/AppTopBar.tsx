@@ -1,9 +1,11 @@
-import { styled } from 'styled-components';
-import { hScalePx } from '@/hooks/useHorizontalRatio';
-import { ReactComponent as LogoSVGR } from '@/assets/svgr/logo.svg';
-import { useNavigate } from 'react-router-dom';
-import { ReactComponent as ICArrowBackSVGR } from '@/assets/svgr/ic/arrow-back.svg';
 import React from 'react';
+
+import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
+
+import { ReactComponent as ICArrowBackSVGR } from '@/assets/svgr/ic/arrow-back.svg';
+import { ReactComponent as LogoSVGR } from '@/assets/svgr/logo.svg';
+import { hScalePx } from '@/hooks/useHorizontalRatio';
 
 const CSSAppTopBarHeight = hScalePx(50);
 
@@ -43,7 +45,7 @@ const LogoLeft = (props: React.ComponentProps<typeof Container>) => {
   return (
     <Container {...props} style={{ justifyContent: 'flex-start' }}>
       <LogoFrame>
-        <LogoSVGR height={hScalePx(18)}/>
+        <LogoSVGR height={18} />
       </LogoFrame>
     </Container>
   );

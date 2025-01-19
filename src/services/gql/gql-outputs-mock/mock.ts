@@ -9,7 +9,10 @@ import type {
 import { faker } from '@faker-js/faker';
 
 import {
+  generateBusinessHour,
   generateCafeDescription,
+  generateConcept,
+  generateFeeInfo,
   generateRandomBreifAddress,
   generateRandomCafeName,
   generateRandomDetailedAddress,
@@ -34,8 +37,7 @@ const cafeCount = 100;
 const lengthObject = { length: cafeCount };
 const cafeCodes = Array.from(lengthObject).map(() => faker.database.mongodbObjectId());
 
-const concepts = ['모던', '아기자기', '코지', '내추럴'] as const;
-const featureList = ['생카성지', '무료대관', '특전맛집'] as const;
+const featureList = ['생카성지', '무료대관', '특전맛집', '대형카페'] as const;
 const specialBenefitList = [
   '포토 컵홀더 제작 및 제공',
   '생일 기념 포토카드 세트',
@@ -59,34 +61,59 @@ const specialBenefitList = [
   '기념일 테마를 담은 배경음악 플레이리스트',
 ];
 
+const randomSNSNames = [
+  'VibeStories',
+  'TheDailyDose',
+  'SunnySideDiary',
+  'UrbanEscape',
+  'PixelPioneers',
+  'CloudNineTales',
+  'NomadicVibes',
+  'GoldenLens',
+  'WanderWhisper',
+  'ChocoCrush',
+  'EchoRoom',
+  'VelvetDreams',
+  'MintyHues',
+  'SnapChronicles',
+  'DreamCrafters',
+  'CozyNest',
+  'LushJournals',
+  'PandaTracks',
+  'TwilightCanvas',
+  'SkylineVibes',
+];
+
 function hasValue<T>(x: T | null | undefined | false): x is T {
   return x !== undefined && x !== null;
 }
 
-function generateSNSList(): ISNS[] {
+function generateSNSList(): (ISNS | null)[] {
+  const channelNames = faker.helpers.arrayElements(randomSNSNames, 3);
+
   const snsKakao: ISNS = {
     __typename: 'Sns',
     type: 'KAKAO',
-    channelName: faker.internet.username(),
+    channelName: channelNames[0],
     url: faker.internet.url(),
   };
   const snsInstagram: ISNS = {
     __typename: 'Sns',
     type: 'INSTAGRAM',
-    channelName: faker.internet.username(),
+    channelName: channelNames[1],
     url: faker.internet.url(),
   };
   const snsTwitter: ISNS = {
     __typename: 'Sns',
     type: 'TWITTER',
-    channelName: faker.internet.username(),
+    channelName: channelNames[2],
     url: faker.internet.url(),
   };
   return [
-    faker.datatype.boolean() && snsKakao,
-    faker.datatype.boolean() && snsInstagram,
-    faker.datatype.boolean() && snsTwitter,
-  ].filter(hasValue);
+    faker.datatype.boolean() ? snsKakao : null,
+    faker.datatype.boolean() ? snsInstagram : null,
+    faker.datatype.boolean() ? snsTwitter : null,
+  ];
 }
 
 function generateBusinessDayList(): Array<Day | null> {
@@ -105,6 +132,10 @@ export const mockCafeDataList: GetCafeQuery[] = Array.from(cafeCodes, code => {
 
   const cafeDescription = generateCafeDescription();
 
+  const businessHour = generateBusinessHour();
+
+  const fee = generateFeeInfo();
+
   const mockData: GetCafeQuery = {
     __typename: 'Query',
     cafe: {
@@ -118,44 +149,23 @@ export const mockCafeDataList: GetCafeQuery[] = Array.from(cafeCodes, code => {
       askingUrl: '',
       briefInfo: cafeDescription.breifInfo,
       businessHour: {
-        __typename: undefined,
+        __typename: 'CafeBusinessHour',
         businessDayList: generateBusinessDayList(),
-        closingTime: undefined,
-        openingTime: undefined,
+        closingTime: businessHour.closingTime,
+        openingTime: businessHour.openingTime,
         workingOnHoliday: faker.datatype.boolean(),
       },
       code,
-      concept:
-        concepts[
-          faker.number.int({
-            min: 0,
-            max: 3,
-          })
-        ],
+      concept: generateConcept(),
       detailedInfo: cafeDescription.description,
       featureList: featureList.filter(() => faker.datatype.boolean()),
       feeInfo: {
         __typename: 'CafeFeeInfo',
-        bookingAmount: faker.number.int({
-          min: 0,
-          max: 10,
-        }),
-        dailyCharge: faker.number.int({
-          min: 10000,
-          max: 50000,
-        }),
-        depositAmount: faker.number.int({
-          min: 10000,
-          max: 50000,
-        }),
-        guaranteeCount: faker.number.int({
-          min: 0,
-          max: 10,
-        }),
-        minPeriod: faker.number.int({
-          min: 0,
-          max: 100,
-        }),
+        bookingAmount: fee.bookingAmount,
+        dailyCharge: fee.dailyCharge,
+        depositAmount: fee.depositAmount,
+        guaranteeCount: fee.guaranteeCount,
+        minPeriod: fee.minPeriod,
         note: undefined,
       },
       imageFileList: Array.from(

@@ -180,6 +180,41 @@ const cafeDescriptionList = [
   },
 ];
 
+const businessHourList = [
+  { openingTime: '오전 10:00', closingTime: '오후 4:00' },
+  { openingTime: '오전 10:00', closingTime: '오후 5:00' },
+  { openingTime: '오전 10:00', closingTime: '오후 6:00' },
+  { openingTime: '오전 10:00', closingTime: '오후 7:00' },
+  { openingTime: '오전 10:00', closingTime: '오후 8:00' },
+  { openingTime: '오전 10:15', closingTime: '오후 6:45' },
+  { openingTime: '오전 10:30', closingTime: '오후 7:30' },
+  { openingTime: '오전 11:00', closingTime: '오후 7:00' },
+  { openingTime: '오전 11:00', closingTime: '오후 8:00' },
+  { openingTime: '오전 11:30', closingTime: '오후 7:30' },
+  { openingTime: '오전 11:30', closingTime: '오후 9:00' },
+  { openingTime: '오전 12:00', closingTime: '오후 8:00' },
+  { openingTime: '오전 7:00', closingTime: '오후 12:00' },
+  { openingTime: '오전 7:00', closingTime: '오후 3:00' },
+  { openingTime: '오전 7:30', closingTime: '오후 3:30' },
+  { openingTime: '오전 8:00', closingTime: '오후 2:00' },
+  { openingTime: '오전 8:00', closingTime: '오후 4:00' },
+  { openingTime: '오전 8:00', closingTime: '오후 5:00' },
+  { openingTime: '오전 8:00', closingTime: '오후 6:00' },
+  { openingTime: '오전 8:30', closingTime: '오후 5:30' },
+  { openingTime: '오전 8:45', closingTime: '오후 4:45' },
+  { openingTime: '오전 9:00', closingTime: '오후 4:30' },
+  { openingTime: '오전 9:00', closingTime: '오후 5:00' },
+  { openingTime: '오전 9:00', closingTime: '오후 5:30' },
+  { openingTime: '오전 9:00', closingTime: '오후 6:00' },
+  { openingTime: '오전 9:00', closingTime: '오후 6:30' },
+  { openingTime: '오전 9:15', closingTime: '오후 5:45' },
+  { openingTime: '오전 9:30', closingTime: '오후 3:30' },
+  { openingTime: '오전 9:30', closingTime: '오후 5:30' },
+  { openingTime: '오전 9:45', closingTime: '오후 6:15' },
+];
+
+const concepts = ['모던', '아기자기', '코지', '내추럴'] as const;
+
 export function generateRandomSigungu() {
   return faker.helpers.arrayElement(sigunguList);
 }
@@ -221,4 +256,40 @@ export function generateRandomLocation() {
 
 export function generateCafeDescription() {
   return faker.helpers.arrayElement(cafeDescriptionList);
+}
+
+export function generateBusinessHour() {
+  return faker.helpers.arrayElement(businessHourList);
+}
+
+export function generateConcept() {
+  return faker.helpers.arrayElement(concepts);
+}
+
+export function generateFeeInfo() {
+  return {
+    bookingAmount:
+      faker.number.int({
+        min: 0,
+        max: 10,
+      }) * 1000,
+    dailyCharge:
+      faker.number.int({
+        min: 1,
+        max: 50,
+      }) * 1000,
+    depositAmount:
+      faker.number.int({
+        min: 1,
+        max: 50,
+      }) * 1000,
+    guaranteeCount: faker.number.int({
+      min: 0,
+      max: 10,
+    }),
+    minPeriod: faker.number.int({
+      min: 0,
+      max: 100,
+    }),
+  };
 }

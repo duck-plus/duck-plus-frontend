@@ -198,7 +198,6 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
   const facilityList = splitToArray(cafe?.facility);
 
   const specialBenefitList = splitToArray(cafe?.specialBenefit);
-  console.log(cafe?.specialBenefit);
 
   const menuImage = cafe?.imageFileList?.find(s => s?.category === 'MENU');
   const mapElement = useRef<HTMLDivElement>(null);
@@ -321,7 +320,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
         <DetailedInfo ref={ref1}>
           <Title>지원특전목록</Title>
           <InfoList>
-            {!specialBenefitList || specialBenefitList.length === 0 ? (
+            {!specialBenefitList?.at(0) || specialBenefitList.length === 0 ? (
               <InfoListItem>정보 없음</InfoListItem>
             ) : (
               specialBenefitList.map(benefit => (

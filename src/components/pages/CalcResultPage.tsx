@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
+
+import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
+import { styled } from 'styled-components';
+
+import { hScalePx } from '@/hooks/useHorizontalRatio';
+import { ROUTES } from '@/router';
+
 import PageFrame from '../atoms/PageFrame';
 import AppTopBar from '../organisms/AppTopBar';
 import CafeList from '../organisms/CafeList';
-import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
-import { ROUTES } from '@/router';
-import { styled } from 'styled-components';
-import { hScalePx } from '@/hooks/useHorizontalRatio';
 import LoadingPage from './LoadingPage';
 
 const Padding = styled.div`
@@ -22,7 +25,7 @@ const CalcResultPage = () => {
   useEffect(() => {
     const timeoutHandle = setTimeout(() => {
       setShowLoadingFaker(false);
-    }, 3e3);
+    }, 2.5e3);
     return () => clearTimeout(timeoutHandle);
   }, []);
 

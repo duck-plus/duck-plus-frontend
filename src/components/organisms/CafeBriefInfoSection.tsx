@@ -96,7 +96,6 @@ const CafeBriefInfoSection = ({ cafeCode }: IProps) => {
 
   const cafe = data.cafe;
 
-  console.log(cafe?.snsList);
   return (
     <div>
       <BreifIntro>

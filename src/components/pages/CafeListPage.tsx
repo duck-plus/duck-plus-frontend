@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+
+import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
+import styled from 'styled-components';
+
 import PageFrame from '@/components/atoms/PageFrame';
-import AppTopBar from '../organisms/AppTopBar';
 import useCafeFeatureList from '@/hooks/useCafeFeatureList';
 import useFeaturedRegionList from '@/hooks/useFeaturedRegionList';
 import { hScalePx } from '@/hooks/useHorizontalRatio';
-import styled from 'styled-components';
+import { ROUTES } from '@/router';
+
+import AppTopBar from '../organisms/AppTopBar';
 import CafeList from '../organisms/CafeList';
 import TabBar from '../organisms/TabBar';
-import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
-import { ROUTES } from '@/router';
 
 const CategoryTabList = styled(TabBar.TabList)`
   position: sticky;
@@ -69,21 +72,21 @@ const CafeListPage = () => {
         {/* 특성 필터 */}
         <CategoryTabList>
           {featureList?.map(feature => (
-            <TabBar.Tab key={feature || ''}>{feature || '전체보기'}</TabBar.Tab>
+            <TabBar.Tab key={feature || 'all'}>{feature || '전체보기'}</TabBar.Tab>
           ))}
         </CategoryTabList>
 
         {featureList?.map(feature => (
-          <TabBar.TabPanel key={feature || ''}>
+          <TabBar.TabPanel key={feature || 'all'}>
             <TabBar.Tabs>
               {/* 지역 필터*/}
               <RegionTabList>
                 {regionList?.map(region => (
-                  <RegionTab key={region || ''}>{region || '전체'}</RegionTab>
+                  <RegionTab key={region || 'all'}>{region || '전체'}</RegionTab>
                 ))}
               </RegionTabList>
               {regionList?.map(region => (
-                <TabBar.TabPanel key={region}>
+                <TabBar.TabPanel key={region || 'all'}>
                   {/* 카페 목록 */}
                   <CafeList
                     filter={{

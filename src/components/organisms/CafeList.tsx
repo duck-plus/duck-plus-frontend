@@ -155,6 +155,17 @@ const CarouselDot = styled.div<{ selected: boolean }>`
   cursor: pointer;
 `;
 
+const NoCafeExist = styled.div`
+  height: ${hScalePx(600)};
+  ${({ theme }) => theme.fontFaces['body1/14-Regular']};
+  align-items: center;
+  color: ${({ theme }) => theme.colors.gray800};
+  display: flex;
+  justify-content: center;
+  padding: ${hScalePx(20)} 0;
+  text-align: center;
+`;
+
 interface ICafeListItemProps {
   cafe: NonNullable<ReturnType<typeof useFilteredCafeList>['data']>[number];
 }
@@ -252,6 +263,13 @@ const CafeList = ({ filter }: IProps) => {
   return (
     <ScrollFrame>
       <CafeListContainer>
+        {!cafeList?.at(0) && (
+          <NoCafeExist>
+            비용에 맞는 카페가 없습니다.
+            <br />
+            비용을 높여서 다시 검색해보세요.
+          </NoCafeExist>
+        )}
         {cafeList?.map(cafe => (
           <CafeListItem key={cafe.name} cafe={cafe} />
         ))}
