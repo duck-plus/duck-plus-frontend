@@ -1,14 +1,18 @@
-import { useGetCafeListQuery } from '@/services/gql-outputs/graphql';
+import { useMemo } from 'react';
+
 import isNonNullable from '@/utils/isNonNullable';
+
+import { useMockGetCafeListQuery } from '../services/gql/gql-outputs-mock/useMockGetCafeList';
 
 /** feature에 해당하는 카페들의 regionList만 모아 반환 */
 export default function useFeaturedRegionList(selectedFeature: string | undefined) {
-  return useGetCafeListQuery(
-    {},
-    {
-      select: ({ cafeList }): (string | undefined)[] => [
+  const { data: cafeListQuery } = useMockGetCafeListQuery({});
+
+  return useMemo(() => {
+    return {
+      data: [
         undefined,
-        ...(cafeList || [])
+        ...(cafeListQuery?.cafeList || [])
           // NotNull, Feature에 해당하는 cafe만 남김
           .filter(isNonNullable)
           .filter(({ featureList }) => isNonNullable(featureList))
@@ -21,6 +25,6 @@ export default function useFeaturedRegionList(selectedFeature: string | undefine
           // 중복 제거
           .filter((a, idx, arr) => arr.findIndex(b => b === a) === idx),
       ],
-    }
-  );
+    };
+  }, [cafeListQuery?.cafeList, selectedFeature]);
 }

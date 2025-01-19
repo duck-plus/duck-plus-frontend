@@ -1,15 +1,18 @@
 import React from 'react';
-import { Day, useGetCafeQuery } from '@/services/gql-outputs/graphql';
-import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
-import { ReactComponent as LocationSVGR } from '@/assets/svgr/ic/location.svg';
-import { ReactComponent as TimeSVGR } from '@/assets/svgr/ic/time.svg';
+
+import styled, { useTheme } from 'styled-components';
+
 import { ReactComponent as InstagramSVGR } from '@/assets/svgr/ic/instagram.svg';
 import { ReactComponent as KakaoSVGR } from '@/assets/svgr/ic/kakao.svg';
+import { ReactComponent as LocationSVGR } from '@/assets/svgr/ic/location.svg';
+import { ReactComponent as TimeSVGR } from '@/assets/svgr/ic/time.svg';
 import { ReactComponent as TwitterSVGR } from '@/assets/svgr/ic/twitter.svg';
-import styled, { useTheme } from 'styled-components';
+import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
+import { Day } from '@/services/gql-outputs/graphql';
+import { useMockGetCafeQuery } from '@/services/gql/gql-outputs-mock/useMockGetCafe';
+import ga from '@/utils/ga';
 import isNonNullable from '@/utils/isNonNullable';
 import openURL from '@/utils/openURL';
-import ga from '@/utils/ga';
 
 const BreifIntro = styled.div`
   padding: ${hScalePx(16)} ${hScalePx(20)} ${hScalePx(12)} ${hScalePx(20)};
@@ -80,16 +83,20 @@ interface IProps {
 const CafeBriefInfoSection = ({ cafeCode }: IProps) => {
   const hr = useHorizontalRatio();
   const theme = useTheme();
-  const { data: cafe } = useGetCafeQuery(
+  const { data } = useMockGetCafeQuery(
     {
       code: cafeCode,
     },
     {
       enabled: !!cafeCode,
-      select: s => s.cafe,
     }
   );
 
+  if (!data) return null;
+
+  const cafe = data.cafe;
+
+  console.log(cafe?.snsList);
   return (
     <div>
       <BreifIntro>

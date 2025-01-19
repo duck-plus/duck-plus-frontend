@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import styled, { useTheme } from 'styled-components';
-import EmblaCarousel from '../organisms/EmblaCarousel';
-import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
+
 import useEmblaCarousel from 'embla-carousel-react';
-import isNonNullable from '@/utils/isNonNullable';
 import { useNavigate } from 'react-router';
-import { ROUTES } from '@/router';
-import { useGetMainCafeBannerQuery } from '@/services/gql-outputs/graphql';
+import styled, { useTheme } from 'styled-components';
+
 import { ReactComponent as ICArrowRightSVGR } from '@/assets/svgr/ic/arrow-line-right.svg';
+import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
+import { ROUTES } from '@/router';
+import isNonNullable from '@/utils/isNonNullable';
+
+import { useMockGetMainCafeBannerQuery } from '../../services/gql/gql-outputs-mock/useMockGetMainCafeBanner';
+import EmblaCarousel from '../organisms/EmblaCarousel';
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -67,7 +70,7 @@ const MainCurationSection = () => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));
   };
 
-  const { data: mainBannerData } = useGetMainCafeBannerQuery({ args: { category: 'BANNER' } });
+  const { data: mainBannerData } = useMockGetMainCafeBannerQuery({ args: { category: 'BANNER' } });
 
   useEffect(() => {
     emblaApi?.on('select', emblaApi => {

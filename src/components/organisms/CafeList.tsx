@@ -1,13 +1,16 @@
-import { hScalePx } from '@/hooks/useHorizontalRatio';
 import React, { useEffect, useState } from 'react';
+
+import useEmblaCarousel from 'embla-carousel-react';
+import { useNavigate } from 'react-router';
 import SimpleBar from 'simplebar-react';
 import { styled } from 'styled-components';
+
 import useFilteredCafeList from '@/hooks/useFilteredCafeList';
-import useEmblaCarousel from 'embla-carousel-react';
-import EmblaCarousel from './EmblaCarousel';
-import { useNavigate } from 'react-router';
+import { hScalePx } from '@/hooks/useHorizontalRatio';
 import { ROUTES } from '@/router';
 import isNonNullable from '@/utils/isNonNullable';
+
+import EmblaCarousel from './EmblaCarousel';
 
 const ScrollFrame = styled(SimpleBar)`
   width: ${hScalePx(360)};
@@ -218,7 +221,7 @@ const CafeListItem = ({ cafe }: ICafeListItemProps) => {
         <DescItem>
           <Name>{cafe.name}</Name>
           <Row>
-            <Sigungu>{cafe.address.sigungu}</Sigungu>
+            <Sigungu>{cafe.address.detailedAddress}</Sigungu>
             <VerticalSep />
             <HashTags>{cafe.hashtag}</HashTags>
           </Row>

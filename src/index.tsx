@@ -1,21 +1,25 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import reportWebVitals from "@/reportWebVitals";
-import { RouterProvider } from "react-router-dom";
-import router from "@/router";
-import "simplebar/dist/simplebar.css";
-import "@/global.css";
-import "react-medium-image-zoom/dist/styles.css";
-import sentry from "./utils/sentry";
+import 'simplebar/dist/simplebar.css';
+import '@/global.css';
+import 'react-medium-image-zoom/dist/styles.css';
+
+import React from 'react';
+
+import ReactDOM from 'react-dom/client';
+import { Toaster } from 'react-hot-toast';
+import { RouterProvider } from 'react-router-dom';
+
+import reportWebVitals from '@/reportWebVitals';
+import router from '@/router';
+
+import sentry from './utils/sentry';
 
 sentry.init();
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <Toaster />
   </React.StrictMode>
 );
 

@@ -1,16 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useGetCafeQuery } from '@/services/gql-outputs/graphql';
-import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
-import styled, { useTheme } from 'styled-components';
-import AppTopBar from './AppTopBar';
-import { ReactComponent as DotSVGR } from '@/assets/svgr/ic/dot.svg';
-import { ReactComponent as ZoomInSVGR } from '@/assets/svgr/ic/zoom-in.svg';
+
 import Zoom from 'react-medium-image-zoom';
-import LocationFillSVG from '@/assets/svgr/ic/location-fill.svg';
-import useInViewIdxObserver from '@/hooks/useInViewIdxObserver';
 import { Link } from 'react-router-dom';
+import styled, { useTheme } from 'styled-components';
+
+import { ReactComponent as DotSVGR } from '@/assets/svgr/ic/dot.svg';
+import LocationFillSVG from '@/assets/svgr/ic/location-fill.svg';
+import { ReactComponent as ZoomInSVGR } from '@/assets/svgr/ic/zoom-in.svg';
+import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
+import useInViewIdxObserver from '@/hooks/useInViewIdxObserver';
 import { ROUTES } from '@/router';
 import isNonNullable from '@/utils/isNonNullable';
+
+import { useMockGetCafeQuery } from '../../services/gql/gql-outputs-mock/useMockGetCafe';
+import AppTopBar from './AppTopBar';
 
 const CSSDetailInfoNavBarHeight = hScalePx(40);
 
@@ -179,21 +182,23 @@ interface IProps {
 
 /** 카페 상세 페이지 > 상세 정보들 */
 const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
-  const { data: cafe } = useGetCafeQuery(
+  const { data } = useMockGetCafeQuery(
     {
       code: cafeCode,
     },
     {
       enabled: !!cafeCode,
-      select: s => s.cafe,
     }
   );
+
+  const cafe = data?.cafe;
 
   const theme = useTheme();
 
   const facilityList = splitToArray(cafe?.facility);
 
   const specialBenefitList = splitToArray(cafe?.specialBenefit);
+  console.log(cafe?.specialBenefit);
 
   const menuImage = cafe?.imageFileList?.find(s => s?.category === 'MENU');
   const mapElement = useRef<HTMLDivElement>(null);
@@ -215,7 +220,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
 
   // NaverMap
   useEffect(() => {
-    if (!mapElement.current || !naver || !cafe) return;
+    if (!mapElement.current || !naver?.maps || !cafe) return;
 
     // 지도에 표시할 중심/마커의 위도와 경도 좌표.
     const [lng, lat] = cafe?.address.location?.coordinates || [0, 0];
@@ -316,7 +321,7 @@ const CafeDetailedInfoSection = ({ cafeCode }: IProps) => {
         <DetailedInfo ref={ref1}>
           <Title>지원특전목록</Title>
           <InfoList>
-            {!specialBenefitList || specialBenefitList.length ? (
+            {!specialBenefitList || specialBenefitList.length === 0 ? (
               <InfoListItem>정보 없음</InfoListItem>
             ) : (
               specialBenefitList.map(benefit => (

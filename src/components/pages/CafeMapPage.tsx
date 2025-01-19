@@ -1,17 +1,20 @@
 import React, { useEffect, useRef } from 'react';
-import PageFrame from '@/components/atoms/PageFrame';
-import AppTopBar from '../organisms/AppTopBar';
-import { useGetCafeQuery } from '@/services/gql-outputs/graphql';
-import styled from 'styled-components';
-import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
-import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
-import { ROUTES } from '@/router';
-import { Navigate } from 'react-router-dom';
-import LocationFill56SVG from '@/assets/svgr/ic/location-fill-56.svg';
-import { ReactComponent as GPSSVGR } from '@/assets/svgr/ic/gps.svg';
-import { ReactComponent as CopyFillSVGR } from '@/assets/svgr/ic/copy-fill.svg';
+
 import copy from 'copy-to-clipboard';
+import { Navigate } from 'react-router-dom';
+import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
+import styled from 'styled-components';
+
+import { ReactComponent as CopyFillSVGR } from '@/assets/svgr/ic/copy-fill.svg';
+import { ReactComponent as GPSSVGR } from '@/assets/svgr/ic/gps.svg';
+import LocationFill56SVG from '@/assets/svgr/ic/location-fill-56.svg';
+import PageFrame from '@/components/atoms/PageFrame';
+import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
+import { ROUTES } from '@/router';
 import sentry from '@/utils/sentry';
+
+import { useMockGetCafeQuery } from '../../services/gql/gql-outputs-mock/useMockGetCafe';
+import AppTopBar from '../organisms/AppTopBar';
 
 const MapContainer = styled.div`
   width: 100%;
@@ -75,14 +78,10 @@ const CopyButton = styled.button`
 const CafeMapPage = () => {
   const mapElement = useRef<HTMLDivElement>(null);
   const [{ code }] = useTypedSearchParams(ROUTES.CAFE.MAP);
-  const { data: cafe } = useGetCafeQuery(
-    {
-      code,
-    },
-    {
-      select: s => s.cafe,
-    }
-  );
+  const { data } = useMockGetCafeQuery({
+    code,
+  });
+  const cafe = data?.cafe;
 
   const hr = useHorizontalRatio();
 
@@ -91,7 +90,7 @@ const CafeMapPage = () => {
 
   // NaverMap
   useEffect(() => {
-    if (!mapElement.current || !naver || !cafe) return;
+    if (!mapElement.current || !naver?.maps || !cafe) return;
 
     // 지도에 표시할 중심/마커의 위도와 경도 좌표.
     const [lng, lat] = cafe.address.location?.coordinates || [0, 0];

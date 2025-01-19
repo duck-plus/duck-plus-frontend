@@ -1,12 +1,14 @@
-import styled from 'styled-components';
-import EmblaCarousel from './EmblaCarousel';
-import { hScalePx } from '@/hooks/useHorizontalRatio';
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
-import isNonNullable from '@/utils/isNonNullable';
-import CurationHeader from '../molecule/CurationHeader';
 import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+
+import { hScalePx } from '@/hooks/useHorizontalRatio';
 import { ROUTES } from '@/router';
-import { useGetCafeCurationsQuery } from '@/services/gql-outputs/graphql';
+import isNonNullable from '@/utils/isNonNullable';
+
+import { useMockGetCafeCurations } from '../../services/gql/gql-outputs-mock/useMockGetCafeCurations';
+import CurationHeader from '../molecule/CurationHeader';
+import EmblaCarousel from './EmblaCarousel';
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -70,7 +72,7 @@ const OPTIONS: EmblaOptionsType = {
 const PopularCurationSection = () => {
   const [emblaRef] = useEmblaCarousel(OPTIONS);
   const navigate = useNavigate();
-  const { data: CafeCurations } = useGetCafeCurationsQuery({ args: { isPopular: true } });
+  const { data: CafeCurations } = useMockGetCafeCurations({ args: { isPopular: true } });
 
   const handleCafeClick = (cafeCode: string) => {
     navigate(ROUTES.CAFE.DETAILS.buildPath({}, { code: cafeCode }));

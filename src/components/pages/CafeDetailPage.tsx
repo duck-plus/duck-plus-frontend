@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
+
+import useEmblaCarousel from 'embla-carousel-react';
+import { Navigate } from 'react-router';
+import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
+import styled from 'styled-components';
+
+import { ReactComponent as CloseSVGR } from '@/assets/svgr/ic/close.svg';
+import useBottomSheet from '@/hooks/useBottomSheet';
+import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
+import { ROUTES } from '@/router';
+import ga from '@/utils/ga';
+import isNonNullable from '@/utils/isNonNullable';
+import openURL from '@/utils/openURL';
+
+import { useMockGetCafeQuery } from '../../services/gql/gql-outputs-mock/useMockGetCafe';
 import PageFrame from '../atoms/PageFrame';
 import AppTopBar from '../organisms/AppTopBar';
-import styled from 'styled-components';
-import EmblaCarousel from '../organisms/EmblaCarousel';
-import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
-import { useGetCafeQuery } from '@/services/gql-outputs/graphql';
-import { useTypedSearchParams } from 'react-router-typesafe-routes/dom';
-import { ROUTES } from '@/router';
-import useEmblaCarousel from 'embla-carousel-react';
-import isNonNullable from '@/utils/isNonNullable';
 import CafeBriefInfoSection from '../organisms/CafeBriefInfoSection';
 import CafeDetailedInfoSection from '../organisms/CafeDetailedInfoSection';
-import { Navigate } from 'react-router';
-import openURL from '@/utils/openURL';
-import useBottomSheet from '@/hooks/useBottomSheet';
-import { ReactComponent as CloseSVGR } from '@/assets/svgr/ic/close.svg';
-import ga from '@/utils/ga';
+import EmblaCarousel from '../organisms/EmblaCarousel';
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -179,15 +182,16 @@ const ContactButton = styled.button`
 const CafeDetailPage = () => {
   const [{ code }] = useTypedSearchParams(ROUTES.CAFE.DETAILS);
 
-  const { data: cafe } = useGetCafeQuery(
+  const { data } = useMockGetCafeQuery(
     {
       code,
     },
     {
       enabled: !!code,
-      select: s => s.cafe,
     }
   );
+
+  const cafe = data?.cafe;
 
   const { setShow: setShowFeeInfo, register, BottomSheet } = useBottomSheet(false);
 

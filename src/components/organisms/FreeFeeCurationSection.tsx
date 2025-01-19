@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import EmblaCarousel from './EmblaCarousel';
+
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
-import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
-import isNonNullable from '@/utils/isNonNullable';
-import CurationHeader from '../molecule/CurationHeader';
 import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+
+import useHorizontalRatio, { hScalePx } from '@/hooks/useHorizontalRatio';
 import { ROUTES } from '@/router';
-import { useGetCafeCurationsQuery } from '@/services/gql-outputs/graphql';
+import isNonNullable from '@/utils/isNonNullable';
+
+import { useMockGetCafeCurations } from '../../services/gql/gql-outputs-mock/useMockGetCafeCurations';
+import CurationHeader from '../molecule/CurationHeader';
+import EmblaCarousel from './EmblaCarousel';
 
 // carousel
 const CafeCarousel = styled(EmblaCarousel.Embla)`
@@ -88,7 +91,7 @@ const FreeFeeCurationSection = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS);
   const [selectedImageIdx, setSelectedImageIdx] = useState<number>(0);
   const navigate = useNavigate();
-  const { data: CafeCurations } = useGetCafeCurationsQuery({ args: { feature: '무료대관' } });
+  const { data: CafeCurations } = useMockGetCafeCurations({ args: { feature: '무료대관' } });
   const hr = useHorizontalRatio();
 
   const handleCafeClick = (cafeCode: string) => {
