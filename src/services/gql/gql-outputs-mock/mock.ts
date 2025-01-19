@@ -11,6 +11,7 @@ import { faker } from '@faker-js/faker';
 import {
   generateBusinessHour,
   generateCafeDescription,
+  generateCafeImages,
   generateConcept,
   generateFeeInfo,
   generateRandomBreifAddress,
@@ -20,7 +21,7 @@ import {
   generateRandomSigungu,
 } from './generator';
 
-faker.seed(2012147551);
+faker.seed(20250119);
 
 export interface IMockQueryOptions {
   enabled?: boolean;
@@ -168,21 +169,12 @@ export const mockCafeDataList: GetCafeQuery[] = Array.from(cafeCodes, code => {
         minPeriod: fee.minPeriod,
         note: undefined,
       },
-      imageFileList: Array.from(
-        {
-          length: faker.number.int({ min: 3, max: 10 }),
-        },
-        () => ({
-          __typename: 'ImageFile',
-          url: faker.image.urlPicsumPhotos({
-            blur: 0,
-            height: 600,
-            width: 800,
-          }),
-          filename: faker.system.fileName(),
-          category: 'LANDSCAPE',
-        })
-      ),
+      imageFileList: generateCafeImages().map(url => ({
+        __typename: 'ImageFile',
+        url,
+        filename: faker.system.fileName(),
+        category: 'LANDSCAPE',
+      })),
       isPopular: faker.datatype.boolean(),
       isSpecialBenefitCustomable: faker.datatype.boolean(),
       name: generateRandomCafeName(),
@@ -236,11 +228,7 @@ export const mockMainCafeBannerData: GetMainCafeBannerQuery = {
       cafeCode: cafe.code,
       category: 'BANNER',
       filename: faker.system.fileName(),
-      url: faker.image.urlPicsumPhotos({
-        blur: 0,
-        height: 800,
-        width: 600,
-      }),
+      url: generateCafeImages()?.at(0)!,
     })),
 };
 

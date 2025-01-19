@@ -215,6 +215,8 @@ const businessHourList = [
 
 const concepts = ['모던', '아기자기', '코지', '내추럴'] as const;
 
+const imageUrls = Array.from({ length: 35 }).map((_, i) => `/images/cafe/${i + 1}.jpg`);
+
 export function generateRandomSigungu() {
   return faker.helpers.arrayElement(sigunguList);
 }
@@ -292,4 +294,8 @@ export function generateFeeInfo() {
       max: 100,
     }),
   };
+}
+
+export function generateCafeImages() {
+  return faker.helpers.arrayElements(imageUrls, 4);
 }
