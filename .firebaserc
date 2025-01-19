@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "duckplus-ce13c"
-  }
+    "default": "duck-plus-archived"
+  },
+  "targets": {},
+  "etags": {}
 }
